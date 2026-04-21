@@ -24,11 +24,14 @@ AVERAGE_SHARES_KEYS = [
     "Basic Weighted Average Shares",
 ]
 
+# ─────────────────────────────────────────────
+# Internal helpers
+# ─────────────────────────────────────────────
 
 def _growth_rate(current_value, previous_value):
+    """Safe YoY growth rate. Returns None if inputs are invalid or previous <= 0."""
     if is_missing(current_value) or is_missing(previous_value) or previous_value <= 0:
         return None
-
     return (current_value - previous_value) / previous_value
 
 
@@ -48,41 +51,82 @@ def _latest_price(data, info):
     return None
 
 
-def _ttm_and_previous_period(series):
-    values = [value for value in series.tolist() if not is_missing(value)]
-    if len(values) >= 8:
-        return sum(values[:4]), sum(values[4:8])
+def _clean_values(series):
+    """Return a list of non-missing floats from a Series, most-recent first.
 
+    Sorts by index descending so that callers can safely use positional
+    slicing (index 0 = latest period, index 1 = one period prior, …)
+    regardless of the order the data source returns columns.
+    """
+    if series is None or series.empty:
+        return []
+    sorted_series = series.sort_index(ascending=False)
+    return [float(v) for v in sorted_series.tolist() if not is_missing(v)]
+
+
+# ── Annual YoY ────────────────────────────────
+
+def _annual_yoy(annual_series):
+    """Return (latest_annual, prior_annual) for true YoY comparison.
+
+    Requires at least 2 annual data points.
+    """
+    values = _clean_values(annual_series)
     if len(values) >= 2:
         return values[0], values[1]
-
     return None, None
 
 
+# ── Trailing-twelve-month (quarterly) ────────
+
+def _ttm_current(quarterly_series):
+    """Sum of the 4 most-recent quarters (TTM). Returns None if <4 quarters."""
+    values = _clean_values(quarterly_series)
+    if len(values) >= 4:
+        return sum(values[:4])
+    return None
+
+
+def _ttm_yoy(quarterly_series):
+    """Return (TTM_current, TTM_previous) using 8 quarters.
+
+    Requires exactly 8 non-missing quarters to produce a valid YoY
+    comparison.  Avoids the old fallback that compared two consecutive
+    quarters (Q vs Q-1) which produced wildly wrong growth rates.
+    """
+    values = _clean_values(quarterly_series)
+    if len(values) >= 8:
+        return sum(values[:4]), sum(values[4:8])
+    return None, None
+
+
+# ── EPS helpers ───────────────────────────────
+
 def _latest_and_previous(series):
-    values = [value for value in series.tolist() if not is_missing(value)]
+    values = _clean_values(series)
     if len(values) >= 2:
         return values[0], values[1]
-
     return None, None
 
 
 def _quarter_yoy_momentum(series):
-    values = [value for value in series.tolist() if not is_missing(value)]
+    """Compare the most-recent quarter to the same quarter one year ago (index 4)."""
+    values = _clean_values(series)
     if len(values) < 5:
         return None
-
     return _growth_rate(values[0], values[4])
 
 
 def _earnings_stability_score(quarterly_series, annual_series):
-    quarterly_values = [value for value in quarterly_series.tolist() if not is_missing(value)]
+    quarterly_values = _clean_values(quarterly_series)
     if len(quarterly_values) >= 8:
-        ttm_windows = rolling_trailing_sums(pd.Series(quarterly_values, dtype="float64"), periods=4, windows=5)
+        ttm_windows = rolling_trailing_sums(
+            pd.Series(quarterly_values, dtype="float64"), periods=4, windows=5
+        )
         if len(ttm_windows) >= 3:
             return _stability_from_values(ttm_windows)
 
-    annual_values = [value for value in annual_series.tolist() if not is_missing(value)]
+    annual_values = _clean_values(annual_series)
     if len(annual_values) >= 3:
         return _stability_from_values(annual_values[:4])
 
@@ -90,15 +134,14 @@ def _earnings_stability_score(quarterly_series, annual_series):
 
 
 def _stability_from_values(values):
-    cleaned = [value for value in values if not is_missing(value)]
+    cleaned = [v for v in values if not is_missing(v)]
     if len(cleaned) < 3:
         return None
-
-    mean_value = pd.Series(cleaned, dtype="float64").mean()
+    s = pd.Series(cleaned, dtype="float64")
+    mean_value = s.mean()
     if mean_value == 0:
         return None
-
-    coefficient_of_variation = pd.Series(cleaned, dtype="float64").std(ddof=0) / abs(mean_value)
+    coefficient_of_variation = s.std(ddof=0) / abs(mean_value)
     return 1 / (1 + coefficient_of_variation)
 
 
@@ -112,6 +155,7 @@ def _eps_series(data):
     if not quarterly_eps.empty or not annual_eps.empty:
         return quarterly_eps, annual_eps
 
+    # Fallback: derive EPS from net income ÷ shares
     quarterly_net_income = row_series(quarterly_income, NET_INCOME_KEYS)
     annual_net_income = row_series(annual_income, NET_INCOME_KEYS)
     quarterly_average_shares = row_series(quarterly_income, AVERAGE_SHARES_KEYS)
@@ -143,11 +187,12 @@ def _ratio_series(numerator_series, denominator_series):
 
 
 def _preferred_eps_growth_inputs(quarterly_eps, annual_eps):
-    annual_current, annual_previous = _latest_and_previous(annual_eps)
+    """Annual EPS YoY is the primary source; TTM quarterly is the fallback."""
+    annual_current, annual_previous = _annual_yoy(annual_eps)
     if not is_missing(annual_current) and not is_missing(annual_previous):
         return annual_current, annual_previous
 
-    ttm_current, ttm_previous = _ttm_and_previous_period(quarterly_eps)
+    ttm_current, ttm_previous = _ttm_yoy(quarterly_eps)
     if not is_missing(ttm_current) and not is_missing(ttm_previous):
         return ttm_current, ttm_previous
 
@@ -158,11 +203,12 @@ def _earnings_quality_indicator(operating_cash_flow, net_income):
     raw_ratio = safe_div(operating_cash_flow, net_income)
     if is_missing(raw_ratio) or raw_ratio <= 0:
         return None
-
-    # Treat 1.0 as ideal cash realization and penalize both weak conversion and
-    # overly inflated conversion caused by temporary working-capital swings.
+    # Treat 1.0 as ideal cash realisation; penalise both weak conversion and
+    # inflated conversion caused by temporary working-capital swings.
     return 1 / (1 + abs(1 - raw_ratio))
 
+
+# ── Dividend helpers ──────────────────────────
 
 def _dividend_windows(data):
     dividends = data.get("dividends")
@@ -177,8 +223,12 @@ def _dividend_windows(data):
     current_start = anchor_date - pd.Timedelta(days=365)
     previous_start = current_start - pd.Timedelta(days=365)
 
-    current_ttm = dividend_series[(dividend_series.index > current_start) & (dividend_series.index <= anchor_date)].sum()
-    previous_ttm = dividend_series[(dividend_series.index > previous_start) & (dividend_series.index <= current_start)].sum()
+    current_ttm = dividend_series[
+        (dividend_series.index > current_start) & (dividend_series.index <= anchor_date)
+    ].sum()
+    previous_ttm = dividend_series[
+        (dividend_series.index > previous_start) & (dividend_series.index <= current_start)
+    ].sum()
 
     return current_ttm, previous_ttm
 
@@ -192,9 +242,12 @@ def _anchor_date(data, fallback_date):
                 return pd.Timestamp(latest_price_date)
         except (TypeError, ValueError):
             pass
-
     return pd.Timestamp(fallback_date)
 
+
+# ─────────────────────────────────────────────
+# Public entry point
+# ─────────────────────────────────────────────
 
 def compute_growth(data):
     info = data.get("info", {}) if isinstance(data.get("info"), dict) else {}
@@ -204,26 +257,38 @@ def compute_growth(data):
 
     quarterly_revenue = row_series(quarterly_income, REVENUE_KEYS)
     annual_revenue = row_series(annual_income, REVENUE_KEYS)
-    revenue_current, revenue_previous = _ttm_and_previous_period(quarterly_revenue)
-    if is_missing(revenue_current) or is_missing(revenue_previous):
-        revenue_current, revenue_previous = _ttm_and_previous_period(annual_revenue)
 
+    # ── Revenue growth ────────────────────────────────────────────────────────
+    # Priority 1: Annual YoY  (most reliable — avoids seasonal distortion and
+    #             the 8-quarter data requirement of TTM comparison).
+    # Priority 2: TTM quarterly YoY  (requires exactly 8 clean quarters).
+    # NOTE: the old code was quarterly-first; when <8 quarters existed it fell
+    #       back to values[0] vs values[1] which compared *consecutive quarters*
+    #       rather than the same period YoY — the root cause of the ~40% anomaly.
+    revenue_current, revenue_previous = _annual_yoy(annual_revenue)
+    if is_missing(revenue_current) or is_missing(revenue_previous):
+        revenue_current, revenue_previous = _ttm_yoy(quarterly_revenue)
+
+    # ── EPS growth ────────────────────────────────────────────────────────────
     quarterly_eps, annual_eps = _eps_series(data)
     eps_current, eps_previous = _preferred_eps_growth_inputs(quarterly_eps, annual_eps)
-    if is_missing(eps_current) or is_missing(eps_previous):
-        eps_current, eps_previous = _ttm_and_previous_period(quarterly_eps)
 
+    # ── Net income (used for stability & quality) ─────────────────────────────
     quarterly_net_income = row_series(quarterly_income, NET_INCOME_KEYS)
     annual_net_income = row_series(annual_income, NET_INCOME_KEYS)
 
+    # ── Derived metrics ───────────────────────────────────────────────────────
     revenue_growth_rate = _growth_rate(revenue_current, revenue_previous)
     eps_growth_rate = _growth_rate(eps_current, eps_previous)
+
+    # EPS momentum: same quarter YoY (more timely than full-year comparison).
     eps_momentum = _quarter_yoy_momentum(quarterly_eps)
     if is_missing(eps_momentum):
-        eps_momentum = _growth_rate(eps_current, eps_previous)
+        eps_momentum = eps_growth_rate  # graceful degradation
 
     earnings_stability = _earnings_stability_score(quarterly_net_income, annual_net_income)
 
+    # ── Cash-flow quality ─────────────────────────────────────────────────────
     aligned_ocf, aligned_net_income = aligned_flow_values(
         data.get("quarterly_cashflow"),
         data.get("cashflow"),
@@ -240,11 +305,13 @@ def compute_growth(data):
         annual_income,
         NET_INCOME_KEYS,
     )
+    # Subtract SBC from OCF so quality score reflects real cash earnings.
     quality_ocf = aligned_ocf
     if not is_missing(quality_ocf) and not is_missing(aligned_sbc) and aligned_sbc >= 0:
         quality_ocf = quality_ocf - aligned_sbc
     earnings_quality_indicator = _earnings_quality_indicator(quality_ocf, aligned_net_income)
 
+    # ── Dividends ─────────────────────────────────────────────────────────────
     current_dividend_ttm, previous_dividend_ttm = _dividend_windows(data)
     latest_price = _latest_price(data, info)
 
@@ -258,6 +325,7 @@ def compute_growth(data):
     if not is_missing(dividend_payout_ratio):
         retention_ratio = 1 - dividend_payout_ratio
 
+    # ── Output ────────────────────────────────────────────────────────────────
     metrics = {
         "Revenue_Growth": revenue_growth_rate,
         "Revenue_Growth_Rate": revenue_growth_rate,

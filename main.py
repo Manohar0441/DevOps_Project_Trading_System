@@ -11,7 +11,7 @@ logging.basicConfig(
 
 if __name__ == "__main__":
     ticker = "AAPL"
-    peers = get_top_peers("AAPL", top_n=5)
+    peers = get_top_peers(ticker, top_n=12)
 
     pipeline = FinancialPipeline(ticker)
     output = pipeline.run(peers=peers)
