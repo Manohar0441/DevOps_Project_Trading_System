@@ -2,6 +2,7 @@ import json
 import logging
 
 from services.ingestion.fetch_data import FinancialPipeline
+from auto_peers_web import get_top_peers
 
 logging.basicConfig(
     level=logging.INFO,
@@ -10,7 +11,7 @@ logging.basicConfig(
 
 if __name__ == "__main__":
     ticker = "AAPL"
-    peers = ["MSFT", "GOOGL", "AMZN"]
+    peers = get_top_peers("AAPL", top_n=5)
 
     pipeline = FinancialPipeline(ticker)
     output = pipeline.run(peers=peers)
