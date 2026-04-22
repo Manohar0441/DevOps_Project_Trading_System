@@ -1,0 +1,1865 @@
+{
+    "valuation": {
+        "PE": 26.050508358327804,
+        "PB": 3.337211016555095,
+        "PS": 0.7017160084814117,
+        "EV": 364332928768.0,
+        "EV_Sales": 0.8140299190244142,
+        "P_CF": 15.944810314667208,
+        "P_FCF": 15.168554878918135,
+        "Earnings_Yield": 0.038386966820181875,
+        "FCF_Yield": 0.0659258583287878,
+        "Current_FCF": 16075000000.0,
+        "Normalized_FCF": 20705000000.0
+    },
+    "profitability": {
+        "ROE": 0.12762614938695835,
+        "ROIC": 0.115714940034623,
+        "ROA": 0.03910499639634613,
+        "ROCE": 0.09645520509192337,
+        "Gross_Margin": 0.1852616479767275,
+        "Operating_Margin": 0.04237130977038075,
+        "Net_Margin": 0.026936749134766416,
+        "EBITDA_Margin": 0.05152301219705653,
+        "Asset_Turnover": 1.451734067860273,
+        "Inventory_Turnover": null,
+        "Receivables_Turnover": 18.784341870010827,
+        "CCC": null
+    },
+    "financial_health": {
+        "Current_Ratio": 0.7883756756051071,
+        "Quick_Ratio": 0.7883756756051071,
+        "Operating_Cash_Flow_Ratio": 0.1714318041376189,
+        "Debt_to_Equity": 0.832950802252683,
+        "Debt_to_Capital": 0.45443161989344866,
+        "Debt_to_Assets": 0.2532099838168363,
+        "Interest_Coverage": 4.738630684657672,
+        "Debt_Service_Coverage": 1.950391127834439
+    },
+    "cashflow": {
+        "OCF": 19697000000.0,
+        "OCF_Margin": 0.04400905339312326,
+        "FCF": 16075000000.0,
+        "FCF_Margin": 0.035916410280471975,
+        "FCF_Yield": 0.0659258583287878,
+        "FCFE": 16801000000.0,
+        "Capex_to_OCF_Ratio": 0.18388587094481393,
+        "Cash_Flow_Coverage": 0.25127249996810774,
+        "Cash_Burn_Rate": 0,
+        "Cash_Conversion_Ratio": 1.553251493032515
+    },
+    "growth": {
+        "Revenue_Growth": 0.11814039242726306,
+        "Revenue_Growth_Rate": 0.11814039242726306,
+        "EPS_Growth": -0.14700193423597674,
+        "EPS_Growth_Rate": -0.14700193423597674,
+        "EPS_Momentum": -0.9983277591973244,
+        "Earnings_Stability": 0.8051458636840604,
+        "Earnings_Quality_Indicator": 0.6438107444195237,
+        "Dividend_Payout_Ratio": 0.6681783824640967,
+        "Retention_Ratio": 0.33182161753590333,
+        "Dividend_Yield": 0.0255483938340047,
+        "Dividend_Growth_Rate": 0.05238095238095232
+    },
+    "risk": {
+        "Beta": 0.408,
+        "Standard_Deviation": 0.019949615166367302,
+        "Coefficient_of_Variation": 120.20646124681821,
+        "Sharpe_Ratio": 0.13206035434145794,
+        "Sortino_Ratio": 0.11761731556480193,
+        "Information_Ratio": null,
+        "Jensens_Alpha": null,
+        "Treynor_Ratio": null,
+        "Total_Shareholder_Return": 0.05273803038772678,
+        "Cumulative_Return": -0.049356977603990604,
+        "CAGR": -0.010079127013741362
+    },
+    "ownership": {
+        "Institutional_Ownership": 0.84156,
+        "Insider_Ownership": 0.008169999,
+        "Insider_Trading_Activity": {
+            "Total_Buy_Shares": 0.0,
+            "Total_Sell_Shares": 0.0,
+            "Net_Activity": 0.0
+        },
+        "Insider_Concentration": 0.00023524698006200867,
+        "Public_Float": 899996901.0
+    },
+    "competitive": {
+        "moat": {
+            "moat_score": 3,
+            "max_score": 12,
+            "strength": "Weak",
+            "reasons": [
+                "High switching costs",
+                "Strong capital allocation",
+                "Market assigns premium valuation"
+            ]
+        },
+        "competitive": {
+            "moat": {
+                "moat_score": 3,
+                "max_score": 12,
+                "strength": "Weak",
+                "reasons": [
+                    "High switching costs",
+                    "Strong capital allocation",
+                    "Market assigns premium valuation"
+                ]
+            },
+            "management": {
+                "insider_ownership": 0.008169999,
+                "institutional_confidence": 0.84156,
+                "comment": "Higher insider holding = aligned incentives",
+                "stability": {
+                    "executive_count": 10,
+                    "ceo_found": "Mr. Stephen J. Hemsley",
+                    "executives_sample": [
+                        "Mr. Stephen J. Hemsley",
+                        "Mr. Christopher R. Zaetta",
+                        "Ms. Erin L.  McSweeney",
+                        "Ms. Heather Rachelle Cianfrocco",
+                        "Mr. Wayne Scott DeVeydt",
+                        "Mr. Dennis  Stankiewicz",
+                        "Mr. Sandeep  Dadlani",
+                        "Mr. Zachary William Sopcak",
+                        "Mr. Terry  Clark",
+                        "Dr. Richard J. Migliori M.D."
+                    ],
+                    "note": "True management stability needs tenure/history data; Yahoo Finance does not always provide it reliably."
+                },
+                "ownership_note": "Ownership is directly from Yahoo Finance when available."
+            },
+            "sustained_roic": {
+                "value": 0.10999738151049764,
+                "source": "income + balance",
+                "method": "derived",
+                "note": "NOPAT / Invested Capital. Uses tax rate from statements when available."
+            },
+            "gross_margin_profile": {
+                "latest_gross_margin": 0.1852616479767275,
+                "gross_margin_history": [
+                    0.1852616479767275,
+                    0.2233422771174034,
+                    0.2447594598812772,
+                    0.24560867714291001
+                ],
+                "stability": 0.8910825730792886,
+                "note": "Computed from Gross Profit / Revenue."
+            },
+            "stable_gross_margins": {
+                "latest_gross_margin": 0.1852616479767275,
+                "gross_margin_history": [
+                    0.1852616479767275,
+                    0.2233422771174034,
+                    0.2447594598812772,
+                    0.24560867714291001
+                ],
+                "stability": 0.8910825730792886,
+                "note": "Computed from Gross Profit / Revenue."
+            },
+            "market_share": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "Needs company revenue and TAM/market size from an external source."
+            },
+            "brand_value": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "Brand value requires an external brand valuation source."
+            },
+            "cost_advantage": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "Needs peer or industry gross margin to assess cost advantage accurately."
+            },
+            "product_differentiation": {
+                "value": null,
+                "source": "metrics + external_data",
+                "method": "proxy",
+                "note": "True differentiation needs product, brand, and peer comparison data. Higher gross margin can indicate differentiation or pricing power. Premium valuation can sometimes reflect perceived differentiation."
+            },
+            "switching_costs": {
+                "value": 0.8910825730792886,
+                "source": "external_data + gross_margin_profile",
+                "method": "proxy",
+                "note": "Switching costs are best measured using retention, recurring revenue, or contract data."
+            },
+            "network_effects": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "Not enough data to infer network effects."
+            },
+            "regulatory_barriers": {
+                "value": null,
+                "source": "yfinance.info",
+                "method": "proxy",
+                "note": "Sector='Healthcare', Industry='Healthcare Plans'. Real regulatory barriers require legal or industry research."
+            },
+            "management_ownership": {
+                "value": 0.008169999,
+                "source": "yfinance.info.heldPercentInsiders",
+                "method": "direct",
+                "note": "Direct insider ownership from Yahoo Finance."
+            },
+            "capital_allocation_efficiency": {
+                "fcf": 16075000000.0,
+                "fcf_conversion": 1.3333609820836099,
+                "capex_intensity": 0.00809264311265129,
+                "roic_proxy": 0.08138577234125859,
+                "note": "Uses free cash flow conversion, capex intensity, and a rough invested-capital return proxy."
+            },
+            "management_stability": {
+                "executive_count": 10,
+                "ceo_found": "Mr. Stephen J. Hemsley",
+                "executives_sample": [
+                    "Mr. Stephen J. Hemsley",
+                    "Mr. Christopher R. Zaetta",
+                    "Ms. Erin L.  McSweeney",
+                    "Ms. Heather Rachelle Cianfrocco",
+                    "Mr. Wayne Scott DeVeydt",
+                    "Mr. Dennis  Stankiewicz",
+                    "Mr. Sandeep  Dadlani",
+                    "Mr. Zachary William Sopcak",
+                    "Mr. Terry  Clark",
+                    "Dr. Richard J. Migliori M.D."
+                ],
+                "note": "True management stability needs tenure/history data; Yahoo Finance does not always provide it reliably."
+            },
+            "tam": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "TAM is not available from Yahoo Finance alone."
+            },
+            "market_concentration": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "Needs market structure data, competitor revenues, or a direct concentration index."
+            },
+            "customer_concentration": {
+                "value": null,
+                "source": "external_data",
+                "method": "unavailable",
+                "note": "Customer concentration typically comes from annual reports or segment disclosures."
+            },
+            "porters_five_forces": {
+                "threat_of_new_entrants": {
+                    "score": 1.44,
+                    "interpretation": "Lower is better for the company.",
+                    "drivers": [
+                        "Regulatory barriers",
+                        "Product differentiation",
+                        "Switching costs",
+                        "Network effects"
+                    ]
+                },
+                "supplier_power": {
+                    "score": 4.26,
+                    "interpretation": "Lower is better for the company.",
+                    "drivers": [
+                        "Cost advantage",
+                        "Gross margin strength"
+                    ]
+                },
+                "buyer_power": {
+                    "score": null,
+                    "interpretation": "Lower is better for the company.",
+                    "drivers": [
+                        "Customer concentration"
+                    ]
+                },
+                "threat_of_substitutes": {
+                    "score": 1.44,
+                    "interpretation": "Lower is better for the company.",
+                    "drivers": [
+                        "Product differentiation",
+                        "Switching costs"
+                    ]
+                },
+                "industry_rivalry": {
+                    "score": 2.85,
+                    "interpretation": "Lower is better for the company.",
+                    "drivers": [
+                        "Market concentration",
+                        "Gross margin stability",
+                        "Gross margin level"
+                    ]
+                }
+            },
+            "moat_detail": {
+                "gross_margin_profile": {
+                    "latest_gross_margin": 0.1852616479767275,
+                    "gross_margin_history": [
+                        0.1852616479767275,
+                        0.2233422771174034,
+                        0.2447594598812772,
+                        0.24560867714291001
+                    ],
+                    "stability": 0.8910825730792886,
+                    "note": "Computed from Gross Profit / Revenue."
+                },
+                "capital_allocation_efficiency": {
+                    "fcf": 16075000000.0,
+                    "fcf_conversion": 1.3333609820836099,
+                    "capex_intensity": 0.00809264311265129,
+                    "roic_proxy": 0.08138577234125859,
+                    "note": "Uses free cash flow conversion, capex intensity, and a rough invested-capital return proxy."
+                },
+                "ownership": {
+                    "insider_ownership": 0.008169999,
+                    "institutional_confidence": 0.84156,
+                    "comment": "Higher insider holding generally suggests stronger incentive alignment."
+                }
+            }
+        }
+    },
+    "valuation_models": {
+        "DCF": {
+            "Enterprise_Value": 575270440645.8536,
+            "Equity_Value": 525002440645.85364,
+            "Per_Share_Value": 578.4030135959734
+        },
+        "WACC": 0.0668162051275749,
+        "Graham_Number": 175.6805491057999
+    },
+    "screening": {
+        "Fundamental Analysis Framework": {
+            "Profitability": {
+                "ROE": 0.12762614938695835,
+                "ROIC": 0.115714940034623,
+                "ROA": 0.03910499639634613,
+                "ROCE": 0.09645520509192337,
+                "Gross_Margin": 0.1852616479767275,
+                "Operating_Margin": 0.04237130977038075,
+                "Net_Margin": 0.026936749134766416,
+                "EBITDA_Margin": 0.05152301219705653,
+                "Asset_Turnover": 1.451734067860273,
+                "Inventory_Turnover": null,
+                "Receivables_Turnover": 18.784341870010827,
+                "CCC": null
+            },
+            "Growth": {
+                "Revenue_Growth": 0.11814039242726306,
+                "Revenue_Growth_Rate": 0.11814039242726306,
+                "EPS_Growth": -0.14700193423597674,
+                "EPS_Growth_Rate": -0.14700193423597674,
+                "EPS_Momentum": -0.9983277591973244,
+                "Earnings_Stability": 0.8051458636840604,
+                "Earnings_Quality_Indicator": 0.6438107444195237,
+                "Dividend_Payout_Ratio": 0.6681783824640967,
+                "Retention_Ratio": 0.33182161753590333,
+                "Dividend_Yield": 0.0255483938340047,
+                "Dividend_Growth_Rate": 0.05238095238095232
+            },
+            "Valuation": {
+                "PE": 26.050508358327804,
+                "PB": 3.337211016555095,
+                "PS": 0.7017160084814117,
+                "EV": 364332928768.0,
+                "EV_Sales": 0.8140299190244142,
+                "P_CF": 15.944810314667208,
+                "P_FCF": 15.168554878918135,
+                "Earnings_Yield": 0.038386966820181875,
+                "FCF_Yield": 0.0659258583287878,
+                "Current_FCF": 16075000000.0,
+                "Normalized_FCF": 20705000000.0
+            },
+            "Financial Health": {
+                "Current_Ratio": 0.7883756756051071,
+                "Quick_Ratio": 0.7883756756051071,
+                "Operating_Cash_Flow_Ratio": 0.1714318041376189,
+                "Debt_to_Equity": 0.832950802252683,
+                "Debt_to_Capital": 0.45443161989344866,
+                "Debt_to_Assets": 0.2532099838168363,
+                "Interest_Coverage": 4.738630684657672,
+                "Debt_Service_Coverage": 1.950391127834439
+            },
+            "Cash Flow": {
+                "OCF": 19697000000.0,
+                "OCF_Margin": 0.04400905339312326,
+                "FCF": 16075000000.0,
+                "FCF_Margin": 0.035916410280471975,
+                "FCF_Yield": 0.0659258583287878,
+                "FCFE": 16801000000.0,
+                "Capex_to_OCF_Ratio": 0.18388587094481393,
+                "Cash_Flow_Coverage": 0.25127249996810774,
+                "Cash_Burn_Rate": 0,
+                "Cash_Conversion_Ratio": 1.553251493032515
+            }
+        },
+        "Quality Screening": {
+            "Score": 0,
+            "Checks": {
+                "High ROE": false,
+                "Reasonable PE": false,
+                "Low Debt": false,
+                "Positive FCF": false
+            }
+        },
+        "Buffett Criteria": {
+            "ROE > 15%": false,
+            "Low Debt (<0.5)": false,
+            "Positive EPS Growth": false
+        },
+        "8-Point Checklist": {
+            "ROE > 15%": false,
+            "ROA > 7%": false,
+            "Debt/Equity < 0.5": false,
+            "Current Ratio > 1.5": false,
+            "Positive EPS Growth": false,
+            "Revenue Growth > 5%": true,
+            "Positive FCF": false,
+            "PE < 25": false
+        },
+        "Growth Stock Evaluation": {
+            "High Revenue Growth": false,
+            "High EPS Growth": false,
+            "High PE (Growth Premium)": true
+        },
+        "Value Stock Evaluation": {
+            "Low PE": false,
+            "Low PB": false,
+            "High Dividend Yield": false
+        },
+        "Cyclical Stock Analysis": {
+            "High Revenue Variability": true,
+            "Moderate Debt": true,
+            "Economic Sensitivity (Proxy PE < 20)": false
+        },
+        "Dividend Stock Analysis": {
+            "Stable Dividend Yield": false,
+            "Positive Free Cash Flow": false,
+            "Low Payout Risk (Debt Low)": false
+        }
+    },
+    "benchmarking": {
+        "valuation": {
+            "PE": {
+                "company": 26.050508358327804,
+                "peer_avg": 20.091032348336363,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "PB": {
+                "company": 3.337211016555095,
+                "peer_avg": 1.437902779212286,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "PS": {
+                "company": 0.7017160084814117,
+                "peer_avg": 0.23608126754617156,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "EV": {
+                "company": 364332928768.0,
+                "peer_avg": 74016015308.8,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "EV_Sales": {
+                "company": 0.8140299190244142,
+                "peer_avg": 0.2700177804414381,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "P_CF": {
+                "company": 15.944810314667208,
+                "peer_avg": 13.228301029479113,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "P_FCF": {
+                "company": 15.168554878918135,
+                "peer_avg": 10.455467652795345,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Earnings_Yield": {
+                "company": 0.038386966820181875,
+                "peer_avg": -0.02495983084153195,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "FCF_Yield": {
+                "company": 0.0659258583287878,
+                "peer_avg": 0.11569908863157172,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Current_FCF": {
+                "company": 16075000000.0,
+                "peer_avg": 4813200000.0,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Normalized_FCF": {
+                "company": 20705000000.0,
+                "peer_avg": 5605600000.0,
+                "peer_count": 5,
+                "relative_position": "Above"
+            }
+        },
+        "profitability": {
+            "ROE": {
+                "company": 0.12762614938695835,
+                "peer_avg": 0.01902123864569779,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "ROIC": {
+                "company": 0.115714940034623,
+                "peer_avg": 0.10692382268209422,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "ROA": {
+                "company": 0.03910499639634613,
+                "peer_avg": 0.007203394158673687,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "ROCE": {
+                "company": 0.09645520509192337,
+                "peer_avg": 0.049909750044416036,
+                "peer_count": 3,
+                "relative_position": "Above"
+            },
+            "Gross_Margin": {
+                "company": 0.1852616479767275,
+                "peer_avg": 0.1044438532557953,
+                "peer_count": 2,
+                "relative_position": "Above"
+            },
+            "Operating_Margin": {
+                "company": 0.04237130977038075,
+                "peer_avg": 0.02922272460538518,
+                "peer_count": 4,
+                "relative_position": "Above",
+                "peers_excluded_invalid": 1
+            },
+            "Net_Margin": {
+                "company": 0.026936749134766416,
+                "peer_avg": 0.015922034985721065,
+                "peer_count": 4,
+                "relative_position": "Above",
+                "peers_excluded_invalid": 1
+            },
+            "EBITDA_Margin": {
+                "company": 0.05152301219705653,
+                "peer_avg": 0.024525763119082142,
+                "peer_count": 1,
+                "relative_position": "Above",
+                "peers_excluded_invalid": 1
+            },
+            "Asset_Turnover": {
+                "company": 1.451734067860273,
+                "peer_avg": 1.9960980394870291,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Inventory_Turnover": {
+                "company": null,
+                "peer_avg": 19.019002271056646,
+                "peer_count": 1,
+                "relative_position": null
+            },
+            "Receivables_Turnover": {
+                "company": 18.784341870010827,
+                "peer_avg": 20.05063478692279,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "CCC": {
+                "company": null,
+                "peer_avg": 15.80719410157447,
+                "peer_count": 1,
+                "relative_position": null
+            }
+        },
+        "growth": {
+            "Revenue_Growth": {
+                "company": 0.11814039242726306,
+                "peer_avg": 0.12499357908000057,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Revenue_Growth_Rate": {
+                "company": 0.11814039242726306,
+                "peer_avg": 0.12499357908000057,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "EPS_Growth": {
+                "company": -0.14700193423597674,
+                "peer_avg": -0.5933462687271108,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "EPS_Growth_Rate": {
+                "company": -0.14700193423597674,
+                "peer_avg": -0.5933462687271108,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "EPS_Momentum": {
+                "company": -0.9983277591973244,
+                "peer_avg": -0.9109219480225427,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Earnings_Stability": {
+                "company": 0.8051458636840604,
+                "peer_avg": 0.6435999178010655,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Earnings_Quality_Indicator": {
+                "company": 0.6438107444195237,
+                "peer_avg": 0.5676158775019883,
+                "peer_count": 4,
+                "relative_position": "Above"
+            },
+            "Dividend_Payout_Ratio": {
+                "company": 0.6681783824640967,
+                "peer_avg": 0.7049286052262181,
+                "peer_count": 4,
+                "relative_position": "Below"
+            },
+            "Retention_Ratio": {
+                "company": 0.33182161753590333,
+                "peer_avg": 0.29507139477378186,
+                "peer_count": 4,
+                "relative_position": "Above"
+            },
+            "Dividend_Yield": {
+                "company": 0.0255483938340047,
+                "peer_avg": 0.023389594339701447,
+                "peer_count": 4,
+                "relative_position": "Above"
+            },
+            "Dividend_Growth_Rate": {
+                "company": 0.05238095238095232,
+                "peer_avg": 0.10944050841161178,
+                "peer_count": 4,
+                "relative_position": "Below"
+            }
+        },
+        "financial_health": {
+            "Current_Ratio": {
+                "company": 0.7883756756051071,
+                "peer_avg": 0.9100620974655088,
+                "peer_count": 3,
+                "relative_position": "Below"
+            },
+            "Quick_Ratio": {
+                "company": 0.7883756756051071,
+                "peer_avg": 0.8026988234252675,
+                "peer_count": 3,
+                "relative_position": "Below"
+            },
+            "Operating_Cash_Flow_Ratio": {
+                "company": 0.1714318041376189,
+                "peer_avg": 0.1425671235541496,
+                "peer_count": 3,
+                "relative_position": "Above"
+            },
+            "Debt_to_Equity": {
+                "company": 0.832950802252683,
+                "peer_avg": 0.831654267624846,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Debt_to_Capital": {
+                "company": 0.45443161989344866,
+                "peer_avg": 0.45114613648851354,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Debt_to_Assets": {
+                "company": 0.2532099838168363,
+                "peer_avg": 0.2535768869621391,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Interest_Coverage": {
+                "company": 4.738630684657672,
+                "peer_avg": 4.77655837813971,
+                "peer_count": 4,
+                "relative_position": "Below",
+                "peers_excluded_invalid": 1
+            },
+            "Debt_Service_Coverage": {
+                "company": 1.950391127834439,
+                "peer_avg": 3.361771653879798,
+                "peer_count": 5,
+                "relative_position": "Below"
+            }
+        },
+        "cashflow": {
+            "OCF": {
+                "company": 19697000000.0,
+                "peer_avg": 6107800000.0,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "OCF_Margin": {
+                "company": 0.04400905339312326,
+                "peer_avg": 0.023239057215953512,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "FCF": {
+                "company": 16075000000.0,
+                "peer_avg": 4813200000.0,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "FCF_Margin": {
+                "company": 0.035916410280471975,
+                "peer_avg": 0.018196911694506167,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "FCF_Yield": {
+                "company": 0.0659258583287878,
+                "peer_avg": 0.11569908863157172,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "FCFE": {
+                "company": 16801000000.0,
+                "peer_avg": 4646600000.0,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Capex_to_OCF_Ratio": {
+                "company": 0.18388587094481393,
+                "peer_avg": 0.2792295746933774,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Cash_Flow_Coverage": {
+                "company": 0.25127249996810774,
+                "peer_avg": 0.18533970344081446,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Cash_Burn_Rate": {
+                "company": 0,
+                "peer_avg": 0.0,
+                "peer_count": 5,
+                "relative_position": "Equal"
+            },
+            "Cash_Conversion_Ratio": {
+                "company": 1.553251493032515,
+                "peer_avg": 1.575236350488751,
+                "peer_count": 5,
+                "relative_position": "Below"
+            }
+        },
+        "risk": {
+            "Beta": {
+                "company": 0.408,
+                "peer_avg": 0.4614,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Standard_Deviation": {
+                "company": 0.019949615166367302,
+                "peer_avg": 0.02035876210211495,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Coefficient_of_Variation": {
+                "company": 120.20646124681821,
+                "peer_avg": 140.49476661689033,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Sharpe_Ratio": {
+                "company": 0.13206035434145794,
+                "peer_avg": 0.08050141737962277,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Sortino_Ratio": {
+                "company": 0.11761731556480193,
+                "peer_avg": 0.07785150837630997,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Information_Ratio": {
+                "company": null,
+                "peer_avg": null,
+                "peer_count": 0,
+                "relative_position": null
+            },
+            "Jensens_Alpha": {
+                "company": null,
+                "peer_avg": null,
+                "peer_count": 0,
+                "relative_position": null
+            },
+            "Treynor_Ratio": {
+                "company": null,
+                "peer_avg": null,
+                "peer_count": 0,
+                "relative_position": null
+            },
+            "Total_Shareholder_Return": {
+                "company": 0.05273803038772678,
+                "peer_avg": -0.029356690088768168,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Cumulative_Return": {
+                "company": -0.049356977603990604,
+                "peer_avg": -0.11332267656277095,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "CAGR": {
+                "company": -0.010079127013741362,
+                "peer_avg": -0.03266471025299378,
+                "peer_count": 5,
+                "relative_position": "Above"
+            }
+        },
+        "ownership": {
+            "Institutional_Ownership": {
+                "company": 0.84156,
+                "peer_avg": 0.959614002,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Insider_Ownership": {
+                "company": 0.008169999,
+                "peer_avg": 0.004368000012,
+                "peer_count": 5,
+                "relative_position": "Above"
+            },
+            "Insider_Trading_Activity": {
+                "company": {
+                    "Total_Buy_Shares": 0.0,
+                    "Total_Sell_Shares": 0.0,
+                    "Net_Activity": 0.0
+                },
+                "peer_avg": null,
+                "peer_count": 0,
+                "relative_position": null,
+                "peers_excluded_invalid": 5
+            },
+            "Insider_Concentration": {
+                "company": 0.00023524698006200867,
+                "peer_avg": 0.0016961362316596875,
+                "peer_count": 5,
+                "relative_position": "Below"
+            },
+            "Public_Float": {
+                "company": 899996901.0,
+                "peer_avg": 466235201.6,
+                "peer_count": 5,
+                "relative_position": "Above"
+            }
+        }
+    },
+    "comparative_analysis": {
+        "Peer_Comparison": {
+            "valuation": {
+                "PE": {
+                    "company": 26.050508358327804,
+                    "peer_avg": 20.091032348336363,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "PB": {
+                    "company": 3.337211016555095,
+                    "peer_avg": 1.437902779212286,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "PS": {
+                    "company": 0.7017160084814117,
+                    "peer_avg": 0.23608126754617156,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "EV": {
+                    "company": 364332928768.0,
+                    "peer_avg": 74016015308.8,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "EV_Sales": {
+                    "company": 0.8140299190244142,
+                    "peer_avg": 0.2700177804414381,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "P_CF": {
+                    "company": 15.944810314667208,
+                    "peer_avg": 13.228301029479113,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "P_FCF": {
+                    "company": 15.168554878918135,
+                    "peer_avg": 10.455467652795345,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Earnings_Yield": {
+                    "company": 0.038386966820181875,
+                    "peer_avg": -0.02495983084153195,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "FCF_Yield": {
+                    "company": 0.0659258583287878,
+                    "peer_avg": 0.11569908863157172,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Current_FCF": {
+                    "company": 16075000000.0,
+                    "peer_avg": 4813200000.0,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Normalized_FCF": {
+                    "company": 20705000000.0,
+                    "peer_avg": 5605600000.0,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                }
+            },
+            "profitability": {
+                "ROE": {
+                    "company": 0.12762614938695835,
+                    "peer_avg": 0.01902123864569779,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "ROIC": {
+                    "company": 0.115714940034623,
+                    "peer_avg": 0.10692382268209422,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "ROA": {
+                    "company": 0.03910499639634613,
+                    "peer_avg": 0.007203394158673687,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "ROCE": {
+                    "company": 0.09645520509192337,
+                    "peer_avg": 0.049909750044416036,
+                    "peer_count": 3,
+                    "relative_position": "Above"
+                },
+                "Gross_Margin": {
+                    "company": 0.1852616479767275,
+                    "peer_avg": 0.1044438532557953,
+                    "peer_count": 2,
+                    "relative_position": "Above"
+                },
+                "Operating_Margin": {
+                    "company": 0.04237130977038075,
+                    "peer_avg": 0.02922272460538518,
+                    "peer_count": 4,
+                    "relative_position": "Above",
+                    "peers_excluded_invalid": 1
+                },
+                "Net_Margin": {
+                    "company": 0.026936749134766416,
+                    "peer_avg": 0.015922034985721065,
+                    "peer_count": 4,
+                    "relative_position": "Above",
+                    "peers_excluded_invalid": 1
+                },
+                "EBITDA_Margin": {
+                    "company": 0.05152301219705653,
+                    "peer_avg": 0.024525763119082142,
+                    "peer_count": 1,
+                    "relative_position": "Above",
+                    "peers_excluded_invalid": 1
+                },
+                "Asset_Turnover": {
+                    "company": 1.451734067860273,
+                    "peer_avg": 1.9960980394870291,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Inventory_Turnover": {
+                    "company": null,
+                    "peer_avg": 19.019002271056646,
+                    "peer_count": 1,
+                    "relative_position": null
+                },
+                "Receivables_Turnover": {
+                    "company": 18.784341870010827,
+                    "peer_avg": 20.05063478692279,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "CCC": {
+                    "company": null,
+                    "peer_avg": 15.80719410157447,
+                    "peer_count": 1,
+                    "relative_position": null
+                }
+            },
+            "growth": {
+                "Revenue_Growth": {
+                    "company": 0.11814039242726306,
+                    "peer_avg": 0.12499357908000057,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Revenue_Growth_Rate": {
+                    "company": 0.11814039242726306,
+                    "peer_avg": 0.12499357908000057,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "EPS_Growth": {
+                    "company": -0.14700193423597674,
+                    "peer_avg": -0.5933462687271108,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "EPS_Growth_Rate": {
+                    "company": -0.14700193423597674,
+                    "peer_avg": -0.5933462687271108,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "EPS_Momentum": {
+                    "company": -0.9983277591973244,
+                    "peer_avg": -0.9109219480225427,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Earnings_Stability": {
+                    "company": 0.8051458636840604,
+                    "peer_avg": 0.6435999178010655,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Earnings_Quality_Indicator": {
+                    "company": 0.6438107444195237,
+                    "peer_avg": 0.5676158775019883,
+                    "peer_count": 4,
+                    "relative_position": "Above"
+                },
+                "Dividend_Payout_Ratio": {
+                    "company": 0.6681783824640967,
+                    "peer_avg": 0.7049286052262181,
+                    "peer_count": 4,
+                    "relative_position": "Below"
+                },
+                "Retention_Ratio": {
+                    "company": 0.33182161753590333,
+                    "peer_avg": 0.29507139477378186,
+                    "peer_count": 4,
+                    "relative_position": "Above"
+                },
+                "Dividend_Yield": {
+                    "company": 0.0255483938340047,
+                    "peer_avg": 0.023389594339701447,
+                    "peer_count": 4,
+                    "relative_position": "Above"
+                },
+                "Dividend_Growth_Rate": {
+                    "company": 0.05238095238095232,
+                    "peer_avg": 0.10944050841161178,
+                    "peer_count": 4,
+                    "relative_position": "Below"
+                }
+            },
+            "financial_health": {
+                "Current_Ratio": {
+                    "company": 0.7883756756051071,
+                    "peer_avg": 0.9100620974655088,
+                    "peer_count": 3,
+                    "relative_position": "Below"
+                },
+                "Quick_Ratio": {
+                    "company": 0.7883756756051071,
+                    "peer_avg": 0.8026988234252675,
+                    "peer_count": 3,
+                    "relative_position": "Below"
+                },
+                "Operating_Cash_Flow_Ratio": {
+                    "company": 0.1714318041376189,
+                    "peer_avg": 0.1425671235541496,
+                    "peer_count": 3,
+                    "relative_position": "Above"
+                },
+                "Debt_to_Equity": {
+                    "company": 0.832950802252683,
+                    "peer_avg": 0.831654267624846,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Debt_to_Capital": {
+                    "company": 0.45443161989344866,
+                    "peer_avg": 0.45114613648851354,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Debt_to_Assets": {
+                    "company": 0.2532099838168363,
+                    "peer_avg": 0.2535768869621391,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Interest_Coverage": {
+                    "company": 4.738630684657672,
+                    "peer_avg": 4.77655837813971,
+                    "peer_count": 4,
+                    "relative_position": "Below",
+                    "peers_excluded_invalid": 1
+                },
+                "Debt_Service_Coverage": {
+                    "company": 1.950391127834439,
+                    "peer_avg": 3.361771653879798,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                }
+            },
+            "cashflow": {
+                "OCF": {
+                    "company": 19697000000.0,
+                    "peer_avg": 6107800000.0,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "OCF_Margin": {
+                    "company": 0.04400905339312326,
+                    "peer_avg": 0.023239057215953512,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "FCF": {
+                    "company": 16075000000.0,
+                    "peer_avg": 4813200000.0,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "FCF_Margin": {
+                    "company": 0.035916410280471975,
+                    "peer_avg": 0.018196911694506167,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "FCF_Yield": {
+                    "company": 0.0659258583287878,
+                    "peer_avg": 0.11569908863157172,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "FCFE": {
+                    "company": 16801000000.0,
+                    "peer_avg": 4646600000.0,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Capex_to_OCF_Ratio": {
+                    "company": 0.18388587094481393,
+                    "peer_avg": 0.2792295746933774,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Cash_Flow_Coverage": {
+                    "company": 0.25127249996810774,
+                    "peer_avg": 0.18533970344081446,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Cash_Burn_Rate": {
+                    "company": 0,
+                    "peer_avg": 0.0,
+                    "peer_count": 5,
+                    "relative_position": "Equal"
+                },
+                "Cash_Conversion_Ratio": {
+                    "company": 1.553251493032515,
+                    "peer_avg": 1.575236350488751,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                }
+            },
+            "risk": {
+                "Beta": {
+                    "company": 0.408,
+                    "peer_avg": 0.4614,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Standard_Deviation": {
+                    "company": 0.019949615166367302,
+                    "peer_avg": 0.02035876210211495,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Coefficient_of_Variation": {
+                    "company": 120.20646124681821,
+                    "peer_avg": 140.49476661689033,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Sharpe_Ratio": {
+                    "company": 0.13206035434145794,
+                    "peer_avg": 0.08050141737962277,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Sortino_Ratio": {
+                    "company": 0.11761731556480193,
+                    "peer_avg": 0.07785150837630997,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Information_Ratio": {
+                    "company": null,
+                    "peer_avg": null,
+                    "peer_count": 0,
+                    "relative_position": null
+                },
+                "Jensens_Alpha": {
+                    "company": null,
+                    "peer_avg": null,
+                    "peer_count": 0,
+                    "relative_position": null
+                },
+                "Treynor_Ratio": {
+                    "company": null,
+                    "peer_avg": null,
+                    "peer_count": 0,
+                    "relative_position": null
+                },
+                "Total_Shareholder_Return": {
+                    "company": 0.05273803038772678,
+                    "peer_avg": -0.029356690088768168,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Cumulative_Return": {
+                    "company": -0.049356977603990604,
+                    "peer_avg": -0.11332267656277095,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "CAGR": {
+                    "company": -0.010079127013741362,
+                    "peer_avg": -0.03266471025299378,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                }
+            },
+            "ownership": {
+                "Institutional_Ownership": {
+                    "company": 0.84156,
+                    "peer_avg": 0.959614002,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Insider_Ownership": {
+                    "company": 0.008169999,
+                    "peer_avg": 0.004368000012,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                },
+                "Insider_Trading_Activity": {
+                    "company": {
+                        "Total_Buy_Shares": 0.0,
+                        "Total_Sell_Shares": 0.0,
+                        "Net_Activity": 0.0
+                    },
+                    "peer_avg": null,
+                    "peer_count": 0,
+                    "relative_position": null,
+                    "peers_excluded_invalid": 5
+                },
+                "Insider_Concentration": {
+                    "company": 0.00023524698006200867,
+                    "peer_avg": 0.0016961362316596875,
+                    "peer_count": 5,
+                    "relative_position": "Below"
+                },
+                "Public_Float": {
+                    "company": 899996901.0,
+                    "peer_avg": 466235201.6,
+                    "peer_count": 5,
+                    "relative_position": "Above"
+                }
+            }
+        },
+        "Historical_Trend_Analysis": {
+            "Cumulative_Return": -0.049356977603990604,
+            "Average_Daily_Return": 0.0001659612549894888,
+            "Volatility": 0.019949615166367302,
+            "Max_Drawdown": -0.6139087156032925,
+            "CAGR": -0.010079127013741362
+        },
+        "Industry_Benchmarking": {
+            "valuation": {
+                "PE": {
+                    "company": 26.050508358327804,
+                    "industry": 20.091032348336363,
+                    "relative_position": "Above"
+                },
+                "PB": {
+                    "company": 3.337211016555095,
+                    "industry": 1.437902779212286,
+                    "relative_position": "Above"
+                },
+                "PS": {
+                    "company": 0.7017160084814117,
+                    "industry": 0.23608126754617156,
+                    "relative_position": "Above"
+                },
+                "EV": {
+                    "company": 364332928768.0,
+                    "industry": 74016015308.8,
+                    "relative_position": "Above"
+                },
+                "EV_Sales": {
+                    "company": 0.8140299190244142,
+                    "industry": 0.2700177804414381,
+                    "relative_position": "Above"
+                },
+                "P_CF": {
+                    "company": 15.944810314667208,
+                    "industry": 13.228301029479113,
+                    "relative_position": "Above"
+                },
+                "P_FCF": {
+                    "company": 15.168554878918135,
+                    "industry": 10.455467652795345,
+                    "relative_position": "Above"
+                },
+                "Earnings_Yield": {
+                    "company": 0.038386966820181875,
+                    "industry": -0.02495983084153195,
+                    "relative_position": "Above"
+                },
+                "FCF_Yield": {
+                    "company": 0.0659258583287878,
+                    "industry": 0.11569908863157172,
+                    "relative_position": "Below"
+                },
+                "Current_FCF": {
+                    "company": 16075000000.0,
+                    "industry": 4813200000.0,
+                    "relative_position": "Above"
+                },
+                "Normalized_FCF": {
+                    "company": 20705000000.0,
+                    "industry": 5605600000.0,
+                    "relative_position": "Above"
+                }
+            },
+            "profitability": {
+                "ROE": {
+                    "company": 0.12762614938695835,
+                    "industry": 0.01902123864569779,
+                    "relative_position": "Above"
+                },
+                "ROIC": {
+                    "company": 0.115714940034623,
+                    "industry": 0.10692382268209422,
+                    "relative_position": "Above"
+                },
+                "ROA": {
+                    "company": 0.03910499639634613,
+                    "industry": 0.007203394158673687,
+                    "relative_position": "Above"
+                },
+                "ROCE": {
+                    "company": 0.09645520509192337,
+                    "industry": 0.049909750044416036,
+                    "relative_position": "Above"
+                },
+                "Gross_Margin": {
+                    "company": 0.1852616479767275,
+                    "industry": 0.1044438532557953,
+                    "relative_position": "Above"
+                },
+                "Operating_Margin": {
+                    "company": 0.04237130977038075,
+                    "industry": 0.023057813316615862,
+                    "relative_position": "Above"
+                },
+                "Net_Margin": {
+                    "company": 0.026936749134766416,
+                    "industry": 0.005884662802748956,
+                    "relative_position": "Above"
+                },
+                "EBITDA_Margin": {
+                    "company": 0.05152301219705653,
+                    "industry": 7.841180030143322e-06,
+                    "relative_position": "Above"
+                },
+                "Asset_Turnover": {
+                    "company": 1.451734067860273,
+                    "industry": 1.9960980394870291,
+                    "relative_position": "Below"
+                },
+                "Inventory_Turnover": {
+                    "company": null,
+                    "industry": 19.019002271056646,
+                    "relative_position": null
+                },
+                "Receivables_Turnover": {
+                    "company": 18.784341870010827,
+                    "industry": 20.05063478692279,
+                    "relative_position": "Below"
+                },
+                "CCC": {
+                    "company": null,
+                    "industry": 15.80719410157447,
+                    "relative_position": null
+                }
+            },
+            "growth": {
+                "Revenue_Growth": {
+                    "company": 0.11814039242726306,
+                    "industry": 0.12499357908000057,
+                    "relative_position": "Below"
+                },
+                "Revenue_Growth_Rate": {
+                    "company": 0.11814039242726306,
+                    "industry": 0.12499357908000057,
+                    "relative_position": "Below"
+                },
+                "EPS_Growth": {
+                    "company": -0.14700193423597674,
+                    "industry": -0.5933462687271108,
+                    "relative_position": "Above"
+                },
+                "EPS_Growth_Rate": {
+                    "company": -0.14700193423597674,
+                    "industry": -0.5933462687271108,
+                    "relative_position": "Above"
+                },
+                "EPS_Momentum": {
+                    "company": -0.9983277591973244,
+                    "industry": -0.9109219480225427,
+                    "relative_position": "Below"
+                },
+                "Earnings_Stability": {
+                    "company": 0.8051458636840604,
+                    "industry": 0.6435999178010655,
+                    "relative_position": "Above"
+                },
+                "Earnings_Quality_Indicator": {
+                    "company": 0.6438107444195237,
+                    "industry": 0.5676158775019883,
+                    "relative_position": "Above"
+                },
+                "Dividend_Payout_Ratio": {
+                    "company": 0.6681783824640967,
+                    "industry": 0.7049286052262181,
+                    "relative_position": "Below"
+                },
+                "Retention_Ratio": {
+                    "company": 0.33182161753590333,
+                    "industry": 0.29507139477378186,
+                    "relative_position": "Above"
+                },
+                "Dividend_Yield": {
+                    "company": 0.0255483938340047,
+                    "industry": 0.023389594339701447,
+                    "relative_position": "Above"
+                },
+                "Dividend_Growth_Rate": {
+                    "company": 0.05238095238095232,
+                    "industry": 0.10944050841161178,
+                    "relative_position": "Below"
+                }
+            },
+            "financial_health": {
+                "Current_Ratio": {
+                    "company": 0.7883756756051071,
+                    "industry": 0.9100620974655088,
+                    "relative_position": "Below"
+                },
+                "Quick_Ratio": {
+                    "company": 0.7883756756051071,
+                    "industry": 0.8026988234252675,
+                    "relative_position": "Below"
+                },
+                "Operating_Cash_Flow_Ratio": {
+                    "company": 0.1714318041376189,
+                    "industry": 0.1425671235541496,
+                    "relative_position": "Above"
+                },
+                "Debt_to_Equity": {
+                    "company": 0.832950802252683,
+                    "industry": 0.831654267624846,
+                    "relative_position": "Above"
+                },
+                "Debt_to_Capital": {
+                    "company": 0.45443161989344866,
+                    "industry": 0.45114613648851354,
+                    "relative_position": "Above"
+                },
+                "Debt_to_Assets": {
+                    "company": 0.2532099838168363,
+                    "industry": 0.2535768869621391,
+                    "relative_position": "Below"
+                },
+                "Interest_Coverage": {
+                    "company": 4.738630684657672,
+                    "industry": 3.7292113042816792,
+                    "relative_position": "Above"
+                },
+                "Debt_Service_Coverage": {
+                    "company": 1.950391127834439,
+                    "industry": 3.361771653879798,
+                    "relative_position": "Below"
+                }
+            },
+            "cashflow": {
+                "OCF": {
+                    "company": 19697000000.0,
+                    "industry": 6107800000.0,
+                    "relative_position": "Above"
+                },
+                "OCF_Margin": {
+                    "company": 0.04400905339312326,
+                    "industry": 0.023239057215953512,
+                    "relative_position": "Above"
+                },
+                "FCF": {
+                    "company": 16075000000.0,
+                    "industry": 4813200000.0,
+                    "relative_position": "Above"
+                },
+                "FCF_Margin": {
+                    "company": 0.035916410280471975,
+                    "industry": 0.018196911694506167,
+                    "relative_position": "Above"
+                },
+                "FCF_Yield": {
+                    "company": 0.0659258583287878,
+                    "industry": 0.11569908863157172,
+                    "relative_position": "Below"
+                },
+                "FCFE": {
+                    "company": 16801000000.0,
+                    "industry": 4646600000.0,
+                    "relative_position": "Above"
+                },
+                "Capex_to_OCF_Ratio": {
+                    "company": 0.18388587094481393,
+                    "industry": 0.2792295746933774,
+                    "relative_position": "Below"
+                },
+                "Cash_Flow_Coverage": {
+                    "company": 0.25127249996810774,
+                    "industry": 0.18533970344081446,
+                    "relative_position": "Above"
+                },
+                "Cash_Burn_Rate": {
+                    "company": 0,
+                    "industry": 0.0,
+                    "relative_position": "Equal"
+                },
+                "Cash_Conversion_Ratio": {
+                    "company": 1.553251493032515,
+                    "industry": 1.575236350488751,
+                    "relative_position": "Below"
+                }
+            },
+            "risk": {
+                "Beta": {
+                    "company": 0.408,
+                    "industry": 0.4614,
+                    "relative_position": "Below"
+                },
+                "Standard_Deviation": {
+                    "company": 0.019949615166367302,
+                    "industry": 0.02035876210211495,
+                    "relative_position": "Below"
+                },
+                "Coefficient_of_Variation": {
+                    "company": 120.20646124681821,
+                    "industry": 140.49476661689033,
+                    "relative_position": "Below"
+                },
+                "Sharpe_Ratio": {
+                    "company": 0.13206035434145794,
+                    "industry": 0.08050141737962277,
+                    "relative_position": "Above"
+                },
+                "Sortino_Ratio": {
+                    "company": 0.11761731556480193,
+                    "industry": 0.07785150837630997,
+                    "relative_position": "Above"
+                },
+                "Information_Ratio": {
+                    "company": null,
+                    "industry": null,
+                    "relative_position": null
+                },
+                "Jensens_Alpha": {
+                    "company": null,
+                    "industry": null,
+                    "relative_position": null
+                },
+                "Treynor_Ratio": {
+                    "company": null,
+                    "industry": null,
+                    "relative_position": null
+                },
+                "Total_Shareholder_Return": {
+                    "company": 0.05273803038772678,
+                    "industry": -0.029356690088768168,
+                    "relative_position": "Above"
+                },
+                "Cumulative_Return": {
+                    "company": -0.049356977603990604,
+                    "industry": -0.11332267656277095,
+                    "relative_position": "Above"
+                },
+                "CAGR": {
+                    "company": -0.010079127013741362,
+                    "industry": -0.03266471025299378,
+                    "relative_position": "Above"
+                }
+            },
+            "ownership": {
+                "Institutional_Ownership": {
+                    "company": 0.84156,
+                    "industry": 0.959614002,
+                    "relative_position": "Below"
+                },
+                "Insider_Ownership": {
+                    "company": 0.008169999,
+                    "industry": 0.004368000012,
+                    "relative_position": "Above"
+                },
+                "Insider_Trading_Activity": {
+                    "company": {
+                        "Total_Buy_Shares": 0.0,
+                        "Total_Sell_Shares": 0.0,
+                        "Net_Activity": 0.0
+                    },
+                    "industry": null,
+                    "relative_position": null
+                },
+                "Insider_Concentration": {
+                    "company": 0.00023524698006200867,
+                    "industry": 0.0016961362316596875,
+                    "relative_position": "Below"
+                },
+                "Public_Float": {
+                    "company": 899996901.0,
+                    "industry": 466235201.6,
+                    "relative_position": "Above"
+                }
+            }
+        }
+    },
+    "integrated": {
+        "Holistic_Valuation_Framework": {
+            "Quality_Tier": "low",
+            "Valuation": {
+                "PE": 26.050508358327804,
+                "PB": 3.337211016555095,
+                "PS": 0.7017160084814117,
+                "Earnings_Yield": 0.038386966820181875,
+                "FCF_Yield": 0.0659258583287878,
+                "DCF_Per_Share_Value": 578.4030135959734,
+                "Score": 4
+            },
+            "Profitability": {
+                "ROE": 0.12762614938695835,
+                "ROIC": 0.115714940034623,
+                "ROA": 0.03910499639634613,
+                "Gross_Margin": 0.1852616479767275,
+                "Operating_Margin": 0.04237130977038075,
+                "Net_Margin": 0.026936749134766416,
+                "Score": 1
+            },
+            "Financial_Health": {
+                "Current_Ratio": 0.7883756756051071,
+                "Quick_Ratio": 0.7883756756051071,
+                "Debt_to_Equity": 0.832950802252683,
+                "Interest_Coverage": 4.738630684657672,
+                "Score": 1
+            },
+            "Cash_Flow": {
+                "FCF": 16075000000.0,
+                "OCF": 19697000000.0,
+                "FCF_Margin": 0.035916410280471975,
+                "Cash_Conversion_Ratio": 1.553251493032515,
+                "Score": 3
+            },
+            "Growth": {
+                "Revenue_Growth": 0.11814039242726306,
+                "EPS_Growth": -0.14700193423597674,
+                "Earnings_Stability": 0.8051458636840604,
+                "Dividend_Growth_Rate": 0.05238095238095232,
+                "Score": 3
+            },
+            "Risk": {
+                "Standard_Deviation": 0.019949615166367302,
+                "Sharpe_Ratio": 0.13206035434145794,
+                "Beta": 0.408,
+                "Score": 2
+            },
+            "Competitive": {
+                "Moat_Score": 3,
+                "Score": 1
+            },
+            "Overall_Score": 15
+        },
+        "Red_Flags_Assessment": {
+            "quality_tier": "low",
+            "flags": [
+                {
+                    "flag": "Tight Short-Term Liquidity",
+                    "severity": "Medium",
+                    "value": 0.7883756756051071,
+                    "reason": "Quick ratio below 1."
+                },
+                {
+                    "flag": "Low Net Margin",
+                    "severity": "Medium",
+                    "value": 0.026936749134766416,
+                    "reason": "Net margin below 5 %."
+                }
+            ],
+            "critical_count": 0,
+            "medium_count": 2,
+            "risk_level": "Low"
+        },
+        "score": 4.0,
+        "raw_score": 5,
+        "signal": "BUY",
+        "quality_tier": "low",
+        "reasons": [
+            "Positive revenue growth",
+            "Positive free / operating cash flow",
+            "Low volatility",
+            "Competitive moat present",
+            "Manageable leverage"
+        ],
+        "red_flag_summary": {
+            "critical": 0,
+            "medium": 2,
+            "risk_level": "Low"
+        }
+    },
+    "tracking": {
+        "timestamp": "2026-04-22T11:35:05.474111",
+        "Performance Monitoring": {
+            "Return Metrics": {
+                "Cumulative Return": null,
+                "CAGR": -0.010079127013741362,
+                "Total Shareholder Return": null
+            },
+            "Risk Metrics": {
+                "Volatility": null,
+                "Sharpe Ratio": null,
+                "Sortino Ratio": null
+            },
+            "Fundamental Tracking": {
+                "PE": 26.050508358327804,
+                "ROE": 0.12762614938695835,
+                "Revenue Growth": 0.11814039242726306,
+                "FCF": 16075000000.0
+            },
+            "Health Indicators": {
+                "Debt_to_Equity": 0.832950802252683,
+                "Current Ratio": 0.7883756756051071
+            }
+        },
+        "Metric Tracking Schedule": {
+            "Frequency": "Monthly",
+            "Review Window": "Rolling 12 months",
+            "Snapshot Points": [
+                "End of every month",
+                "Quarterly results",
+                "Post earnings release"
+            ],
+            "Tracked Areas": [
+                "Performance monitoring",
+                "KPI monitoring",
+                "Valuation stability",
+                "Risk stability",
+                "Rebalancing triggers"
+            ]
+        },
+        "KPI Monitoring": {
+            "Valuation KPIs": {
+                "PE": 26.050508358327804,
+                "PB": 3.337211016555095,
+                "PS": 0.7017160084814117,
+                "EV/EBITDA": null
+            },
+            "Profitability KPIs": {
+                "ROE": 0.12762614938695835,
+                "ROA": 0.03910499639634613,
+                "Net Margin": 0.026936749134766416,
+                "Operating Margin": 0.04237130977038075
+            },
+            "Growth KPIs": {
+                "Revenue Growth": 0.11814039242726306,
+                "EPS Growth": -0.14700193423597674,
+                "FCF Growth": null
+            },
+            "Financial Health KPIs": {
+                "Debt_to_Equity": 0.832950802252683,
+                "Current Ratio": 0.7883756756051071,
+                "Interest Coverage": 4.738630684657672
+            },
+            "Risk KPIs": {
+                "Volatility": null,
+                "Sharpe Ratio": null,
+                "Sortino Ratio": null,
+                "Beta": 0.408
+            }
+        },
+        "Rebalancing Triggers": {
+            "Decision": "HOLD",
+            "Score": 2,
+            "Triggers": [
+                "Positive FCF",
+                "Strong growth"
+            ]
+        }
+    },
+    "rebalance": {
+        "Decision": "HOLD",
+        "Score": 2,
+        "Triggers": [
+            "Positive FCF",
+            "Strong growth"
+        ]
+    },
+    "meta": {
+        "ticker": "UNH",
+        "peer_count": 5,
+        "peers": [
+            "CVS",
+            "CI",
+            "ELV",
+            "HUM",
+            "CNC"
+        ]
+    }
+}

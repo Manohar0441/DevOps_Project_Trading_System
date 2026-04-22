@@ -27,7 +27,8 @@ def run_pipeline(ticker):
     # ✅ Optional metadata (useful for debugging)
     output["meta"] = {
         "ticker": ticker,
-        "peer_count": len(peers)
+        "peer_count": len(peers),
+        "peers": peers,
     }
 
     return output
