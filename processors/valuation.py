@@ -27,6 +27,8 @@ from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from math import isfinite
 from typing import Any, Callable, Dict, List, Optional, Tuple
+from enum import Enum
+from typing import Dict, Any
 
 from utils.financials import (
     CASH_KEYS,
@@ -83,7 +85,43 @@ MAX_CASH_TO_MARKET_CAP_RATIO: float = 2.0
 # ---------------------------------------------------------------------------
 # Issue dataclass
 # ---------------------------------------------------------------------------
+class BusinessProfile(Enum):
+    TECH_PLATFORM = "TECH_PLATFORM"       # High margin, network effects (e.g., AMZN, GOOGL, META)
+    CYCLICAL_HEAVY = "CYCLICAL_HEAVY"     # Cycle-dependent (e.g., CAT, XOM)
+    LUXURY = "LUXURY"                     # Premium pricing, brand moat (e.g., RACE, LVMH)
+    REGULATED_UTILITY = "REGULATED_UTIL"  # Steady cash flow, high debt normal (e.g., NEE)
+    DEFAULT = "DEFAULT"
 
+PROFILE_CONFIGS: Dict[BusinessProfile, Dict[str, Any]] = {
+    BusinessProfile.TECH_PLATFORM: {
+        "metric_weights": {
+            "EV_Sales_G": 0.40,   # Growth-adjusted sales are critical
+            "EV_EBITDA": 0.30,
+            "PE": 0.15,           # De-emphasized due to heavy R&D / CapEx
+            "P_CF": 0.15
+        },
+        "premium_multiple_cap": 2.0,  # Allows higher ceilings for network effects
+        "cycle_smoothing_years": 3    # Fast-moving sector, shorter smoothing
+    },
+    BusinessProfile.CYCLICAL_HEAVY: {
+        "metric_weights": {
+            "PE": 0.10,           # Highly misleading at cycle peaks/troughs
+            "EV_EBITDA": 0.40,
+            "P_CF": 0.50          # Cash flow is king in heavy industrials
+        },
+        "premium_multiple_cap": 0.8,
+        "cycle_smoothing_years": 10   # Shiller-style 10-year smoothing needed
+    },
+    BusinessProfile.LUXURY: {
+        "metric_weights": {
+            "PE": 0.40,
+            "EV_EBITDA": 0.40,
+            "EV_Sales": 0.20
+        },
+        "premium_multiple_cap": 1.5,
+        "cycle_smoothing_years": 5
+    }
+}
 @dataclass
 class ValidationIssue:
     """Represents a single validation finding for one financial field."""
@@ -1280,14 +1318,9 @@ def compute_valuation(data: Dict[str, Any]) -> Dict[str, Any]:
     peg: Optional[float] = None
     
     if pe is not None and eps_growth_pct is not None:
-        # Only calculate PEG if growth is strictly positive.
-        # Clamping negative/zero growth to a floor of 1 mathematically forces PEG = PE, 
-        # which misrepresents shrinking companies.
         if eps_growth_pct > 0:
             peg = _ratio(pe, eps_growth_pct)
         else:
-            # PEG is traditionally N/A (None) for zero or negative growth 
-            # because the multiple becomes meaningless.
             peg = None
     # EV/EBITDA  (suppressed when EBITDA ≤ 0)
     ev_ebitda = _ratio(pos_ev, _pos(ebitda))
