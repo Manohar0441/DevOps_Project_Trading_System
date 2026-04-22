@@ -647,6 +647,17 @@ def estimate_porters_five_forces(compiled: Dict[str, Any]):
 def competitive_moat_score(metrics, raw, external_data=None):
     external_data = external_data or {}
 
+    def to_float(value):
+        try:
+            if value in [None, "", "NaN"]:
+                return None
+            return float(value)
+        except:
+            return None
+
+    def safe_val(obj, key):
+        return to_float(obj.get(key)) if obj else None
+
     gross_margin_profile = compute_gross_margin_profile(raw)
     roic_data = compute_roic_proxy(raw, metrics)
     cap_alloc = compute_capital_allocation_efficiency(raw)
@@ -654,64 +665,121 @@ def competitive_moat_score(metrics, raw, external_data=None):
     score = 0
     reasons = []
 
-    roic = roic_data.get("value")
+    # -----------------------------------
+    # 1. ROIC (High importance)
+    # -----------------------------------
+    roic = to_float(roic_data.get("value"))
     if roic is not None and roic > 0.15:
-        score += 1
+        score += 2
         reasons.append("High sustained return on invested capital")
 
-    gm = gross_margin_profile.get("latest_gross_margin")
-    gm_stability = gross_margin_profile.get("stability")
+    # -----------------------------------
+    # 2. Gross Margin Stability
+    # -----------------------------------
+    gm = to_float(gross_margin_profile.get("latest_gross_margin"))
+    gm_stability = to_float(gross_margin_profile.get("stability"))
+
     if gm is not None and gm > 0.30 and gm_stability is not None and gm_stability >= 0.75:
         score += 1
         reasons.append("Stable gross margins")
 
+    # -----------------------------------
+    # 3. Cost Advantage
+    # -----------------------------------
     cost_advantage = estimate_cost_advantage(gross_margin_profile, external_data)
-    if cost_advantage.get("value") is not None:
-        score += 1
-        reasons.append("Possible cost advantage versus peers")
+    cost_val = to_float(cost_advantage.get("value"))
 
+    if cost_val is not None and cost_val > 0.7:
+        score += 1
+        reasons.append("Cost advantage vs peers")
+
+    # -----------------------------------
+    # 4. Product Differentiation
+    # -----------------------------------
     differentiation = estimate_product_differentiation(metrics, raw, external_data)
-    if differentiation.get("value") is not None:
-        score += 1
-        reasons.append("Product differentiation signal present")
+    diff_val = to_float(differentiation.get("value"))
 
+    if diff_val is not None and diff_val > 0.7:
+        score += 1
+        reasons.append("Strong product differentiation")
+
+    # -----------------------------------
+    # 5. Switching Costs
+    # -----------------------------------
     switching_costs = estimate_switching_costs(external_data, gross_margin_profile)
-    if switching_costs.get("value") is not None:
-        score += 1
-        reasons.append("Possible switching costs")
+    switch_val = to_float(switching_costs.get("value"))
 
+    if switch_val is not None and switch_val > 0.7:
+        score += 1
+        reasons.append("High switching costs")
+
+    # -----------------------------------
+    # 6. Network Effects
+    # -----------------------------------
     network_effects = estimate_network_effects(external_data)
-    if network_effects.get("value") is not None:
-        score += 1
-        reasons.append("Possible network effects")
+    net_val = to_float(network_effects.get("value"))
 
+    if net_val is not None and net_val > 0.7:
+        score += 1
+        reasons.append("Network effects present")
+
+    # -----------------------------------
+    # 7. Regulatory Barriers
+    # -----------------------------------
     regulatory_barriers = estimate_regulatory_barriers(raw, external_data)
-    if regulatory_barriers.get("value") is not None:
-        score += 1
-        reasons.append("Regulatory barriers signal present")
+    reg_val = to_float(regulatory_barriers.get("value"))
 
+    if reg_val is not None and reg_val > 0.7:
+        score += 1
+        reasons.append("Regulatory barriers present")
+
+    # -----------------------------------
+    # 8. Management Ownership
+    # -----------------------------------
     management_ownership = get_management_ownership(raw)
-    insiders = management_ownership.get("insider_ownership")
+    insiders = to_float(management_ownership.get("insider_ownership"))
+
     if insiders is not None and insiders > 0.05:
         score += 1
-        reasons.append("Meaningful management ownership")
+        reasons.append("Aligned management incentives")
 
-    cap_eff = cap_alloc.get("fcf_conversion")
+    # -----------------------------------
+    # 9. Capital Allocation
+    # -----------------------------------
+    cap_eff = to_float(cap_alloc.get("fcf_conversion"))
+
     if cap_eff is not None and cap_eff > 0.6:
         score += 1
-        reasons.append("Strong capital allocation efficiency")
+        reasons.append("Strong capital allocation")
 
+    # -----------------------------------
+    # 10. Market Premium (Valuation Signal)
+    # -----------------------------------
     info = raw.get("info", {}) or {}
-    pe = info.get("trailingPE") or nested_get(metrics, "valuation", "PE")
+    raw_pe = info.get("trailingPE")
+
+    if raw_pe is None:
+        raw_pe = nested_get(metrics, "valuation", "PE")
+
+    pe = to_float(raw_pe)
+
     if pe is not None and pe > 25:
         score += 1
         reasons.append("Market assigns premium valuation")
 
+    # -----------------------------------
+    # Final Output
+    # -----------------------------------
     return {
         "moat_score": score,
+        "max_score": 12,  # updated due to weighting
+        "strength": (
+            "Strong" if score >= 8 else
+            "Moderate" if score >= 5 else
+            "Weak"
+        ),
         "reasons": reasons
     }
-
 
 def management_quality(raw, external_data=None):
     external_data = external_data or {}
