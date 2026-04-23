@@ -1,0 +1,115 @@
+{
+    "valuation": {
+        "PE": 16.151403670237542,
+        "PS": 4.7598186339069715,
+        "P_CF": null,
+        "PEG": 1.27,
+        "EV_EBITDA": null,
+        "EV_Sales": 8.566949358131874,
+        "EV_Sales_G": 0.5908240936642672,
+        "P_EBITDA": null,
+        "Cash_Earnings_Yield": -0.16276608804266554,
+        "Dividend_Yield": 1.93,
+        "Earnings_Yield": 0.06191412340481073,
+        "Valuation_Score": 50.0,
+        "PE_Weight": 1.0,
+        "One_Time_Gains_Flag": false,
+        "_meta": {
+            "peg_source": "finviz"
+        }
+    },
+    "profitability": {
+        "ROE": 0.138568427438743,
+        "ROIC": null,
+        "ROA": 0.00971002878184591,
+        "ROCE": null,
+        "Gross_Margin": null,
+        "Operating_Margin": null,
+        "Net_Margin": 0.2946999982842338,
+        "EBITDA_Margin": null,
+        "Asset_Turnover": 0.03294885930905479,
+        "Net_Income": 17176000000.0,
+        "Receivables_Turnover": 0.3458106730619757,
+        "_meta": {
+            "ebitda_source": "missing",
+            "ebitda_basis": "TTM",
+            "ebitda_as_of": "2025-12-31",
+            "ebitda_value": null,
+            "operating_income_for_ebitda": null,
+            "margin_period_basis": "TTM"
+        }
+    },
+    "financial_health": {
+        "Current_Ratio": null,
+        "Quick_Ratio": null,
+        "Operating_Cash_Flow_Ratio": null,
+        "Debt_to_Equity": 3.089892135838428,
+        "Debt_to_Capital": 0.7554947742417661,
+        "Debt_to_Assets": 0.2134227223487277,
+        "Interest_Coverage": null,
+        "Debt_Service_Coverage": -0.2946196708903707
+    },
+    "cashflow": {
+        "OCF": -45154000000.0,
+        "OCF_Margin": -0.7747370588336222,
+        "FCF": -47218000000.0,
+        "FCF_Margin": -0.8101504726935813,
+        "FCF_Yield": -0.17122106388939917,
+        "FCFE": -28234000000.0,
+        "Capex_to_OCF_Ratio": 0.0,
+        "Cash_Flow_Coverage": -0.1169338340023307,
+        "Cash_Conversion_Ratio": -2.8294713553795994,
+        "_meta": {
+            "fcf_formula": "operating_cash_flow - capex",
+            "fcf_source": "ttm_ocf_minus_capex",
+            "fcf_basis": "TTM",
+            "fcf_as_of": "2025-12-31",
+            "market_cap_source": "price_x_shares_outstanding",
+            "market_cap_as_of": "2026-04-22",
+            "price_consistent_market_cap": true,
+            "capex_to_ocf_raw": -0.04571023608096736,
+            "capex_to_ocf_cap": 0.6,
+            "data_source_priority": "TTM>ANNUAL>FALLBACK"
+        }
+    },
+    "growth": {
+        "Revenue_Growth": 0.08915757213335326,
+        "Revenue_Growth_Rate": 0.08915757213335326,
+        "EPS_Growth": 0.26591021213616184,
+        "EPS_Growth_Rate": 0.26591021213616184,
+        "Dividend_Payout_Ratio": 0.3020265003897116,
+        "Retention_Ratio": 0.6979734996102884,
+        "Dividend_Growth_Rate": 0.3191489361702128,
+        "Earnings_Stability": 0.770908494747765,
+        "Earnings_Quality_Indicator": null,
+        "_meta": {
+            "revenue_growth_basis": "ANNUAL_YOY",
+            "eps_growth_basis": "ANNUAL_YOY",
+            "period_policy": "ANNUAL_YOY_PRIMARY_TTM_YOY_FALLBACK"
+        }
+    },
+    "risk": {
+        "Beta": 1.311,
+        "Volatility": 0.2774719713742227,
+        "Max_Drawdown": -0.3284010772676633
+    },
+    "ownership": {
+        "Institutional_Ownership": 0.7612
+    },
+    "meta": {
+        "ticker": "GS",
+        "peer_count": 10,
+        "peers": [
+            "SCHW",
+            "EVR",
+            "VIRT",
+            "MS",
+            "JEF",
+            "LPLA",
+            "IBKR",
+            "HOOD",
+            "XP",
+            "HLI"
+        ]
+    }
+}

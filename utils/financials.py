@@ -100,6 +100,18 @@ def normalize_output(value):
     return value
 
 
+def _is_number(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and not is_missing(value)
+
+
+def _safe_gt(a, b):
+    return _is_number(a) and _is_number(b) and a > b
+
+
+def _safe_lt(a, b):
+    return _is_number(a) and _is_number(b) and a < b
+
+
 def safe_div(numerator, denominator):
     if is_missing(numerator) or is_missing(denominator) or denominator == 0:
         return None

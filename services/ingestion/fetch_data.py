@@ -10,12 +10,7 @@ from processors.cashflow import compute_cashflow
 from processors.growth import compute_growth
 from processors.risk import compute_risk
 from processors.ownership import compute_ownership
-from processors.valuation_models import compute_dcf, compute_wacc, graham_number
-from processors.screening import screening_framework
-from processors.benchmarking import compare_with_peers, comparative_analysis
-from processors.integrated_analysis import integrated_analysis
-from processors.tracking import track_metrics, rebalance_signal
-from processors.competitive import competitive_analysis
+
 
 logger = logging.getLogger(__name__)
 
@@ -110,20 +105,8 @@ class FinancialPipeline:
         _log_section_summary("ownership", metrics["ownership"])
 
         # Competitive
-        metrics["competitive"] = competitive_analysis(metrics, raw)
-        _log_section_summary("competitive", metrics["competitive"])
-
-        # Valuation Models
-        metrics["valuation_models"] = {
-            "DCF": compute_dcf(raw),
-            "WACC": compute_wacc(raw),
-            "Graham_Number": graham_number(raw),
-        }
-        _log_section_summary("valuation_models", metrics["valuation_models"])
-
-        # Screening
-        metrics["screening"] = screening_framework(metrics)
-        _log_section_summary("screening", metrics["screening"])
+      
+       
 
         # Peer Pipeline
         peer_data: List[Dict[str, Any]] = []
@@ -146,33 +129,10 @@ class FinancialPipeline:
             else:
                 logger.info("No industry proxy available. Industry benchmarking may be partial.")
 
-        # Benchmarking
-        if peer_data:
-            metrics["benchmarking"] = compare_with_peers(metrics, peer_data)
-            _log_section_summary("benchmarking", metrics["benchmarking"])
-        else:
-            metrics["benchmarking"] = {}
-            logger.info("benchmarking skipped due to no peer data.")
+     
 
-        # Comparative Analysis
-        metrics["comparative_analysis"] = comparative_analysis(
-            company_metrics=metrics,
-            peer_metrics_list=peer_data,
-            price_data=raw.get("price"),
-            industry_metrics=industry_metrics or {},
-        )
-        _log_section_summary("comparative_analysis", metrics["comparative_analysis"])
 
-        # Integrated Analysis
-        metrics["integrated"] = integrated_analysis(metrics)
-        _log_section_summary("integrated", metrics["integrated"])
-
-        # Tracking
-        metrics["tracking"] = track_metrics(metrics)
-        _log_section_summary("tracking", metrics["tracking"])
-
-        metrics["rebalance"] = rebalance_signal(metrics)
-        logger.info("Rebalance signal generated: %s", metrics["rebalance"])
+      
 
         logger.info("Pipeline completed for ticker: %s", self.ticker)
         return metrics

@@ -1,9 +1,12 @@
+print("RUNNING UPDATED MAIN FILE")
 import json
 import logging
 import sys
 import os
-
+from venv import logger
 from services.ingestion.fetch_data import FinancialPipeline
+from services.enrichment.peg_scraper import PEGScraper
+
 from auto_peers_web import get_top_peers
 
 logging.basicConfig(
@@ -16,13 +19,21 @@ def run_pipeline(ticker):
 
     # ✅ Peer safety
     try:
-        peers = get_top_peers(ticker, top_n=12) or []
+        peers = get_top_peers(ticker, top_n=10) or []
     except Exception as e:
         logging.warning(f"Peer fetch failed for {ticker}: {e}")
         peers = []
 
     pipeline = FinancialPipeline(ticker)
     output = pipeline.run(peers=peers)
+
+    # ✅ PEG enrichment
+    peg_scraper = PEGScraper(logger)
+    peg, source = peg_scraper.get(ticker)
+    output["valuation"] = output.get("valuation", {})
+    output["valuation"]["PEG"] = peg
+    output["valuation"].setdefault("_meta", {})
+    output["valuation"]["_meta"]["peg_source"] = source
 
     # ✅ Optional metadata (useful for debugging)
     output["meta"] = {

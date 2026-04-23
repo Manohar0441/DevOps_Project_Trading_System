@@ -1316,11 +1316,15 @@ def compute_valuation(data: Dict[str, Any]) -> Dict[str, Any]:
 
 # ── MODIFICATION 1: Adjusted PEG ─────────────────────────────────────────
     peg: Optional[float] = None
-    
+
     if pe is not None and eps_growth_pct is not None:
         if eps_growth_pct > 0:
-            peg = _ratio(pe, eps_growth_pct)
-        else:
+            growth_percent = eps_growth_pct * 100
+            peg = _ratio(pe, growth_percent)
+
+# sanity check (SAFE)
+    if peg is not None:
+        if peg < 0.5 or peg > 5:
             peg = None
     # EV/EBITDA  (suppressed when EBITDA ≤ 0)
     ev_ebitda = _ratio(pos_ev, _pos(ebitda))
