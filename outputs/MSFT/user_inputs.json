@@ -1,0 +1,45 @@
+{
+  "provided_inputs": {
+    "entry_price": 432.0,
+    "exit_logic": "Exit at target or if RSI exceeds 75 or thesis breaks.",
+    "risk_level": "medium",
+    "stop_loss": 406.08,
+    "target_price": 470.0
+  },
+  "ticker": "MSFT",
+  "validation": {
+    "inputs": {
+      "entry_price": {
+        "message": "ok",
+        "valid": true,
+        "value": 432.0
+      },
+      "entry_vs_market": {
+        "message": "ok",
+        "valid": true,
+        "value": 432.0
+      },
+      "exit_logic": {
+        "message": "ok",
+        "valid": true,
+        "value": "Exit at target or if RSI exceeds 75 or thesis breaks."
+      },
+      "risk_level": {
+        "message": "ok",
+        "valid": true,
+        "value": "medium"
+      },
+      "stop_loss": {
+        "message": "ok",
+        "valid": true,
+        "value": 406.08
+      },
+      "target_price": {
+        "message": "ok",
+        "valid": true,
+        "value": 470.0
+      }
+    },
+    "overall_valid": true
+  }
+}

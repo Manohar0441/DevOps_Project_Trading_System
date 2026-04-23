@@ -1,0 +1,49 @@
+{
+  "ticker": "MSFT",
+  "valuation": {
+    "PE": 28.1,
+    "Industry_Average_PE": 30.5
+  },
+  "growth": {
+    "Revenue_Growth": 0.12
+  },
+  "profitability": {
+    "Net_Margin": 0.31
+  },
+  "cashflow": {
+    "OCF": 120000000000,
+    "EBITDA": 145000000000
+  },
+  "financials": {
+    "Debt": 60000000000,
+    "Debt_to_Equity": 0.35,
+    "Interest_Expense": 2500000000,
+    "Intangibles": 18000000000,
+    "Amortization": 1500000000,
+    "Shares_Outstanding": 7430000000
+  },
+  "technical": {
+    "Current_Price": 432.92,
+    "Recent_High": 470.0,
+    "RSI": 61.2,
+    "Pullback_Percentage": 0.079
+  },
+  "quarterly_revenue": {
+    "2025-12-31": 69632000000,
+    "2025-09-30": 65585000000,
+    "2025-06-30": 64727000000,
+    "2025-03-31": 61858000000
+  },
+  "quarterly_net_income": {
+    "2025-12-31": 24108000000,
+    "2025-09-30": 24667000000,
+    "2025-06-30": 22036000000,
+    "2025-03-31": 21939000000
+  },
+  "quarterly_operating_cash_flow": {
+    "2025-12-31": 30100000000,
+    "2025-09-30": 28600000000,
+    "2025-06-30": 27400000000,
+    "2025-03-31": 26200000000
+  }
+}

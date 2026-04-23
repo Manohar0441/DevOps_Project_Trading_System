@@ -1,72 +1,49 @@
-print("RUNNING UPDATED MAIN FILE")
-import json
+import argparse
 import logging
-import sys
-import os
-from venv import logger
+from pathlib import Path
+
 from services.ingestion.fetch_data import FinancialPipeline
-from services.enrichment.peg_scraper import PEGScraper
 
-from auto_peers_web import get_top_peers
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 
-def run_pipeline(ticker):
-    logging.info(f"Starting pipeline for {ticker}")
 
-    # ✅ Peer safety
-    try:
-        peers = get_top_peers(ticker, top_n=10) or []
-    except Exception as e:
-        logging.warning(f"Peer fetch failed for {ticker}: {e}")
-        peers = []
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Audit-ready stock screening pipeline")
+    parser.add_argument("ticker", nargs="?", help="US stock ticker")
+    parser.add_argument("--input-json", dest="input_json", help="Path to the input stock JSON")
+    parser.add_argument("--user-inputs", dest="user_inputs", help="Path to user trade inputs JSON")
+    parser.add_argument("--output-dir", dest="output_dir", default="outputs", help="Base output directory")
+    return parser
 
-    pipeline = FinancialPipeline(ticker)
-    output = pipeline.run(peers=peers)
 
-    # ✅ PEG enrichment
-    peg_scraper = PEGScraper(logger)
-    peg, source = peg_scraper.get(ticker)
-    output["valuation"] = output.get("valuation", {})
-    output["valuation"]["PEG"] = peg
-    output["valuation"].setdefault("_meta", {})
-    output["valuation"]["_meta"]["peg_source"] = source
+def run_pipeline(args: argparse.Namespace) -> dict:
+    if not args.ticker and not args.input_json:
+        raise ValueError("Provide either a ticker or an input JSON file.")
 
-    # ✅ Optional metadata (useful for debugging)
-    output["meta"] = {
-        "ticker": ticker,
-        "peer_count": len(peers),
-        "peers": peers,
-    }
-
-    return output
+    pipeline = FinancialPipeline((args.ticker or "").upper() or "UNKNOWN")
+    return pipeline.run(
+        input_path=args.input_json,
+        user_inputs_path=args.user_inputs,
+        output_dir=args.output_dir,
+        write_outputs=True,
+    )
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python main.py <TICKER>")
-        sys.exit(1)
-
-    ticker = sys.argv[1].upper()
+    parser = build_parser()
+    args = parser.parse_args()
 
     try:
-        output = run_pipeline(ticker)
-
-        os.makedirs("outputs", exist_ok=True)
-
-        file_path = f"outputs/{ticker}.json"
-
-        with open(file_path, "w") as f:
-            json.dump(output, f, indent=4)
-
-        print(f"{ticker} saved successfully")
-
-    except Exception as e:
-        logging.error(f"Pipeline failed for {ticker}: {e}")
-
-        os.makedirs("failed", exist_ok=True)
-        with open(f"failed/{ticker}.txt", "w") as f:
-            f.write(str(e))
+        bundle = run_pipeline(args)
+        ticker = bundle["standardized_output"]["ticker"]
+        output_dir = Path(args.output_dir) / ticker
+        print(f"{ticker} screening completed")
+        print(f"Outputs written to {output_dir}")
+    except Exception as exc:  # noqa: BLE001
+        logging.exception("Pipeline failed: %s", exc)
+        failed_dir = Path("failed")
+        failed_dir.mkdir(exist_ok=True)
+        failed_ticker = (args.ticker or "UNKNOWN").upper()
+        (failed_dir / f"{failed_ticker}.txt").write_text(str(exc), encoding="utf-8")
+        raise
