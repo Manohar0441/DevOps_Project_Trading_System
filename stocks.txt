@@ -4,3 +4,4 @@ NVDA
 AMZN
 GOOGL
 GS
+MU
