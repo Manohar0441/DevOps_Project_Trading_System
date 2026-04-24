@@ -1,7 +1,7 @@
 # 📈 SwingEdge — Automated Swing Trading Strategy Platform
 ### Microservice Architecture | DevOps | Docker | Kubernetes | Jenkins | AWS
 > **System Version:** 3-Month Cycle, Dynamic Quarterly, India + USA  
-> **Team Size:** 2 Engineers | **Stack:** Python · React · PostgreSQL · Redis · AWS EKS
+> **Team Size:** 2 Engineers | **Stack:** Python · React · PostgreSQL · Redis · AWS EKS · K8 · Docker · Terraform 
 
 ---
 
