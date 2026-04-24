@@ -1,0 +1,57 @@
+{
+  "ticker": "GOOGL",
+  "as_of_date": "2026-04-24",
+  "metrics": {
+    "growth_quality": {
+      "eps_growth_yoy": 0.2676,
+      "revenue_growth_yoy": 0.132,
+      "ocf_growth_yoy": 0.154,
+      "ocf_to_net_income": 1.12
+    },
+    "profitability": {
+      "operating_margin": 39.6,
+      "net_profit_margin": 32.8,
+      "roic": 25.3,
+      "roe": 35.7
+    },
+    "financial_health": {
+      "debt_to_equity": 0.05,
+      "current_ratio": 2.01,
+      "interest_coverage": 150
+    },
+    "valuation_sanity": {
+      "pe_ratio": 31.64,
+      "pe_ratio_industry_avg": 34.61,
+      "peg_ratio": 1.2,
+      "ev_ebitda": 21.2
+    },
+    "monitoring": {
+      "relative_strength": {
+        "status": "strong_outperformance",
+        "outperformance_percent": 86.6
+      },
+      "earnings_vs_guidance": "Beat",
+      "analyst_actions": {
+        "upgrades": 4,
+        "downgrades": 0
+      },
+      "volume_trend": "Stable",
+      "gross_margin_trend": "Stable",
+      "ocf_vs_net_income_trend": "Stable",
+      "capex_percent_sales": 11.5,
+      "customer_concentration_trend": "Stable"
+    },
+    "risk_exit_signals": {
+      "margin_compression_bps": 0,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "Bullish",
+      "guidance_change": "Raised",
+      "sector_momentum": "Bullish",
+      "relative_underperformance_percent": 0
+    }
+  },
+  "metadata": {
+    "source": "frontend-manual-entry",
+    "analyst": ""
+  }
+}

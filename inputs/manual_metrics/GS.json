@@ -1,0 +1,57 @@
+{
+  "ticker": "GS",
+  "as_of_date": "2026-04-24",
+  "metrics": {
+    "growth_quality": {
+      "eps_growth_yoy": 24,
+      "revenue_growth_yoy": 14,
+      "ocf_growth_yoy": 12.5,
+      "ocf_to_net_income": 1.1
+    },
+    "profitability": {
+      "operating_margin": 39.5,
+      "net_profit_margin": 32.7,
+      "roic": 21.3,
+      "roe": 19.8
+    },
+    "financial_health": {
+      "debt_to_equity": 6.5,
+      "current_ratio": 1.2,
+      "interest_coverage": 2.2
+    },
+    "valuation_sanity": {
+      "pe_ratio": 17.7,
+      "pe_ratio_industry_avg": 15.52,
+      "peg_ratio": 0.64,
+      "ev_ebitda": 52.8
+    },
+    "monitoring": {
+      "relative_strength": {
+        "status": "moderate_outperformance",
+        "outperformance_percent": 87.4
+      },
+      "earnings_vs_guidance": "Beat",
+      "analyst_actions": {
+        "upgrades": 1,
+        "downgrades": 0
+      },
+      "volume_trend": "stable",
+      "gross_margin_trend": "Stable",
+      "ocf_vs_net_income_trend": "Stable",
+      "capex_percent_sales": 1.5,
+      "customer_concentration_trend": "Stable"
+    },
+    "risk_exit_signals": {
+      "margin_compression_bps": 0,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "Neutral",
+      "guidance_change": "None",
+      "sector_momentum": "Strong",
+      "relative_underperformance_percent": 0
+    }
+  },
+  "metadata": {
+    "source": "live-search-data",
+    "analyst": "Gemini AI"
+  }
+}

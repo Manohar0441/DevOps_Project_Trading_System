@@ -1,1390 +1,434 @@
 {
-  "generated_at": "2026-04-23T12:14:22+00:00",
-  "input_payload": {
-    "cashflow": {
-      "EBITDA": 145000000000,
-      "OCF": 120000000000
+  "evaluation_trace": [
+    {
+      "label": "Growth Quality",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "EPS Growth YoY matched the excellent band using rule > 20. Weighted score awarded: 7.5000 out of 7.5000.",
+          "label": "EPS Growth YoY",
+          "matched_rule": "> 20",
+          "metric_key": "eps_growth_yoy",
+          "normalized_value": 24.0,
+          "raw_value": 24,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 7.5
+        },
+        {
+          "band": "excellent",
+          "explanation": "Revenue Growth YoY matched the excellent band using rule > 15. Weighted score awarded: 7.5000 out of 7.5000.",
+          "label": "Revenue Growth YoY",
+          "matched_rule": "> 15",
+          "metric_key": "revenue_growth_yoy",
+          "normalized_value": 17.0,
+          "raw_value": 17,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 7.5
+        },
+        {
+          "band": "excellent",
+          "explanation": "OCF Growth YoY matched the excellent band using rule > 15. Weighted score awarded: 7.5000 out of 7.5000.",
+          "label": "OCF Growth YoY",
+          "matched_rule": "> 15",
+          "metric_key": "ocf_growth_yoy",
+          "normalized_value": 22.5,
+          "raw_value": 22.5,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 7.5
+        },
+        {
+          "band": "good",
+          "explanation": "OCF to Net Income matched the good band using rule 1.0-1.3. Weighted score awarded: 5.6250 out of 7.5000.",
+          "label": "OCF to Net Income",
+          "matched_rule": "1.0-1.3",
+          "metric_key": "ocf_to_net_income",
+          "normalized_value": 1.25,
+          "raw_value": 1.25,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 5.625
+        }
+      ],
+      "score": 28.125,
+      "section_key": "growth_quality",
+      "weight": 30.0
     },
-    "financials": {
-      "Amortization": 1500000000,
-      "Debt": 60000000000,
-      "Debt_to_Equity": 0.35,
-      "Intangibles": 18000000000,
-      "Interest_Expense": 2500000000,
-      "Shares_Outstanding": 7430000000
+    {
+      "label": "Profitability",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "Operating Margin matched the excellent band using rule > 20. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "Operating Margin",
+          "matched_rule": "> 20",
+          "metric_key": "operating_margin",
+          "normalized_value": 45.0,
+          "raw_value": 45,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        },
+        {
+          "band": "excellent",
+          "explanation": "Net Profit Margin matched the excellent band using rule > 10. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "Net Profit Margin",
+          "matched_rule": "> 10",
+          "metric_key": "net_profit_margin",
+          "normalized_value": 38.0,
+          "raw_value": 38,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        },
+        {
+          "band": "excellent",
+          "explanation": "ROIC matched the excellent band using rule > 18. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "ROIC",
+          "matched_rule": "> 18",
+          "metric_key": "roic",
+          "normalized_value": 30.5,
+          "raw_value": 30.5,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        },
+        {
+          "band": "excellent",
+          "explanation": "ROE matched the excellent band using rule > 18. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "ROE",
+          "matched_rule": "> 18",
+          "metric_key": "roe",
+          "normalized_value": 38.5,
+          "raw_value": 38.5,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        }
+      ],
+      "score": 25.0,
+      "section_key": "profitability",
+      "weight": 25.0
     },
-    "growth": {
-      "Revenue_Growth": 0.12
+    {
+      "label": "Financial Health",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "Debt to Equity matched the excellent band using rule < 0.5. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Debt to Equity",
+          "matched_rule": "< 0.5",
+          "metric_key": "debt_to_equity",
+          "normalized_value": 0.1,
+          "raw_value": 0.1,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        },
+        {
+          "band": "poor",
+          "explanation": "Current Ratio matched the poor band using rule 1.2-1.5. Weighted score awarded: 2.0000 out of 5.0000.",
+          "label": "Current Ratio",
+          "matched_rule": "1.2-1.5",
+          "metric_key": "current_ratio",
+          "normalized_value": 1.39,
+          "raw_value": 1.39,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 2.0
+        },
+        {
+          "band": "excellent",
+          "explanation": "Interest Coverage matched the excellent band using rule > 6. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Interest Coverage",
+          "matched_rule": "> 6",
+          "metric_key": "interest_coverage",
+          "normalized_value": 282.9,
+          "raw_value": 282.9,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        }
+      ],
+      "score": 12.0,
+      "section_key": "financial_health",
+      "weight": 15.0
     },
-    "profitability": {
-      "Net_Margin": 0.31
+    {
+      "label": "Valuation Sanity",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "PE Ratio Relative matched the excellent band using rule < 0.8x industry. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "PE Ratio Relative",
+          "matched_rule": "< 0.8x industry",
+          "metric_key": "pe_ratio_relative",
+          "normalized_value": 0.7827217567177116,
+          "raw_value": 0.7827217567177116,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        },
+        {
+          "band": "poor",
+          "explanation": "PEG Ratio matched the poor band using rule 1.5-2.0. Weighted score awarded: 2.0000 out of 5.0000.",
+          "label": "PEG Ratio",
+          "matched_rule": "1.5-2.0",
+          "metric_key": "peg_ratio",
+          "normalized_value": 1.6,
+          "raw_value": 1.6,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 2.0
+        },
+        {
+          "band": "poor",
+          "explanation": "EV / EBITDA matched the poor band using rule 15-20. Weighted score awarded: 2.0000 out of 5.0000.",
+          "label": "EV / EBITDA",
+          "matched_rule": "15-20",
+          "metric_key": "ev_ebitda",
+          "normalized_value": 18.5,
+          "raw_value": 18.5,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 2.0
+        }
+      ],
+      "score": 9.0,
+      "section_key": "valuation_sanity",
+      "weight": 15.0
     },
-    "quarterly_net_income": {
-      "2025-03-31": 21939000000,
-      "2025-06-30": 22036000000,
-      "2025-09-30": 24667000000,
-      "2025-12-31": 24108000000
-    },
-    "quarterly_operating_cash_flow": {
-      "2025-03-31": 26200000000,
-      "2025-06-30": 27400000000,
-      "2025-09-30": 28600000000,
-      "2025-12-31": 30100000000
-    },
-    "quarterly_revenue": {
-      "2025-03-31": 61858000000,
-      "2025-06-30": 64727000000,
-      "2025-09-30": 65585000000,
-      "2025-12-31": 69632000000
-    },
-    "technical": {
-      "Current_Price": 432.92,
-      "Pullback_Percentage": 0.079,
-      "RSI": 61.2,
-      "Recent_High": 470.0
-    },
-    "ticker": "MSFT",
-    "valuation": {
-      "Industry_Average_PE": 30.5,
-      "PE": 28.1
+    {
+      "label": "Momentum Monitoring",
+      "metrics": [
+        {
+          "band": "bad",
+          "explanation": "Relative Strength matched the bad band using rule underperformance. Weighted score awarded: 0.0000 out of 5.0000.",
+          "label": "Relative Strength",
+          "matched_rule": "underperformance",
+          "metric_key": "relative_strength",
+          "normalized_value": "underperformance",
+          "raw_value": "underperformance",
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 0.0
+        },
+        {
+          "band": "excellent",
+          "explanation": "Analyst Sentiment matched the excellent band using rule strong_upgrades. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Analyst Sentiment",
+          "matched_rule": "strong_upgrades",
+          "metric_key": "analyst_sentiment",
+          "normalized_value": "strong_upgrades",
+          "raw_value": "strong_upgrades",
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        },
+        {
+          "band": "excellent",
+          "explanation": "Volume Trend matched the excellent band using rule increasing. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Volume Trend",
+          "matched_rule": "increasing",
+          "metric_key": "volume_trend",
+          "normalized_value": "increasing",
+          "raw_value": "increasing",
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        }
+      ],
+      "score": 10.0,
+      "section_key": "momentum_monitoring",
+      "weight": 15.0
+    }
+  ],
+  "generated_at": "2026-04-24T10:04:34.587892+00:00",
+  "metadata": {
+    "as_of_date": "2026-04-24",
+    "metadata": {
+      "analyst": "Gemini AI",
+      "source": "live-search-data"
     }
   },
-  "reconciliation": {
-    "amortization": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 26901000000.0,
-      "input_value": 1500000000.0,
-      "percentage_difference": 0.9442399910783986,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 26901000000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 11600000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 42202000000.0
-        }
-      ]
-    },
-    "current_price": {
-      "confidence": "high",
-      "data_conflict": false,
-      "final_value": 432.92,
-      "input_value": 432.92,
-      "percentage_difference": 0.0,
-      "reconciliation_method": "blended",
-      "requires_review": false,
-      "scraped_consensus": 432.92,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 432.92
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 432.92
-        }
-      ]
-    },
-    "debt": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 48934500000.0,
-      "input_value": 60000000000.0,
-      "percentage_difference": 0.2261288048309475,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 48934500000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 40262000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 57607000000.0
-        }
-      ]
-    },
-    "debt_to_equity": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 0.14737959705788295,
-      "input_value": 0.35,
-      "percentage_difference": 1.3748199003593313,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 0.14737959705788295,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 0.32
-        },
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 0.10300479692996482
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 0.14737959705788295
-        }
-      ]
-    },
-    "ebitda": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 191385000000.0,
-      "input_value": 145000000000.0,
-      "percentage_difference": 0.24236486663009119,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 191385000000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 191385000000.0
-        }
-      ]
-    },
-    "industry_average_pe": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 105.14752920000001,
-      "input_value": 30.5,
-      "percentage_difference": 0.7099313675551399,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 105.14752920000001,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:22+00:00",
-          "source": "peer_group",
-          "value": 105.14752920000001
-        }
-      ]
-    },
-    "intangibles": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 70596500000.0,
-      "input_value": 18000000000.0,
-      "percentage_difference": 0.74502985275474,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 70596500000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 1282000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 139911000000.0
-        }
-      ]
-    },
-    "interest_expense": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 4161000000.0,
-      "input_value": 2500000000.0,
-      "percentage_difference": 0.39918288872867097,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 4161000000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 5679000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 2643000000.0
-        }
-      ]
-    },
-    "net_income": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 119262000000.0,
-      "input_value": null,
-      "percentage_difference": null,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 119262000000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 119260000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 217326000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 119262000000.0
-        }
-      ]
-    },
-    "net_profit_margin": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 0.39039999999999997,
-      "input_value": 0.31,
-      "percentage_difference": 0.2059426229508196,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 0.39039999999999997,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 0.39039999999999997
-        },
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 0.01662403426910426
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 0.3904430468844634
-        }
-      ]
-    },
-    "operating_cash_flow": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 218182000000.0,
-      "input_value": 120000000000.0,
-      "percentage_difference": 0.4500004583329514,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 218182000000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 275858000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 160506000000.0
-        }
-      ]
-    },
-    "pe_ratio": {
-      "confidence": "high",
-      "data_conflict": false,
-      "final_value": 27.599582,
-      "input_value": 28.1,
-      "percentage_difference": 0.03693235702769279,
-      "reconciliation_method": "blended",
-      "requires_review": false,
-      "scraped_consensus": 27.099164000000002,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 27.09
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 27.108328
-        }
-      ]
-    },
-    "pullback_percentage": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 0.2205959132235125,
-      "input_value": 0.079,
-      "percentage_difference": 0.6418791316412308,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 0.2205959132235125,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 0.2205959132235125
-        }
-      ]
-    },
-    "quarterly_ebitda": {
-      "confidence": "high",
-      "data_conflict": false,
-      "final_value": [
-        {
-          "period": "2025-12-31",
-          "value": 58180000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 48060000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 44434000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 40711000000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 35626000000.0
-        }
-      ],
-      "input_value": [],
-      "percentage_difference": null,
-      "reconciliation_method": "series_reconciliation",
-      "requires_review": false,
-      "scraped_consensus": [
-        {
-          "period": "2025-12-31",
-          "value": 58180000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 48060000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 44434000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 40711000000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 35626000000.0
-        }
-      ],
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 58180000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 48060000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 44434000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 40711000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 35626000000.0
-            }
-          ]
-        }
-      ]
-    },
-    "quarterly_net_income": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": [
-        {
-          "period": "2025-12-31",
-          "value": 52331500000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 27747000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 27233000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 50211500000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 36441500000.0
-        },
-        {
-          "period": "2024-09-30",
-          "value": 24667000000.0
-        },
-        {
-          "period": "2024-03-31",
-          "value": 66100000000.0
-        },
-        {
-          "period": "2023-12-31",
-          "value": 44161000000.0
-        }
-      ],
-      "input_value": [
-        {
-          "period": "2025-12-31",
-          "value": 24108000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 24667000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 22036000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 21939000000.0
-        }
-      ],
-      "percentage_difference": null,
-      "reconciliation_method": "series_reconciliation",
-      "requires_review": true,
-      "scraped_consensus": [
-        {
-          "period": "2025-12-31",
-          "value": 52331500000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 27747000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 27233000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 50211500000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 36441500000.0
-        },
-        {
-          "period": "2024-09-30",
-          "value": 24667000000.0
-        },
-        {
-          "period": "2024-03-31",
-          "value": 66100000000.0
-        },
-        {
-          "period": "2023-12-31",
-          "value": 44161000000.0
-        }
-      ],
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 66205000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 27747000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 74599000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 48775000000.0
-            },
-            {
-              "period": "2024-09-30",
-              "value": 24667000000.0
-            },
-            {
-              "period": "2024-03-31",
-              "value": 66100000000.0
-            },
-            {
-              "period": "2023-12-31",
-              "value": 44161000000.0
-            },
-            {
-              "period": "2023-09-30",
-              "value": 22291000000.0
-            }
-          ]
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 38458000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 27747000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 27233000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 25824000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 24108000000.0
-            }
-          ]
-        }
-      ]
-    },
-    "quarterly_net_profit_margin": {
-      "confidence": "high",
-      "data_conflict": false,
-      "final_value": [
-        {
-          "period": "2025-12-31",
-          "value": 0.473195280105324
-        },
-        {
-          "period": "2025-09-30",
-          "value": 0.35722838051832684
-        },
-        {
-          "period": "2025-06-30",
-          "value": 0.34835347335448785
-        },
-        {
-          "period": "2025-03-31",
-          "value": 0.3616169603821353
-        },
-        {
-          "period": "2024-12-31",
-          "value": 0.34622012867647056
-        }
-      ],
-      "input_value": [
-        {
-          "period": "2025-12-31",
-          "value": 0.34622012867647056
-        },
-        {
-          "period": "2025-09-30",
-          "value": 0.37610734161774795
-        },
-        {
-          "period": "2025-06-30",
-          "value": 0.34044525468506187
-        },
-        {
-          "period": "2025-03-31",
-          "value": 0.3546671408710272
-        }
-      ],
-      "percentage_difference": null,
-      "reconciliation_method": "series_reconciliation",
-      "requires_review": false,
-      "scraped_consensus": [
-        {
-          "period": "2025-12-31",
-          "value": 0.473195280105324
-        },
-        {
-          "period": "2025-09-30",
-          "value": 0.35722838051832684
-        },
-        {
-          "period": "2025-06-30",
-          "value": 0.3562616920239139
-        },
-        {
-          "period": "2025-03-31",
-          "value": 0.3685667798932435
-        },
-        {
-          "period": "2024-12-31",
-          "value": 0.34622012867647056
-        }
-      ],
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 0.473195280105324
-            },
-            {
-              "period": "2025-09-30",
-              "value": 0.35722838051832684
-            },
-            {
-              "period": "2025-06-30",
-              "value": 0.3562616920239139
-            },
-            {
-              "period": "2025-03-31",
-              "value": 0.3685667798932435
-            },
-            {
-              "period": "2024-12-31",
-              "value": 0.34622012867647056
-            }
-          ]
-        }
-      ]
-    },
-    "quarterly_operating_cash_flow": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": [
-        {
-          "period": "2025-12-31",
-          "value": 58286500000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 45057000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 42647000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 65279500000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 39381000000.0
-        },
-        {
-          "period": "2024-09-30",
-          "value": 34180000000.0
-        },
-        {
-          "period": "2024-03-31",
-          "value": 81353000000.0
-        },
-        {
-          "period": "2023-12-31",
-          "value": 49436000000.0
-        }
-      ],
-      "input_value": [
-        {
-          "period": "2025-12-31",
-          "value": 30100000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 28600000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 27400000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 26200000000.0
-        }
-      ],
-      "percentage_difference": null,
-      "reconciliation_method": "series_reconciliation",
-      "requires_review": true,
-      "scraped_consensus": [
-        {
-          "period": "2025-12-31",
-          "value": 58286500000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 45057000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 42647000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 65279500000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 39381000000.0
-        },
-        {
-          "period": "2024-09-30",
-          "value": 34180000000.0
-        },
-        {
-          "period": "2024-03-31",
-          "value": 81353000000.0
-        },
-        {
-          "period": "2023-12-31",
-          "value": 49436000000.0
-        }
-      ],
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 80815000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 45057000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 93515000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 56471000000.0
-            },
-            {
-              "period": "2024-09-30",
-              "value": 34180000000.0
-            },
-            {
-              "period": "2024-03-31",
-              "value": 81353000000.0
-            },
-            {
-              "period": "2023-12-31",
-              "value": 49436000000.0
-            },
-            {
-              "period": "2023-09-30",
-              "value": 30583000000.0
-            }
-          ]
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 35758000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 45057000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 42647000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 37044000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 22291000000.0
-            }
-          ]
-        }
-      ]
-    },
-    "quarterly_revenue": {
-      "confidence": "high",
-      "data_conflict": false,
-      "final_value": [
-        {
-          "period": "2025-12-31",
-          "value": 81273000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 77673000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 76441000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 70066000000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 69632000000.0
-        },
-        {
-          "period": "2010-12-31",
-          "value": 36148000000.0
-        },
-        {
-          "period": "2010-09-30",
-          "value": 16195000000.0
-        },
-        {
-          "period": "2010-03-31",
-          "value": 46445000000.0
-        }
-      ],
-      "input_value": [
-        {
-          "period": "2025-12-31",
-          "value": 69632000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 65585000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 64727000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 61858000000.0
-        }
-      ],
-      "percentage_difference": null,
-      "reconciliation_method": "series_reconciliation",
-      "requires_review": false,
-      "scraped_consensus": [
-        {
-          "period": "2025-12-31",
-          "value": 81273000000.0
-        },
-        {
-          "period": "2025-09-30",
-          "value": 77673000000.0
-        },
-        {
-          "period": "2025-06-30",
-          "value": 76441000000.0
-        },
-        {
-          "period": "2025-03-31",
-          "value": 70066000000.0
-        },
-        {
-          "period": "2024-12-31",
-          "value": 69632000000.0
-        },
-        {
-          "period": "2010-12-31",
-          "value": 36148000000.0
-        },
-        {
-          "period": "2010-09-30",
-          "value": 16195000000.0
-        },
-        {
-          "period": "2010-03-31",
-          "value": 46445000000.0
-        }
-      ],
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "values": [
-            {
-              "period": "2010-12-31",
-              "value": 36148000000.0
-            },
-            {
-              "period": "2010-09-30",
-              "value": 16195000000.0
-            },
-            {
-              "period": "2010-03-31",
-              "value": 46445000000.0
-            },
-            {
-              "period": "2009-12-31",
-              "value": 31942000000.0
-            },
-            {
-              "period": "2009-09-30",
-              "value": 12920000000.0
-            },
-            {
-              "period": "2009-03-31",
-              "value": 45338000000.0
-            },
-            {
-              "period": "2008-12-31",
-              "value": 31690000000.0
-            }
-          ]
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "values": [
-            {
-              "period": "2025-12-31",
-              "value": 81273000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 77673000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 76441000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 70066000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 69632000000.0
-            }
-          ]
-        }
-      ]
-    },
-    "recent_high": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 555.45,
-      "input_value": 470.0,
-      "percentage_difference": 0.15383922945359627,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 555.45,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 555.45
-        }
-      ]
-    },
-    "revenue": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 305450000000.0,
-      "input_value": null,
-      "percentage_difference": null,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 305450000000.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 305450000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 130730000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 305453000000.0
-        }
-      ]
-    },
-    "revenue_growth": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 0.167,
-      "input_value": 0.12,
-      "percentage_difference": 0.28143712574850305,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 0.167,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 0.167
-        }
-      ]
-    },
-    "rsi": {
-      "confidence": "low",
-      "data_conflict": true,
-      "final_value": 0.7308001606628387,
-      "input_value": 0.612,
-      "percentage_difference": 0.16256176046141874,
-      "reconciliation_method": "scraped_priority",
-      "requires_review": true,
-      "scraped_consensus": 0.7308001606628387,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 0.7306
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 0.7310003213256775
-        }
-      ]
-    },
-    "shares_outstanding": {
-      "confidence": "high",
-      "data_conflict": false,
-      "final_value": 7427814538.0,
-      "input_value": 7430000000.0,
-      "percentage_difference": 0.000588626762159053,
-      "reconciliation_method": "blended",
-      "requires_review": false,
-      "scraped_consensus": 7425629076.0,
-      "scraped_values": [
-        {
-          "collected_at": "2026-04-23T12:14:06+00:00",
-          "source": "finviz",
-          "value": 7430000000.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:12+00:00",
-          "source": "sec_companyfacts",
-          "value": 7425629076.0
-        },
-        {
-          "collected_at": "2026-04-23T12:14:05+00:00",
-          "source": "yahoo_finance",
-          "value": 7425629076.0
-        }
-      ]
-    }
+  "normalized_metrics": {
+    "analyst_sentiment": "strong_upgrades",
+    "current_ratio": 1.39,
+    "debt_to_equity": 0.1,
+    "eps_growth_yoy": 24.0,
+    "ev_ebitda": 18.5,
+    "interest_coverage": 282.9,
+    "net_profit_margin": 38.0,
+    "ocf_growth_yoy": 22.5,
+    "ocf_to_net_income": 1.25,
+    "operating_margin": 45.0,
+    "pe_ratio_relative": 0.7827217567177116,
+    "peg_ratio": 1.6,
+    "relative_strength": "underperformance",
+    "revenue_growth_yoy": 17.0,
+    "roe": 38.5,
+    "roic": 30.5,
+    "volume_trend": "increasing"
   },
-  "scraped_sources": {
-    "peer_context": {
-      "industry_average_pe": 105.14752920000001,
-      "peers": [
-        "CRWD",
-        "ORCL",
-        "PANW",
-        "PLTR",
-        "SNPS"
-      ]
-    },
-    "scraped_at": "2026-04-23T12:14:22+00:00",
-    "sources": {
-      "finviz": {
-        "collected_at": "2026-04-23T12:14:06+00:00",
-        "metrics": {
-          "current_price": 432.92,
-          "debt_to_equity": 0.32,
-          "net_income": 119260000000.0,
-          "net_profit_margin": 0.39039999999999997,
-          "pe_ratio": 27.09,
-          "pullback_percentage": null,
-          "recent_high": null,
-          "revenue": 305450000000.0,
-          "rsi": 73.06,
-          "shares_outstanding": 7430000000.0
-        },
-        "source": "finviz",
-        "warnings": []
+  "parser_debug": {
+    "derived_metrics": [
+      {
+        "formula": "pe_ratio / pe_ratio_industry_avg",
+        "metric_key": "pe_ratio_relative",
+        "sources": [
+          {
+            "path": "metrics.valuation_sanity.pe_ratio",
+            "value": 27.09
+          },
+          {
+            "path": "metrics.valuation_sanity.pe_ratio_industry_avg",
+            "value": 34.61
+          }
+        ],
+        "value": 0.7827217567177116
       },
-      "sec_companyfacts": {
-        "collected_at": "2026-04-23T12:14:12+00:00",
-        "metrics": {
-          "amortization": 11600000000.0,
-          "debt": 40262000000.0,
-          "debt_to_equity": 0.10300479692996482,
-          "ebitda": null,
-          "intangibles": 1282000000.0,
-          "interest_expense": 5679000000.0,
-          "net_income": 217326000000.0,
-          "net_profit_margin": 1.662403426910426,
-          "operating_cash_flow": 275858000000.0,
-          "quarterly_ebitda": [],
-          "quarterly_net_income": [
-            {
-              "period": "2025-12-31",
-              "value": 66205000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 27747000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 74599000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 48775000000.0
-            },
-            {
-              "period": "2024-09-30",
-              "value": 24667000000.0
-            },
-            {
-              "period": "2024-03-31",
-              "value": 66100000000.0
-            },
-            {
-              "period": "2023-12-31",
-              "value": 44161000000.0
-            },
-            {
-              "period": "2023-09-30",
-              "value": 22291000000.0
-            }
-          ],
-          "quarterly_net_profit_margin": [],
-          "quarterly_operating_cash_flow": [
-            {
-              "period": "2025-12-31",
-              "value": 80815000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 45057000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 93515000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 56471000000.0
-            },
-            {
-              "period": "2024-09-30",
-              "value": 34180000000.0
-            },
-            {
-              "period": "2024-03-31",
-              "value": 81353000000.0
-            },
-            {
-              "period": "2023-12-31",
-              "value": 49436000000.0
-            },
-            {
-              "period": "2023-09-30",
-              "value": 30583000000.0
-            }
-          ],
-          "quarterly_revenue": [
-            {
-              "period": "2010-12-31",
-              "value": 36148000000.0
-            },
-            {
-              "period": "2010-09-30",
-              "value": 16195000000.0
-            },
-            {
-              "period": "2010-03-31",
-              "value": 46445000000.0
-            },
-            {
-              "period": "2009-12-31",
-              "value": 31942000000.0
-            },
-            {
-              "period": "2009-09-30",
-              "value": 12920000000.0
-            },
-            {
-              "period": "2009-03-31",
-              "value": 45338000000.0
-            },
-            {
-              "period": "2008-12-31",
-              "value": 31690000000.0
-            }
-          ],
-          "revenue": 130730000000.0,
-          "shares_outstanding": 7425629076.0
-        },
-        "source": "sec_companyfacts",
-        "warnings": []
-      },
-      "yahoo_finance": {
-        "collected_at": "2026-04-23T12:14:05+00:00",
-        "metrics": {
-          "amortization": 42202000000.0,
-          "current_price": 432.92,
-          "debt": 57607000000.0,
-          "debt_to_equity": 0.14737959705788295,
-          "ebitda": 191385000000.0,
-          "industry": "Software - Infrastructure",
-          "intangibles": 139911000000.0,
-          "interest_expense": 2643000000.0,
-          "net_income": 119262000000.0,
-          "net_profit_margin": 0.3904430468844634,
-          "operating_cash_flow": 160506000000.0,
-          "pe_ratio": 27.108328,
-          "pullback_percentage": 0.2205959132235125,
-          "quarterly_ebitda": [
-            {
-              "period": "2025-12-31",
-              "value": 58180000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 48060000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 44434000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 40711000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 35626000000.0
-            }
-          ],
-          "quarterly_net_income": [
-            {
-              "period": "2025-12-31",
-              "value": 38458000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 27747000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 27233000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 25824000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 24108000000.0
-            }
-          ],
-          "quarterly_net_profit_margin": [
-            {
-              "period": "2025-12-31",
-              "value": 0.473195280105324
-            },
-            {
-              "period": "2025-09-30",
-              "value": 0.35722838051832684
-            },
-            {
-              "period": "2025-06-30",
-              "value": 0.3562616920239139
-            },
-            {
-              "period": "2025-03-31",
-              "value": 0.3685667798932435
-            },
-            {
-              "period": "2024-12-31",
-              "value": 0.34622012867647056
-            }
-          ],
-          "quarterly_operating_cash_flow": [
-            {
-              "period": "2025-12-31",
-              "value": 35758000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 45057000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 42647000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 37044000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 22291000000.0
-            }
-          ],
-          "quarterly_revenue": [
-            {
-              "period": "2025-12-31",
-              "value": 81273000000.0
-            },
-            {
-              "period": "2025-09-30",
-              "value": 77673000000.0
-            },
-            {
-              "period": "2025-06-30",
-              "value": 76441000000.0
-            },
-            {
-              "period": "2025-03-31",
-              "value": 70066000000.0
-            },
-            {
-              "period": "2024-12-31",
-              "value": 69632000000.0
-            }
-          ],
-          "recent_high": 555.45,
-          "revenue": 305453000000.0,
-          "revenue_growth": 0.167,
-          "rsi": 73.10003213256775,
-          "sector": "Technology",
-          "shares_outstanding": 7425629076.0
-        },
-        "source": "yahoo_finance",
-        "warnings": []
+      {
+        "formula": "derived from analyst_actions upgrades/downgrades",
+        "metric_key": "analyst_sentiment",
+        "sources": [
+          {
+            "path": "metrics.monitoring.analyst_actions.upgrades",
+            "value": 1.0
+          },
+          {
+            "path": "metrics.monitoring.analyst_actions.downgrades",
+            "value": 0.0
+          }
+        ],
+        "value": "strong_upgrades"
       }
+    ],
+    "extracted_metrics": [
+      {
+        "metric_key": "eps_growth_yoy",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.eps_growth_yoy",
+        "value": 24
+      },
+      {
+        "metric_key": "revenue_growth_yoy",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.revenue_growth_yoy",
+        "value": 17
+      },
+      {
+        "metric_key": "ocf_growth_yoy",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.ocf_growth_yoy",
+        "value": 22.5
+      },
+      {
+        "metric_key": "ocf_to_net_income",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.ocf_to_net_income",
+        "value": 1.25
+      },
+      {
+        "metric_key": "operating_margin",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.operating_margin",
+        "value": 45
+      },
+      {
+        "metric_key": "net_profit_margin",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.net_profit_margin",
+        "value": 38
+      },
+      {
+        "metric_key": "roic",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.roic",
+        "value": 30.5
+      },
+      {
+        "metric_key": "roe",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.roe",
+        "value": 38.5
+      },
+      {
+        "metric_key": "debt_to_equity",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.financial_health.debt_to_equity",
+        "value": 0.1
+      },
+      {
+        "metric_key": "current_ratio",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.financial_health.current_ratio",
+        "value": 1.39
+      },
+      {
+        "metric_key": "interest_coverage",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.financial_health.interest_coverage",
+        "value": 282.9
+      },
+      {
+        "metric_key": "peg_ratio",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.valuation_sanity.peg_ratio",
+        "value": 1.6
+      },
+      {
+        "metric_key": "ev_ebitda",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.valuation_sanity.ev_ebitda",
+        "value": 18.5
+      },
+      {
+        "metric_key": "relative_strength",
+        "mode": "object-field",
+        "overrode_previous_value": false,
+        "source_path": "metrics.monitoring.relative_strength.status",
+        "value": "underperformance"
+      },
+      {
+        "metric_key": "volume_trend",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.monitoring.volume_trend",
+        "value": "increasing"
+      }
+    ],
+    "input_shape": {
+      "metrics_container_keys": [
+        "financial_health",
+        "growth_quality",
+        "monitoring",
+        "profitability",
+        "risk_exit_signals",
+        "valuation_sanity"
+      ],
+      "top_level_keys": [
+        "as_of_date",
+        "metadata",
+        "metrics",
+        "ticker"
+      ]
     },
-    "ticker": "MSFT",
-    "warnings": []
+    "unresolved_metrics": []
   },
-  "ticker": "MSFT",
-  "warnings": []
+  "ticker": "MSFT"
 }

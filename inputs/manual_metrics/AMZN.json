@@ -1,0 +1,57 @@
+{
+  "ticker": "AMZN",
+  "as_of_date": "2026-04-24",
+  "metrics": {
+    "growth_quality": {
+      "eps_growth_yoy": 0.2897,
+      "revenue_growth_yoy": 0.1238,
+      "ocf_growth_yoy": 0.245,
+      "ocf_to_net_income": 1.65
+    },
+    "profitability": {
+      "operating_margin": 11.8,
+      "net_profit_margin": 10.83,
+      "roic": 13.77,
+      "roe": 18.89
+    },
+    "financial_health": {
+      "debt_to_equity": 0.41,
+      "current_ratio": 1.05,
+      "interest_coverage": 28.5
+    },
+    "valuation_sanity": {
+      "pe_ratio": 35.57,
+      "pe_ratio_industry_avg": 30.9,
+      "peg_ratio": 1.41,
+      "ev_ebitda": 18.55
+    },
+    "monitoring": {
+      "relative_strength": {
+        "status": "moderate_outperformance",
+        "outperformance_percent": 7.1
+      },
+      "earnings_vs_guidance": "Beat",
+      "analyst_actions": {
+        "upgrades": 4,
+        "downgrades": 1
+      },
+      "volume_trend": "Stable",
+      "gross_margin_trend": "Improving",
+      "ocf_vs_net_income_trend": "Stable",
+      "capex_percent_sales": 7,
+      "customer_concentration_trend": "Stable"
+    },
+    "risk_exit_signals": {
+      "margin_compression_bps": 0,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "Bullish",
+      "guidance_change": "Raised",
+      "sector_momentum": "Bullish",
+      "relative_underperformance_percent": 0
+    }
+  },
+  "metadata": {
+    "source": "frontend-manual-entry",
+    "analyst": "Gemini"
+  }
+}

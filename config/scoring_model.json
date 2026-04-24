@@ -1,0 +1,228 @@
+{
+  "total_score": 100,
+  "pass_threshold": 85,
+  "disqualification_rule": {
+    "enabled": true,
+    "logic": "ANY_BAD_DISQUALIFIES",
+    "description": "If ANY single metric scores 'bad' (0.0), the stock is immediately rejected regardless of total score. All metrics must score at minimum 'poor' (0.4) for the total score to be evaluated.",
+    "trigger_band": "bad",
+    "trigger_score": 0.0,
+    "outcome": "REJECTED",
+    "override_threshold": true
+  },
+  "band_scores": {
+    "excellent": 1.0,
+    "good": 0.75,
+    "poor": 0.4,
+    "bad": 0.0
+  },
+  "sections": {
+    "growth_quality": {
+      "label": "Growth Quality",
+      "weight": 30,
+      "metrics": {
+        "eps_growth_yoy": {
+          "label": "EPS Growth YoY",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 20",
+          "good": "10-20",
+          "poor": "0-10",
+          "bad": "< 0",
+          "bad_condition": "EPS growth is negative — business is shrinking. Stock rejected."
+        },
+        "revenue_growth_yoy": {
+          "label": "Revenue Growth YoY",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 15",
+          "good": "8-15",
+          "poor": "0-8",
+          "bad": "< 0",
+          "bad_condition": "Revenue is declining — demand is collapsing. Stock rejected."
+        },
+        "ocf_growth_yoy": {
+          "label": "OCF Growth YoY",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 15",
+          "good": "10-15",
+          "poor": "0-10",
+          "bad": "< 0",
+          "bad_condition": "Operating cash flow is shrinking — earnings quality is deteriorating. Stock rejected."
+        },
+        "ocf_to_net_income": {
+          "label": "OCF to Net Income",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "> 1.3",
+          "good": "1.0-1.3",
+          "poor": "0.8-1.0",
+          "bad": "< 0.8",
+          "bad_condition": "Cash flow is significantly below reported profit — earnings may be manipulated. Stock rejected."
+        }
+      }
+    },
+    "profitability": {
+      "label": "Profitability",
+      "weight": 25,
+      "metrics": {
+        "operating_margin": {
+          "label": "Operating Margin",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 20",
+          "good": "15-20",
+          "poor": "10-15",
+          "bad": "< 10",
+          "bad_condition": "Operating margin below 10% — business lacks pricing power or efficiency. Stock rejected."
+        },
+        "net_profit_margin": {
+          "label": "Net Profit Margin",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 10",
+          "good": "5-10",
+          "poor": "2-5",
+          "bad": "< 2",
+          "bad_condition": "Net margin below 2% — business is not fundamentally viable at this stage. Stock rejected."
+        },
+        "roic": {
+          "label": "ROIC",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 18",
+          "good": "12-18",
+          "poor": "8-12",
+          "bad": "< 8",
+          "bad_condition": "ROIC below 8% — capital is being deployed unproductively. Stock rejected."
+        },
+        "roe": {
+          "label": "ROE",
+          "rule_type": "numeric",
+          "value_type": "percentage",
+          "excellent": "> 18",
+          "good": "12-18",
+          "poor": "8-12",
+          "bad": "< 8",
+          "bad_condition": "ROE below 8% — shareholders are earning unacceptable returns. Stock rejected."
+        }
+      }
+    },
+    "financial_health": {
+      "label": "Financial Health",
+      "weight": 15,
+      "metrics": {
+        "debt_to_equity": {
+          "label": "Debt to Equity",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "< 0.5",
+          "good": "0.5-1.5",
+          "poor": "1.5-2.0",
+          "bad": "> 2.0",
+          "bad_condition": "Debt-to-equity above 2.0 — leverage is dangerous and survival risk is elevated. Stock rejected."
+        },
+        "current_ratio": {
+          "label": "Current Ratio",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "> 2.0",
+          "good": "1.5-2.0",
+          "poor": "1.2-1.5",
+          "bad": "< 1.2",
+          "bad_condition": "Current ratio below 1.2 — company cannot comfortably meet short-term obligations. Stock rejected."
+        },
+        "interest_coverage": {
+          "label": "Interest Coverage",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "> 6",
+          "good": "3-6",
+          "poor": "2-3",
+          "bad": "< 2",
+          "bad_condition": "Interest coverage below 2x — earnings cannot safely service debt. Stock rejected."
+        }
+      }
+    },
+    "valuation_sanity": {
+      "label": "Valuation Sanity",
+      "weight": 15,
+      "metrics": {
+        "pe_ratio_relative": {
+          "label": "PE Ratio Relative",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "< 0.8x industry",
+          "good": "0.8-1.3x",
+          "poor": "1.3-1.8x",
+          "bad": "> 1.8x",
+          "bad_condition": "PE ratio more than 1.8x industry average — stock is dangerously overpriced. Stock rejected."
+        },
+        "peg_ratio": {
+          "label": "PEG Ratio",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "< 1.0",
+          "good": "1.0-1.5",
+          "poor": "1.5-2.0",
+          "bad": "> 2.0",
+          "bad_condition": "PEG above 2.0 — growth does not justify current valuation. Stock rejected."
+        },
+        "ev_ebitda": {
+          "label": "EV / EBITDA",
+          "rule_type": "numeric",
+          "value_type": "ratio",
+          "excellent": "< 10",
+          "good": "10-15",
+          "poor": "15-20",
+          "bad": "> 20",
+          "bad_condition": "EV/EBITDA above 20x — valuation is euphoric and return expectations are unrealistic. Stock rejected."
+        }
+      }
+    },
+    "momentum_monitoring": {
+      "label": "Momentum Monitoring",
+      "weight": 15,
+      "metrics": {
+        "relative_strength": {
+          "label": "Relative Strength",
+          "rule_type": "categorical",
+          "value_type": "category",
+          "excellent": "strong_outperformance",
+          "good": "moderate_outperformance",
+          "poor": "neutral",
+          "bad": "underperformance",
+          "bad_condition": "Stock is underperforming its index — institutional money is not participating. Stock rejected."
+        },
+        "analyst_sentiment": {
+          "label": "Analyst Sentiment",
+          "rule_type": "categorical",
+          "value_type": "category",
+          "excellent": "strong_upgrades",
+          "good": "more_upgrades",
+          "poor": "neutral",
+          "bad": "more_downgrades",
+          "bad_condition": "More analyst downgrades than upgrades — professional consensus is turning negative. Stock rejected."
+        },
+        "volume_trend": {
+          "label": "Volume Trend",
+          "rule_type": "categorical",
+          "value_type": "category",
+          "excellent": "increasing",
+          "good": "stable",
+          "poor": "declining",
+          "bad": "sharp_decline",
+          "bad_condition": "Volume is in sharp decline — conviction behind price movement is collapsing. Stock rejected."
+        }
+      }
+    }
+  },
+  "evaluation_sequence": {
+    "step_1": "Score every metric individually against its band thresholds",
+    "step_2": "Check disqualification rule — if ANY metric = bad (0.0), STOP. Stock is REJECTED. Do not compute total score.",
+    "step_3": "If no metric is bad, compute weighted section scores",
+    "step_4": "Sum all section scores into total score out of 100",
+    "step_5": "If total score >= 85, stock PASSES. If total score < 85, stock FAILS."
+  }
+}

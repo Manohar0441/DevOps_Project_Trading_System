@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+outputs/
+logs/
+failed/
+.pytest_cache/
+.mypy_cache/
+node_modules/
+

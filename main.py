@@ -1,27 +1,34 @@
+from __future__ import annotations
+
 import argparse
 import logging
 from pathlib import Path
 
-from services.ingestion.fetch_data import FinancialPipeline
+from services.common.logging_utils import configure_logging
+from services.scoring_service.pipeline import ManualScoringPipeline
 
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(name)s | %(message)s")
+logger = logging.getLogger(__name__)
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Audit-ready stock screening pipeline")
+    parser = argparse.ArgumentParser(description="Manual-input stock scoring pipeline")
     parser.add_argument("ticker", nargs="?", help="US stock ticker")
-    parser.add_argument("--input-json", dest="input_json", help="Path to the input stock JSON")
-    parser.add_argument("--user-inputs", dest="user_inputs", help="Path to user trade inputs JSON")
+    parser.add_argument("--input-json", dest="input_json", help="Path to the primary stock scoring JSON")
+    parser.add_argument(
+        "--user-inputs",
+        dest="user_inputs",
+        help="Optional path to an override JSON containing metrics or metadata",
+    )
     parser.add_argument("--output-dir", dest="output_dir", default="outputs", help="Base output directory")
     return parser
 
 
 def run_pipeline(args: argparse.Namespace) -> dict:
-    if not args.ticker and not args.input_json:
-        raise ValueError("Provide either a ticker or an input JSON file.")
+    if not args.ticker and not args.input_json and not args.user_inputs:
+        raise ValueError("Provide a ticker and at least one input payload path.")
 
-    pipeline = FinancialPipeline((args.ticker or "").upper() or "UNKNOWN")
+    pipeline = ManualScoringPipeline((args.ticker or "").upper() or "UNKNOWN")
     return pipeline.run(
         input_path=args.input_json,
         user_inputs_path=args.user_inputs,
@@ -33,15 +40,14 @@ def run_pipeline(args: argparse.Namespace) -> dict:
 if __name__ == "__main__":
     parser = build_parser()
     args = parser.parse_args()
+    configure_logging("main-cli", log_dir=Path(args.output_dir) / "_logs", level=logging.DEBUG, console=False)
 
     try:
         bundle = run_pipeline(args)
-        ticker = bundle["standardized_output"]["ticker"]
-        output_dir = Path(args.output_dir) / ticker
-        print(f"{ticker} screening completed")
-        print(f"Outputs written to {output_dir}")
+        score = bundle["standardized_output"]["total_score"]
+        print(f"{score:.2f}")
     except Exception as exc:  # noqa: BLE001
-        logging.exception("Pipeline failed: %s", exc)
+        logger.exception("Pipeline failed: %s", exc)
         failed_dir = Path("failed")
         failed_dir.mkdir(exist_ok=True)
         failed_ticker = (args.ticker or "UNKNOWN").upper()

@@ -1,0 +1,57 @@
+{
+  "ticker": "MSFT",
+  "as_of_date": "2026-04-24",
+  "metrics": {
+    "growth_quality": {
+      "eps_growth_yoy": 24,
+      "revenue_growth_yoy": 17,
+      "ocf_growth_yoy": 22.5,
+      "ocf_to_net_income": 1.25
+    },
+    "profitability": {
+      "operating_margin": 45,
+      "net_profit_margin": 38,
+      "roic": 30.5,
+      "roe": 38.5
+    },
+    "financial_health": {
+      "debt_to_equity": 0.1,
+      "current_ratio": 1.39,
+      "interest_coverage": 282.9
+    },
+    "valuation_sanity": {
+      "pe_ratio": 27.09,
+      "pe_ratio_industry_avg": 34.61,
+      "peg_ratio": 1.6,
+      "ev_ebitda": 18.5
+    },
+    "monitoring": {
+      "relative_strength": {
+        "status": "underperformance",
+        "outperformance_percent": -22
+      },
+      "earnings_vs_guidance": "Beat",
+      "analyst_actions": {
+        "upgrades": 1,
+        "downgrades": 0
+      },
+      "volume_trend": "increasing",
+      "gross_margin_trend": "Stable",
+      "ocf_vs_net_income_trend": "Favorable",
+      "capex_percent_sales": 46.1,
+      "customer_concentration_trend": "Stable"
+    },
+    "risk_exit_signals": {
+      "margin_compression_bps": null,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "Neutral",
+      "guidance_change": "None",
+      "sector_momentum": "Lagging",
+      "relative_underperformance_percent": 22
+    }
+  },
+  "metadata": {
+    "source": "live-search-data",
+    "analyst": "Gemini AI"
+  }
+}

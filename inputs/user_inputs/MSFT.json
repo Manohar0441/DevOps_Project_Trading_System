@@ -1,7 +1,0 @@
-{
-  "entry_price": 432.0,
-  "stop_loss": 406.08,
-  "target_price": 470.0,
-  "exit_logic": "Exit at target or if RSI exceeds 75 or thesis breaks.",
-  "risk_level": "medium"
-}

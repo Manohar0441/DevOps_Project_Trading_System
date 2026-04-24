@@ -1,16 +1,22 @@
-import subprocess
-import sys
-import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from __future__ import annotations
+
+import json
+import logging
+import os
 from pathlib import Path
 
+from services.batch_service.runner import BatchScoringService
+from services.common.logging_utils import configure_logging
 
-MAX_WORKERS = 10
+
+MAX_WORKERS = int(os.environ.get("BATCH_MAX_WORKERS", "10"))
 BASE_DIR = Path(__file__).resolve().parent
 STOCKS_FILE = BASE_DIR / "stocks.txt"
-OUTPUT_DIR = BASE_DIR / "outputs"
+OUTPUT_DIR = Path(os.environ.get("BATCH_OUTPUT_DIR", str(BASE_DIR / "outputs")))
+SUMMARY_PATH = OUTPUT_DIR / "_batch" / "summary.json"
 
 STOCK_INPUT_CANDIDATES = (
+    lambda ticker: BASE_DIR / "inputs" / "manual_metrics" / f"{ticker}.json",
     lambda ticker: BASE_DIR / "inputs" / "stock_data" / f"{ticker}.json",
     lambda ticker: BASE_DIR / "inputs" / f"{ticker}.stock.json",
     lambda ticker: BASE_DIR / "inputs" / f"{ticker}.json",
@@ -20,6 +26,8 @@ USER_INPUT_CANDIDATES = (
     lambda ticker: BASE_DIR / "inputs" / "user_inputs" / f"{ticker}.json",
     lambda ticker: BASE_DIR / "inputs" / f"{ticker}.user.json",
 )
+
+logger = logging.getLogger(__name__)
 
 
 def load_tickers(path: Path) -> list[str]:
@@ -35,74 +43,56 @@ def resolve_optional_input(ticker: str, candidates) -> Path | None:
     return None
 
 
-def build_command(ticker: str) -> list[str]:
-    command = [sys.executable, "main.py", ticker, "--output-dir", str(OUTPUT_DIR)]
-
-    stock_input = resolve_optional_input(ticker, STOCK_INPUT_CANDIDATES)
-    user_input = resolve_optional_input(ticker, USER_INPUT_CANDIDATES)
-
-    if stock_input is not None:
-        command.extend(["--input-json", str(stock_input)])
-    if user_input is not None:
-        command.extend(["--user-inputs", str(user_input)])
-
-    return command
-
-
-def describe_inputs(ticker: str) -> str:
-    stock_input = resolve_optional_input(ticker, STOCK_INPUT_CANDIDATES)
-    user_input = resolve_optional_input(ticker, USER_INPUT_CANDIDATES)
-    parts = []
-    if stock_input is not None:
-        parts.append(f"stock={stock_input.relative_to(BASE_DIR)}")
-    if user_input is not None:
-        parts.append(f"user={user_input.relative_to(BASE_DIR)}")
-    return ", ".join(parts) if parts else "no extra inputs"
-
-
-def run_stock(args):
-    index, ticker = args
-    start = time.time()
-    command = build_command(ticker)
-    input_description = describe_inputs(ticker)
-
-    try:
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=True,
-            cwd=BASE_DIR,
+def build_jobs(tickers: list[str]) -> list[dict[str, str | None]]:
+    jobs = []
+    for ticker in tickers:
+        jobs.append(
+            {
+                "ticker": ticker,
+                "input_path": str(resolve_optional_input(ticker, STOCK_INPUT_CANDIDATES) or ""),
+                "user_inputs_path": str(resolve_optional_input(ticker, USER_INPUT_CANDIDATES) or ""),
+            }
         )
-        duration = time.time() - start
-        return ticker, index, True, result.stdout, duration, input_description
-    except subprocess.CalledProcessError as exc:
-        duration = time.time() - start
-        return ticker, index, False, exc.stderr or str(exc), duration, input_description
+    return jobs
 
 
-stocks = load_tickers(STOCKS_FILE)
-print(f"Processing {len(stocks)} stocks with {MAX_WORKERS} workers...\n")
+def normalize_job_paths(jobs: list[dict[str, str | None]]) -> list[dict[str, str | None]]:
+    normalized: list[dict[str, str | None]] = []
+    for job in jobs:
+        normalized.append(
+            {
+                "ticker": job["ticker"],
+                "input_path": job["input_path"] or None,
+                "user_inputs_path": job["user_inputs_path"] or None,
+            }
+        )
+    return normalized
 
-results = {"success": [], "failed": []}
 
-with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-    futures = {executor.submit(run_stock, (index, ticker)): ticker for index, ticker in enumerate(stocks, 1)}
-    for future in as_completed(futures):
-        ticker, index, success, output, duration, input_description = future.result()
-        if success:
-            print(f"[{index}/{len(stocks)}] {ticker} done in {duration:.1f}s")
-            print(f"  inputs: {input_description}")
-            if output.strip():
-                print(f"  {output.strip()[:200]}")
-            results["success"].append(ticker)
+def main() -> None:
+    (OUTPUT_DIR / "_batch").mkdir(parents=True, exist_ok=True)
+    configure_logging("batchrunner", log_dir=OUTPUT_DIR / "_batch", level=logging.DEBUG, console=False)
+
+    tickers = load_tickers(STOCKS_FILE)
+    jobs = normalize_job_paths(build_jobs(tickers))
+    logger.debug("Prepared batch jobs: %s", jobs)
+    service = BatchScoringService(max_workers=MAX_WORKERS)
+    result = service.run_jobs(jobs=jobs, output_dir=str(OUTPUT_DIR), write_outputs=True)
+
+    SUMMARY_PATH.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    for stock_result in result["results"]:
+        if stock_result["status"] == "success":
+            print(f"{stock_result['ticker']}: {stock_result['score']:.2f}")
         else:
-            print(f"[{index}/{len(stocks)}] {ticker} FAILED in {duration:.1f}s")
-            print(f"  inputs: {input_description}")
-            print(f"  {output.strip()[:200]}")
-            results["failed"].append(ticker)
+            logger.error(
+                "Batch scoring failed for %s: %s | details=%s | failure_output_files=%s",
+                stock_result["ticker"],
+                stock_result.get("error"),
+                stock_result.get("details"),
+                stock_result.get("failure_output_files"),
+            )
+            print(f"{stock_result['ticker']}: ERROR")
 
-print("\n" + "=" * 40)
-print(f"Done. {len(results['success'])} succeeded, {len(results['failed'])} failed.")
-if results["failed"]:
-    print(f"Failed tickers: {', '.join(results['failed'])}")
+
+if __name__ == "__main__":
+    main()

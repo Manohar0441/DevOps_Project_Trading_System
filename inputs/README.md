@@ -1,64 +1,105 @@
-# Batch Input Files
+# Manual Input Files
 
-`batchrunner.py` always reads tickers from `stocks.txt`.
+`batchrunner.py` reads tickers from `stocks.txt` and then looks for manual scoring payloads.
 
-For each ticker, you can optionally provide:
+## Preferred Location
 
-- stock input JSON in `inputs/stock_data/<TICKER>.json`
-- user trade input JSON in `inputs/user_inputs/<TICKER>.json`
+- `inputs/manual_metrics/<TICKER>.json`
 
 Example:
 
-- `inputs/stock_data/MSFT.json`
-- `inputs/user_inputs/MSFT.json`
+- `inputs/manual_metrics/MSFT.json`
 
-The runner also accepts these fallback names:
+## Backward-Compatible Fallbacks
 
+Primary stock payload:
+
+- `inputs/stock_data/<TICKER>.json`
 - `inputs/<TICKER>.stock.json`
-- `inputs/<TICKER>.user.json`
-- `inputs/<TICKER>.json` for stock data
+- `inputs/<TICKER>.json`
 
-## Stock Input Shape
+Optional overrides:
+
+- `inputs/user_inputs/<TICKER>.json`
+- `inputs/<TICKER>.user.json`
+
+If an override file contains a `metrics` object or metric keys at the top level, those values replace the primary payload.
+
+## Canonical Payload Shape
 
 ```json
 {
-  "ticker": "MSFT",
-  "valuation": {
-    "PE": 28.1
+  "ticker": "",
+  "as_of_date": "",
+  "metrics": {
+    
+    "growth_quality": {
+      "eps_growth_yoy": null,
+      "revenue_growth_yoy": null,
+      "ocf_growth_yoy": null,
+      "ocf_to_net_income": null
+    },
+
+    "profitability": {
+      "operating_margin": null,
+      "net_profit_margin": null,
+      "roic": null,
+      "roe": null
+    },
+
+    "financial_health": {
+      "debt_to_equity": null,
+      "current_ratio": null,
+      "interest_coverage": null
+    },
+
+    "valuation_sanity": {
+      "pe_ratio": null,
+      "pe_ratio_industry_avg": null,
+      "peg_ratio": null,
+      "ev_ebitda": null
+    },
+
+    "monitoring": {
+      "relative_strength": {
+        "status": "", 
+        "outperformance_percent": null
+      },
+      "earnings_vs_guidance": "",
+      "analyst_actions": {
+        "upgrades": null,
+        "downgrades": null
+      },
+      "volume_trend": "",
+      "gross_margin_trend": "",
+      "ocf_vs_net_income_trend": "",
+      "capex_percent_sales": null,
+      "customer_concentration_trend": ""
+    },
+
+    "risk_exit_signals": {
+      "margin_compression_bps": null,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "",
+      "guidance_change": "",
+      "sector_momentum": "",
+      "relative_underperformance_percent": null
+    }
   },
-  "growth": {
-    "Revenue_Growth": 0.12
-  },
-  "profitability": {
-    "Net_Margin": 0.31
-  },
-  "cashflow": {
-    "OCF": 120000000000
-  },
-  "technical": {
-    "Current_Price": 432.92,
-    "Recent_High": 470.0,
-    "RSI": 61.2
-  },
-  "quarterly_revenue": {
-    "2025-12-31": 69632000000,
-    "2025-09-30": 65585000000
-  },
-  "quarterly_net_income": {
-    "2025-12-31": 24108000000,
-    "2025-09-30": 24667000000
+
+  "metadata": {
+    "source": "",
+    "analyst": ""
   }
 }
 ```
 
-## User Input Shape
+## Value Handling
 
-```json
-{
-  "entry_price": 410.0,
-  "stop_loss": 385.4,
-  "target_price": 460.0,
-  "exit_logic": "Exit if RSI > 75 or price reaches target.",
-  "risk_level": "medium"
-}
-```
+- Percentage metrics accept either percentage units like `24.5` or decimal form like `0.245`.
+- Ratio metrics should be entered as raw numeric ratios.
+- Categorical metrics must match one of the configured band values in `config/scoring_model.json`.
+- Every scoring metric is required for a valid final score.
+- The parser derives `pe_ratio_relative` from `pe_ratio / pe_ratio_industry_avg`.
+- The parser derives `analyst_sentiment` from `analyst_actions.upgrades` and `analyst_actions.downgrades` when available.
+- If a run fails validation, `outputs/<TICKER>/failure_debug.json` is written with the parser trace and validation issues.

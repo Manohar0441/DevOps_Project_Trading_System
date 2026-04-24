@@ -1,0 +1,64 @@
+{
+  "ticker": "MU",
+  "as_of_date": "2026-04-24",
+  "metrics": {
+    
+    "growth_quality": {
+      "eps_growth_yoy": 180.0,
+      "revenue_growth_yoy": 52.0,
+      "ocf_growth_yoy": 95.0,
+      "ocf_to_net_income": 1.35
+    },
+
+    "profitability": {
+      "operating_margin": 28.5,
+      "net_profit_margin": 22.0,
+      "roic": 16.5,
+      "roe": 18.2
+    },
+
+    "financial_health": {
+      "debt_to_equity": 0.32,
+      "current_ratio": 2.6,
+      "interest_coverage": 9.5
+    },
+
+    "valuation_sanity": {
+      "pe_ratio": 18.5,
+      "pe_ratio_industry_avg": 22.0,
+      "peg_ratio": 0.9,
+      "ev_ebitda": 9.8
+    },
+
+    "monitoring": {
+      "relative_strength": {
+        "status": "strong_outperformance",
+        "outperformance_percent": 18.0
+      },
+      "earnings_vs_guidance": "beat",
+      "analyst_actions": {
+        "upgrades": 18,
+        "downgrades": 5
+      },
+      "volume_trend": "increasing",
+      "gross_margin_trend": "improving",
+      "ocf_vs_net_income_trend": "improving",
+      "capex_percent_sales": 28.0,
+      "customer_concentration_trend": "stable"
+    },
+
+    "risk_exit_signals": {
+      "margin_compression_bps": 0,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "positive",
+      "guidance_change": "raised",
+      "sector_momentum": "positive",
+      "relative_underperformance_percent": -18.0
+    }
+  },
+
+  "metadata": {
+    "source": "estimated blended financials + analyst trends",
+    "analyst": "chatgpt"
+  }
+}
