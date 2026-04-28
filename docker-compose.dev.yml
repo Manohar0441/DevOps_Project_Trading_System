@@ -1,0 +1,124 @@
+version: "3.9"
+
+services:
+  scoring:
+    build:
+      context: .
+      dockerfile: services/scoring_service/Dockerfile
+    container_name: tradingdevops-scoring-dev
+    environment:
+      SCORING_SERVICE_HOST: 0.0.0.0
+      SCORING_SERVICE_PORT: 8000
+      SCORING_OUTPUT_DIR: /app/outputs
+      SCORING_WRITE_OUTPUTS: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config:ro
+      - ./inputs:/app/inputs:ro
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs
+      - ./failed:/app/failed
+      - ./stocks.txt:/app/stocks.txt:ro
+    restart: unless-stopped
+
+  batch:
+    build:
+      context: .
+      dockerfile: services/batch_service/Dockerfile
+    container_name: tradingdevops-batch-dev
+    environment:
+      BATCH_SERVICE_HOST: 0.0.0.0
+      BATCH_SERVICE_PORT: 8001
+      BATCH_OUTPUT_DIR: /app/outputs
+      BATCH_WRITE_OUTPUTS: "true"
+      BATCH_MAX_WORKERS: "4"
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./config:/app/config:ro
+      - ./inputs:/app/inputs:ro
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs
+      - ./failed:/app/failed
+      - ./stocks.txt:/app/stocks.txt:ro
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: services/frontend_service/Dockerfile
+    container_name: tradingdevops-frontend-dev
+    environment:
+      FRONTEND_SERVICE_HOST: 0.0.0.0
+      FRONTEND_SERVICE_PORT: 8080
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  # risk:
+  #   build:
+  #     context: .
+  #     dockerfile: services/risk_service/Dockerfile
+  #   container_name: tradingdevops-risk-dev
+  #   environment:
+  #     RISK_SERVICE_HOST: 0.0.0.0
+  #     RISK_SERVICE_PORT: 8004
+  #     RISK_OUTPUT_DIR: /app/outputs
+  #     RISK_WRITE_OUTPUTS: "true"
+  #   ports:
+  #     - "8004:8004"
+  #   volumes:
+  #     - ./config:/app/config:ro
+  #     - ./inputs:/app/inputs:ro
+  #     - ./outputs:/app/outputs
+  #     - ./logs:/app/logs
+  #     - ./failed:/app/failed
+  #     - ./stocks.txt:/app/stocks.txt:ro
+  #   restart: unless-stopped
+
+  # notification:
+  #   build:
+  #     context: .
+  #     dockerfile: services/notification_service/Dockerfile
+  #   container_name: tradingdevops-notification-dev
+  #   environment:
+  #     NOTIFICATION_SERVICE_HOST: 0.0.0.0
+  #     NOTIFICATION_SERVICE_PORT: 8006
+  #   ports:
+  #     - "8006:8006"
+  #   volumes:
+  #     - ./config:/app/config:ro
+  #     - ./logs:/app/logs
+  #   restart: unless-stopped
+
+
+  # screening:
+  #   build:
+  #     context: .
+  #     dockerfile: services/screening_service/Dockerfile
+  #   container_name: tradingdevops-screening-dev
+  #   environment:
+  #     SCREENING_SERVICE_HOST: 0.0.0.0
+  #     SCREENING_SERVICE_PORT: 8005
+  #   ports:
+  #     - "8005:8005"
+  #   volumes:
+  #     - ./config:/app/config:ro
+  #     - ./logs:/app/logs
+  #   restart: unless-stopped
+
+  # portfolio:
+  #   build:
+  #     context: .
+  #     dockerfile: services/portfolio_service/Dockerfile
+  #   container_name: tradingdevops-portfolio-dev
+  #   environment:
+  #     SCREENING_SERVICE_HOST: 0.0.0.0
+  #     SCREENING_SERVICE_PORT: 8003
+  #   ports:
+  #     - "8003:8003"
+  #   volumes:
+  #     - ./config:/app/config:ro
+  #     - ./logs:/app/logs
+  #   restart: unless-stopped  

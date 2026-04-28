@@ -5,3 +5,4 @@ AMZN
 GOOGL
 GS
 MU
+TSLA
