@@ -18,8 +18,8 @@ services:
       - ./inputs:/app/inputs:ro
       - ./outputs:/app/outputs
       - ./logs:/app/logs
-      - ./failed:/app/failed
-      - ./stocks.txt:/app/stocks.txt:ro
+      - ./inputs:/app/inputs
+      - ./stocks.txt:/app/stocks.txt
     restart: unless-stopped
 
   batch:

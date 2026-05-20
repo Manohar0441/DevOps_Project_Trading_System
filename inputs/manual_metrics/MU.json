@@ -1,57 +1,57 @@
 {
   "ticker": "MU",
-  "as_of_date": "2026-04-24",
+  "as_of_date": "2026-04-28",
   "metrics": {
     "growth_quality": {
-      "eps_growth_yoy": 180,
-      "revenue_growth_yoy": 52,
-      "ocf_growth_yoy": 95,
-      "ocf_to_net_income": 1.35
+      "eps_growth_yoy": null,
+      "revenue_growth_yoy": null,
+      "ocf_growth_yoy": null,
+      "ocf_to_net_income": null
     },
     "profitability": {
-      "operating_margin": 28.5,
-      "net_profit_margin": 22,
-      "roic": 16.5,
-      "roe": 18.2
+      "operating_margin": null,
+      "net_profit_margin": null,
+      "roic": null,
+      "roe": null
     },
     "financial_health": {
-      "debt_to_equity": 0.32,
-      "current_ratio": 2.6,
-      "interest_coverage": 9.5
+      "debt_to_equity": null,
+      "current_ratio": null,
+      "interest_coverage": null
     },
     "valuation_sanity": {
-      "pe_ratio": 18.5,
-      "pe_ratio_industry_avg": 22,
-      "peg_ratio": 0.9,
-      "ev_ebitda": 9.8
+      "pe_ratio": null,
+      "pe_ratio_industry_avg": null,
+      "peg_ratio": null,
+      "ev_ebitda": null
     },
     "monitoring": {
       "relative_strength": {
-        "status": "strong_outperformance",
-        "outperformance_percent": 18
+        "status": "",
+        "outperformance_percent": null
       },
-      "earnings_vs_guidance": "beat",
+      "earnings_vs_guidance": "",
       "analyst_actions": {
-        "upgrades": 18,
-        "downgrades": 5
+        "upgrades": null,
+        "downgrades": null
       },
-      "volume_trend": "increasing",
-      "gross_margin_trend": "improving",
-      "ocf_vs_net_income_trend": "improving",
-      "capex_percent_sales": 28,
-      "customer_concentration_trend": "stable"
+      "volume_trend": "",
+      "gross_margin_trend": "",
+      "ocf_vs_net_income_trend": "",
+      "capex_percent_sales": null,
+      "customer_concentration_trend": ""
     },
     "risk_exit_signals": {
-      "margin_compression_bps": 0,
+      "margin_compression_bps": null,
       "ocf_less_than_net_income": false,
-      "analyst_sentiment_shift": "positive",
-      "guidance_change": "raised",
-      "sector_momentum": "positive",
-      "relative_underperformance_percent": -18
+      "analyst_sentiment_shift": "",
+      "guidance_change": "",
+      "sector_momentum": "",
+      "relative_underperformance_percent": null
     }
   },
   "metadata": {
-    "source": "estimated blended financials + analyst trends",
-    "analyst": "chatgpt"
+    "source": "frontend-manual-entry",
+    "analyst": ""
   }
 }
