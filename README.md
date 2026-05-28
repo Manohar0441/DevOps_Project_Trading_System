@@ -1179,3 +1179,43 @@ volumes:
 
 **Grafana login:** `admin / admin`
 The production dashboard opens automatically — no navigation needed.
+
+
+
+
+TO RUN : 
+# ── 1. Infra ──────────────────────────────────────────────
+cd infra/terraform && terraform apply -auto-approve && cd ../..
+
+# ── 2. kubectl ───────────────────────────────────────────
+aws eks update-kubeconfig --region ap-south-1 --name trading-devops-cluster
+
+# ── 3. ConfigMap (edit the file first with terraform output values) ──
+kubectl apply -f infra/k8s/namespace.yaml
+kubectl apply -f infra/k8s/monitoring/namespace.yaml
+kubectl apply -f infra/k8s/configmap.yaml
+
+# ── 4. ECR login + build + push ──────────────────────────
+ECR_PWD=$(aws ecr get-login-password --region ap-south-1)
+docker login --username AWS --password "$ECR_PWD" \
+  951151047337.dkr.ecr.ap-south-1.amazonaws.com
+
+REGISTRY=951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops
+for SERVICE in scoring-service batch-service frontend-service \
+               portfolio-service risk-service screening-service \
+               notification-service; do
+  DIR="${SERVICE//-/_}"
+  docker build -f "services/${DIR}/Dockerfile" -t "$REGISTRY/$SERVICE:latest" .
+  docker push "$REGISTRY/$SERVICE:latest"
+done
+
+# ── 5. Deploy ─────────────────────────────────────────────
+kubectl apply -f infra/k8s/monitoring/prometheus.yaml
+kubectl apply -f infra/k8s/monitoring/grafana.yaml
+kubectl apply -f infra/k8s/apps.yaml
+
+# ── 6. Check ──────────────────────────────────────────────
+kubectl get pods -n trading-devops
+kubectl get pods -n monitoring
+kubectl get svc  -n trading-devops frontend-service
+kubectl get svc  -n monitoring     grafana
