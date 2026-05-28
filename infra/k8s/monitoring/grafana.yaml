@@ -1,0 +1,448 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+  namespace: monitoring
+data:
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus:9090
+        access: proxy
+        isDefault: true
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-provider
+  namespace: monitoring
+data:
+  provider.yaml: |
+    apiVersion: 1
+    providers:
+      - name: trading-devops
+        orgId: 1
+        folder: Trading DevOps
+        type: file
+        disableDeletion: false
+        updateIntervalSeconds: 30
+        options:
+          path: /etc/grafana/provisioning/dashboards
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: monitoring
+data:
+  trading-services.json: |
+    {
+      "title": "Trading DevOps — Production",
+      "uid": "trading-devops-prod-v2",
+      "schemaVersion": 38,
+      "version": 2,
+      "refresh": "30s",
+      "time": { "from": "now-3h", "to": "now" },
+      "timezone": "browser",
+      "tags": ["trading", "devops", "production"],
+      "editable": true,
+      "panels": [
+        {
+          "id": 1, "type": "row", "title": "Fleet Health",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+        },
+        {
+          "id": 2, "title": "scoring-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 0, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"scoring-service\"}", "legendFormat": "scoring", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 3, "title": "batch-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 3, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"batch-service\"}", "legendFormat": "batch", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 4, "title": "frontend-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 6, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"frontend-service\"}", "legendFormat": "frontend", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 5, "title": "portfolio-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 9, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"portfolio-service\"}", "legendFormat": "portfolio", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 6, "title": "risk-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 12, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"risk-service\"}", "legendFormat": "risk", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 7, "title": "screening-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 15, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"screening-service\"}", "legendFormat": "screening", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 8, "title": "notification-service", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 18, "y": 1 },
+          "targets": [{ "expr": "service_up{service=\"notification-service\"}", "legendFormat": "notification", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }, "mappings": [{ "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }] } }
+        },
+        {
+          "id": 9, "title": "Services Healthy", "type": "stat",
+          "gridPos": { "h": 3, "w": 3, "x": 21, "y": 1 },
+          "targets": [{ "expr": "sum(service_up)", "legendFormat": "/ 7", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 1 }, { "color": "green", "value": 7 }] } } }
+        },
+        {
+          "id": 10, "type": "row", "title": "HTTP Traffic",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 }
+        },
+        {
+          "id": 11, "title": "Request Rate by Service (req/s)", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 14, "x": 0, "y": 5 },
+          "targets": [{ "expr": "sum by (service) (rate(http_requests_total[5m]))", "legendFormat": "{{service}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2, "fillOpacity": 10, "spanNulls": false } } },
+          "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 12, "title": "HTTP Error Rate % by Service", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 10, "x": 14, "y": 5 },
+          "targets": [{ "expr": "100 * sum by (service) (rate(http_requests_total{status_code=~\"[45]..\"}[5m])) / clamp_min(sum by (service) (rate(http_requests_total[5m])), 0.001)", "legendFormat": "{{service}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "lineWidth": 2, "fillOpacity": 10 }, "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 5 }] } } },
+          "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 13, "title": "In-Flight Requests by Service", "type": "stat",
+          "gridPos": { "h": 5, "w": 8, "x": 0, "y": 13 },
+          "targets": [{ "expr": "sum by (service) (http_requests_in_flight)", "legendFormat": "{{service}}", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "none", "orientation": "horizontal" },
+          "fieldConfig": { "defaults": { "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 10 }, { "color": "red", "value": 50 }] } } }
+        },
+        {
+          "id": 14, "title": "Cumulative Requests per Service", "type": "bargauge",
+          "gridPos": { "h": 5, "w": 16, "x": 8, "y": 13 },
+          "targets": [{ "expr": "sum by (service) (http_requests_total)", "legendFormat": "{{service}}", "refId": "A", "instant": true }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "orientation": "horizontal", "displayMode": "lcd" },
+          "fieldConfig": { "defaults": { "unit": "short", "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] } } }
+        },
+        {
+          "id": 15, "type": "row", "title": "Latency (P50 / P95 / P99)",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 }
+        },
+        {
+          "id": 16, "title": "P50 Request Latency by Service", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 19 },
+          "targets": [{ "expr": "histogram_quantile(0.5, sum by (service, le) (rate(http_request_duration_seconds_bucket[5m])))", "legendFormat": "{{service}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2, "fillOpacity": 10, "spanNulls": false } } },
+          "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 17, "title": "P95 Request Latency by Service", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 8, "y": 19 },
+          "targets": [{ "expr": "histogram_quantile(0.95, sum by (service, le) (rate(http_request_duration_seconds_bucket[5m])))", "legendFormat": "{{service}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2, "fillOpacity": 10, "spanNulls": false }, "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.5 }, { "color": "red", "value": 1.0 }] } } },
+          "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 18, "title": "P99 Request Latency by Service", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 19 },
+          "targets": [{ "expr": "histogram_quantile(0.99, sum by (service, le) (rate(http_request_duration_seconds_bucket[5m])))", "legendFormat": "{{service}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2, "fillOpacity": 10, "spanNulls": false } } },
+          "options": { "tooltip": { "mode": "multi", "sort": "desc" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 19, "type": "row", "title": "Scoring Analytics",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 27 }
+        },
+        {
+          "id": 20, "title": "Scoring Outcomes Rate (pass / fail / error)", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 28 },
+          "targets": [{ "expr": "rate(scoring_requests_total[5m])", "legendFormat": "{{outcome}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 21, "title": "Scoring Pass Rate %", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 12, "y": 28 },
+          "targets": [{ "expr": "100 * rate(scoring_requests_total{outcome=\"pass\"}[5m]) / clamp_min(sum(rate(scoring_requests_total[5m])), 0.001)", "legendFormat": "Pass Rate %", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "lineWidth": 2, "fillOpacity": 20 }, "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "yellow", "value": 50 }, { "color": "green", "value": 80 }] } } },
+          "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 22, "title": "Pipeline Duration P95", "type": "stat",
+          "gridPos": { "h": 4, "w": 4, "x": 20, "y": 28 },
+          "targets": [{ "expr": "histogram_quantile(0.95, rate(scoring_pipeline_duration_seconds_bucket[5m]))", "legendFormat": "P95", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area", "textMode": "value_and_name" },
+          "fieldConfig": { "defaults": { "unit": "s", "noValue": "N/A", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 0.5 }, { "color": "red", "value": 1.0 }] } } }
+        },
+        {
+          "id": 23, "title": "Stocks Registered (total)", "type": "stat",
+          "gridPos": { "h": 4, "w": 4, "x": 20, "y": 32 },
+          "targets": [{ "expr": "stocks_registered_total", "legendFormat": "Tickers", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
+          "fieldConfig": { "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] } } }
+        },
+        {
+          "id": 24, "type": "row", "title": "Risk Operations",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 36 }
+        },
+        {
+          "id": 25, "title": "Risk Evaluations by Outcome", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 37 },
+          "targets": [{ "expr": "rate(risk_evaluations_total[5m])", "legendFormat": "{{outcome}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 26, "title": "Profit Lock Signals Rate", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 12, "y": 37 },
+          "targets": [{ "expr": "rate(risk_profit_lock_signals_total[5m])", "legendFormat": "Signals/s", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 20 } } },
+          "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 27, "title": "Macro Caution Flags Rate", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 18, "y": 37 },
+          "targets": [{ "expr": "rate(risk_macro_flags_total[5m])", "legendFormat": "Flags/s", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 20 } } },
+          "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 28, "title": "BREACH Evaluations (total)", "type": "stat",
+          "gridPos": { "h": 4, "w": 8, "x": 0, "y": 45 },
+          "targets": [{ "expr": "risk_evaluations_total{outcome=\"BREACH\"}", "legendFormat": "BREACH", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "area" },
+          "fieldConfig": { "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 5 }] } } }
+        },
+        {
+          "id": 29, "title": "Profit Lock Signals (total)", "type": "stat",
+          "gridPos": { "h": 4, "w": 8, "x": 8, "y": 45 },
+          "targets": [{ "expr": "risk_profit_lock_signals_total", "legendFormat": "Signals", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
+          "fieldConfig": { "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] } } }
+        },
+        {
+          "id": 30, "title": "Macro Flags Raised (total)", "type": "stat",
+          "gridPos": { "h": 4, "w": 8, "x": 16, "y": 45 },
+          "targets": [{ "expr": "risk_macro_flags_total", "legendFormat": "Flags", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
+          "fieldConfig": { "defaults": { "unit": "short", "noValue": "0", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 10 }] } } }
+        },
+        {
+          "id": 31, "type": "row", "title": "Batch Processing",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 49 }
+        },
+        {
+          "id": 32, "title": "Batch Jobs by Status", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 50 },
+          "targets": [{ "expr": "rate(batch_jobs_total[5m])", "legendFormat": "{{status}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 33, "title": "Batch Stocks Processed by Status", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 8, "y": 50 },
+          "targets": [{ "expr": "rate(batch_stocks_processed_total[5m])", "legendFormat": "{{status}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 34, "title": "Batch Job Duration P95 (s)", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 50 },
+          "targets": [{ "expr": "histogram_quantile(0.95, rate(batch_job_duration_seconds_bucket[5m]))", "legendFormat": "P95", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "s", "custom": { "lineWidth": 2, "fillOpacity": 10 }, "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 30 }, { "color": "red", "value": 120 }] } } },
+          "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 35, "type": "row", "title": "Screening & Portfolio",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 58 }
+        },
+        {
+          "id": 36, "title": "Screening Requests by Status", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 59 },
+          "targets": [{ "expr": "rate(screening_requests_total[5m])", "legendFormat": "{{status}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 37, "title": "Portfolio Allocations by Status", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 59 },
+          "targets": [{ "expr": "rate(portfolio_allocations_total[5m])", "legendFormat": "{{status}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 38, "title": "Candidates Evaluated Rate", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 67 },
+          "targets": [{ "expr": "rate(screening_candidates_evaluated_total[5m])", "legendFormat": "candidates/s", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 39, "title": "Positions Allocated Rate", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 67 },
+          "targets": [{ "expr": "rate(portfolio_positions_allocated_total[5m])", "legendFormat": "positions/s", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 40, "type": "row", "title": "Notifications & Messaging",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 75 }
+        },
+        {
+          "id": 41, "title": "Notifications Dispatched by Channel", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 76 },
+          "targets": [{ "expr": "rate(notifications_dispatched_total[5m])", "legendFormat": "{{channel}} ({{status}})", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 42, "title": "SQS Messages Consumed", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 12, "y": 76 },
+          "targets": [{ "expr": "rate(sqs_messages_consumed_total[5m])", "legendFormat": "{{queue}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 43, "title": "SQS Messages Failed", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 18, "y": 76 },
+          "targets": [{ "expr": "rate(sqs_messages_failed_total[5m])", "legendFormat": "{{queue}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 }, "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 0.01 }] } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 44, "type": "row", "title": "System Resources",
+          "collapsed": false, "panels": [],
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 84 }
+        },
+        {
+          "id": 45, "title": "Resident Memory by Pod", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 85 },
+          "targets": [{ "expr": "process_resident_memory_bytes", "legendFormat": "{{instance}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 46, "title": "CPU Usage by Pod (cores)", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 85 },
+          "targets": [{ "expr": "rate(process_cpu_seconds_total[5m])", "legendFormat": "{{instance}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "percentunit", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 47, "title": "Open File Descriptors by Pod", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 93 },
+          "targets": [{ "expr": "process_open_fds", "legendFormat": "{{instance}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 }, "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 100 }, { "color": "red", "value": 500 }] } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 48, "title": "Python GC Collections Rate", "type": "timeseries",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 93 },
+          "targets": [{ "expr": "rate(python_gc_collections_total[5m])", "legendFormat": "gen{{generation}} {{instance}}", "refId": "A" }],
+          "fieldConfig": { "defaults": { "unit": "short", "custom": { "lineWidth": 2, "fillOpacity": 10 } } },
+          "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+        },
+        {
+          "id": 49, "title": "Process Start Times (uptime)", "type": "table",
+          "gridPos": { "h": 6, "w": 24, "x": 0, "y": 101 },
+          "targets": [{ "expr": "process_start_time_seconds", "legendFormat": "{{instance}}", "refId": "A", "instant": true, "format": "table" }],
+          "fieldConfig": { "defaults": { "unit": "dateTimeFromNow" }, "overrides": [] },
+          "options": { "sortBy": [{ "displayName": "Value", "desc": false }], "footer": { "show": false } },
+          "transformations": [{ "id": "organize", "options": {} }]
+        }
+      ]
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:10.4.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: "admin"
+            - name: GF_USERS_ALLOW_SIGN_UP
+              value: "false"
+            - name: GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH
+              value: "/etc/grafana/provisioning/dashboards/trading-devops/trading-services.json"
+          volumeMounts:
+            - name: datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: dashboard-provider
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: dashboards
+              mountPath: /etc/grafana/provisioning/dashboards/trading-devops
+            - name: storage
+              mountPath: /var/lib/grafana
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 300m
+              memory: 512Mi
+      volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboard-provider
+          configMap:
+            name: grafana-dashboard-provider
+        - name: dashboards
+          configMap:
+            name: grafana-dashboards
+        - name: storage
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  type: LoadBalancer
+  selector:
+    app: grafana
+  ports:
+    - port: 80
+      targetPort: 3000

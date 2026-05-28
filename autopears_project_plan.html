@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Peers — DevOps Project Plan</title>
+<style>
+  :root {
+    --navy: #0f2342;
+    --blue: #1a5fb4;
+    --blue-light: #3584e4;
+    --teal: #0d7d7d;
+    --teal-light: #e6f5f5;
+    --accent: #e8a020;
+    --bg: #f7f8fc;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --muted: #5c6b82;
+    --border: #d8e0ee;
+    --code-bg: #1e2233;
+    --code-text: #cdd6f4;
+    --green: #2e7d32;
+    --green-light: #e8f5e9;
+    --purple: #6a0dad;
+    --purple-light: #f3e8ff;
+    --coral: #c0392b;
+    --coral-light: #fdecea;
+    --amber-light: #fff8e1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a6b 60%, #0d5b8c 100%);
+    color: white;
+    padding: 56px 0 48px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px; }
+  header p.subtitle { font-size: 1.15rem; opacity: 0.82; margin-bottom: 28px; }
+  .badge-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV TABS */
+  .nav-tabs {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .nav-tabs-inner {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 14px 18px;
+    border: none;
+    background: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--blue); }
+  .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* SECTIONS */
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h2 .phase-num {
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 28px 0 10px;
+  }
+  .section-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .tag {
+    background: var(--teal-light);
+    color: var(--teal);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .goal-box {
+    background: var(--amber-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: #4a3500;
+  }
+  p { margin-bottom: 14px; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 16px 0 24px; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead tr { background: var(--navy); color: white; }
+  thead th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; }
+  tbody tr:nth-child(even) { background: #f0f5ff; }
+  tbody tr:hover { background: #e4edff; }
+  tbody td { padding: 11px 16px; border-top: 1px solid var(--border); vertical-align: top; }
+  .tag-green { background: var(--green-light); color: var(--green); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; }
+  .tag-blue { background: #e3f0ff; color: var(--blue); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; }
+  .tag-purple { background: var(--purple-light); color: var(--purple); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; }
+  .tag-coral { background: var(--coral-light); color: var(--coral); border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 10px;
+    padding: 20px 22px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+    margin: 12px 0 24px;
+    position: relative;
+  }
+  .code-block .code-label {
+    position: absolute;
+    top: 10px; right: 14px;
+    font-size: 11px;
+    color: #6e7a9a;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .code-block pre { white-space: pre; }
+
+  /* LISTS */
+  ul.checklist { list-style: none; margin: 0 0 20px; padding: 0; }
+  ul.checklist li {
+    padding: 8px 12px 8px 36px;
+    position: relative;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 14px;
+  }
+  ul.checklist li::before {
+    content: '✓';
+    position: absolute;
+    left: 12px;
+    color: var(--teal);
+    font-weight: 700;
+  }
+  ul.plain { list-style: none; padding: 0; margin: 0 0 20px; }
+  ul.plain li {
+    padding: 6px 12px 6px 28px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text);
+  }
+  ul.plain li::before {
+    content: '→';
+    position: absolute;
+    left: 8px;
+    color: var(--blue-light);
+    font-weight: 700;
+  }
+
+  /* PHASE OVERVIEW CARDS */
+  .phase-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 28px 0; }
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    border-top: 4px solid var(--blue);
+  }
+  .phase-card .pnum { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .phase-card .ptitle { font-size: 15px; font-weight: 700; color: var(--navy); margin: 6px 0 4px; }
+  .phase-card .pdur { font-size: 12px; color: var(--muted); }
+  .phase-card .ptools { margin-top: 8px; font-size: 12px; color: var(--blue); font-weight: 600; }
+
+  /* SERVICE GRID */
+  .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .service-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--blue);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .service-card .sname { font-weight: 700; font-size: 14px; color: var(--navy); font-family: monospace; }
+  .service-card .sdesc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* BRANCH MAP */
+  .branch-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .branch-name { font-family: monospace; font-weight: 700; color: var(--purple); min-width: 110px; }
+  .arrow-right { color: var(--muted); font-size: 18px; }
+  .env-name { font-weight: 600; color: var(--navy); min-width: 180px; }
+  .trigger-badge {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .trigger-auto { background: var(--green-light); color: var(--green); }
+  .trigger-manual { background: var(--coral-light); color: var(--coral); }
+
+  /* RESUME TABLE */
+  .resume-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
+  .resume-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .resume-tech {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--navy);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tech-badge {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    width: fit-content;
+  }
+  .resume-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .resume-text { font-size: 14px; color: var(--text); }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 32px; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 700px) {
+    header h1 { font-size: 1.9rem; }
+    .resume-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Auto Peers</h1>
+  <p class="subtitle">Full-Stack DevOps Project Plan</p>
+  <div class="badge-row">
+    <span class="badge">Docker</span>
+    <span class="badge">Kubernetes</span>
+    <span class="badge">Terraform</span>
+    <span class="badge">AWS</span>
+    <span class="badge">Jenkins</span>
+    <span class="badge">10 Weeks</span>
+  </div>
+</header>
+
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="tab-btn active" onclick="scrollTo('overview')">Overview</button>
+    <button class="tab-btn" onclick="scrollTo('phase1')">Phase 1 — Docker</button>
+    <button class="tab-btn" onclick="scrollTo('phase2')">Phase 2 — Terraform</button>
+    <button class="tab-btn" onclick="scrollTo('phase3')">Phase 3 — K8s</button>
+    <button class="tab-btn" onclick="scrollTo('phase4')">Phase 4 — Jenkins</button>
+    <button class="tab-btn" onclick="scrollTo('phase5')">Phase 5 — Go-Live</button>
+    <button class="tab-btn" onclick="scrollTo('resume')">Resume Alignment</button>
+  </div>
+</nav>
+
+<!-- ── OVERVIEW ─────────────────────────────────────────────── -->
+<section id="overview">
+<div class="container">
+  <h2><span class="phase-num">★</span> Project Overview</h2>
+  <p style="margin:10px 0 24px;color:var(--muted);font-size:14px;">Production-grade cloud deployment for the Auto Peers Python-based financial screening, scoring, and portfolio management platform. Five core technologies — five phases — ten weeks.</p>
+
+  <div class="phase-cards">
+    <div class="phase-card">
+      <div class="pnum">Phase 1</div>
+      <div class="ptitle">Docker Containerisation</div>
+      <div class="pdur">Week 1 – 2</div>
+      <div class="ptools">Docker · ECR</div>
+    </div>
+    <div class="phase-card">
+      <div class="pnum">Phase 2</div>
+      <div class="ptitle">AWS Infrastructure</div>
+      <div class="pdur">Week 3 – 4</div>
+      <div class="ptools">Terraform · AWS</div>
+    </div>
+    <div class="phase-card">
+      <div class="pnum">Phase 3</div>
+      <div class="ptitle">Kubernetes on EKS</div>
+      <div class="pdur">Week 5 – 6</div>
+      <div class="ptools">K8s · EKS</div>
+    </div>
+    <div class="phase-card">
+      <div class="pnum">Phase 4</div>
+      <div class="ptitle">Jenkins CI/CD</div>
+      <div class="pdur">Week 7 – 8</div>
+      <div class="ptools">Jenkins · Docker</div>
+    </div>
+    <div class="phase-card">
+      <div class="pnum">Phase 5</div>
+      <div class="ptitle">Monitoring & Go-Live</div>
+      <div class="pdur">Week 9 – 10</div>
+      <div class="ptools">CloudWatch · X-Ray</div>
+    </div>
+  </div>
+
+  <h3>Microservices Inventory</h3>
+  <div class="service-grid">
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">batch_service</div><div class="sdesc">Scheduled data ingestion and bulk processing jobs</div></div></div>
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">screening_service</div><div class="sdesc">Stock screening engine (filters from stocks.txt)</div></div></div>
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">scoring_service</div><div class="sdesc">Numerical scoring and ranking engine</div></div></div>
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">risk_service</div><div class="sdesc">Volatility, VaR, and drawdown calculations</div></div></div>
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">portfolio_service</div><div class="sdesc">Portfolio construction and rebalancing logic</div></div></div>
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">notification_service</div><div class="sdesc">Alerting and report dispatch</div></div></div>
+    <div class="service-card"><div class="service-dot"></div><div><div class="sname">frontend_service</div><div class="sdesc">Web UI layer (via auto_peers_web.py)</div></div></div>
+    <div class="service-card"><div class="service-dot" style="background:var(--muted)"></div><div><div class="sname">common</div><div class="sdesc">Shared utilities, models, and DB clients</div></div></div>
+  </div>
+
+  <h3>Architecture — Traffic Flow</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Step</th><th>Component</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Client DNS lookup resolves to ALB</td><td><span class="tag-coral">Route 53</span></td></tr>
+        <tr><td>2</td><td>Request inspected before reaching ALB</td><td><span class="tag-coral">AWS WAF</span></td></tr>
+        <tr><td>3</td><td>ALB routes to K8s Ingress</td><td><span class="tag-blue">ALB → NGINX Ingress</span></td></tr>
+        <tr><td>4</td><td>Ingress dispatches to frontend pod</td><td><span class="tag-blue">frontend_service</span></td></tr>
+        <tr><td>5</td><td>Frontend calls downstream services via ClusterIP</td><td><span class="tag-blue">screening / scoring / risk</span></td></tr>
+        <tr><td>6</td><td>Services query managed data layer</td><td><span class="tag-green">RDS + ElastiCache</span></td></tr>
+        <tr><td>7</td><td>Batch jobs consume SQS messages, write to S3</td><td><span class="tag-green">SQS + S3</span></td></tr>
+        <tr><td>8</td><td>Notifications dispatched from DLQ</td><td><span class="tag-blue">notification_service</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ── PHASE 1 — DOCKER ──────────────────────────────────────── -->
+<section id="phase1">
+<div class="container">
+  <h2><span class="phase-num">1</span> Docker Containerisation</h2>
+  <div class="section-meta"><span class="tag">Week 1–2</span><span>Docker · AWS ECR · docker-compose</span></div>
+  <div class="goal-box">Goal: Every service runs inside a reproducible, minimal Docker image. Extend the existing docker-compose.dev.yml to cover all 8 services and publish production-grade images to ECR.</div>
+
+  <h3>Image Strategy</h3>
+  <ul class="plain">
+    <li>Base image: <strong>python:3.11-slim</strong> — minimise attack surface</li>
+    <li>Multi-stage builds: builder stage installs deps, final stage copies artefacts only</li>
+    <li>Non-root USER (appuser) in all images — required by EKS pod security policies</li>
+    <li>One Dockerfile per service: <code>services/&lt;name&gt;/Dockerfile</code></li>
+    <li>Shared base image in ECR: <code>&lt;account&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/autopears/base</code></li>
+  </ul>
+
+  <h3>Dockerfile Template (apply to all 8 services)</h3>
+  <div class="code-block"><span class="code-label">Dockerfile</span><pre># ── Stage 1: builder ─────────────────────────────────────
+FROM python:3.11-slim AS builder
+WORKDIR /app
+COPY services/common ./common
+COPY services/&lt;service_name&gt;/requirements.txt .
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+
+# ── Stage 2: production image ─────────────────────────────
+FROM python:3.11-slim
+WORKDIR /app
+RUN addgroup --system appgroup && \
+    adduser --system --ingroup appgroup appuser
+COPY --from=builder /install /usr/local
+COPY services/common ./common
+COPY services/&lt;service_name&gt; ./&lt;service_name&gt;
+USER appuser
+EXPOSE 8000
+CMD ["python", "-m", "&lt;service_name&gt;.main"]</pre></div>
+
+  <h3>docker-compose.dev.yml — Extended</h3>
+  <div class="code-block"><span class="code-label">YAML</span><pre>version: '3.9'
+services:
+
+  frontend_service:
+    build: { context: ., dockerfile: services/frontend_service/Dockerfile }
+    ports: ['8080:8000']
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+      - REDIS_URL=redis://redis:6379
+    depends_on: [postgres, redis]
+
+  screening_service:
+    build: { context: ., dockerfile: services/screening_service/Dockerfile }
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+      - REDIS_URL=redis://redis:6379
+
+  scoring_service:
+    build: { context: ., dockerfile: services/scoring_service/Dockerfile }
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+      - REDIS_URL=redis://redis:6379
+
+  risk_service:
+    build: { context: ., dockerfile: services/risk_service/Dockerfile }
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+
+  portfolio_service:
+    build: { context: ., dockerfile: services/portfolio_service/Dockerfile }
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+
+  notification_service:
+    build: { context: ., dockerfile: services/notification_service/Dockerfile }
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+      - SQS_QUEUE_URL=http://localstack:4566/000000000000/autopears-notif
+
+  batch_service:
+    build: { context: ., dockerfile: services/batch_service/Dockerfile }
+    environment:
+      - DATABASE_URL=postgresql://dev:dev@postgres:5432/autopears
+      - SQS_QUEUE_URL=http://localstack:4566/000000000000/autopears-batch
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: autopears
+    volumes: ['pgdata:/var/lib/postgresql/data']
+
+  redis:
+    image: redis:7-alpine
+
+volumes:
+  pgdata:</pre></div>
+
+  <h3>.dockerignore</h3>
+  <div class="code-block"><span class="code-label">.dockerignore</span><pre>venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+logs/
+outputs/
+.git/
+.gitignore
+*.md
+run_all.ps1</pre></div>
+
+  <h3>Phase 1 Checklist</h3>
+  <ul class="checklist">
+    <li>Write Dockerfile for each of the 8 services following the multi-stage template</li>
+    <li>Run: <code>docker compose -f docker-compose.dev.yml up --build</code> — all services start</li>
+    <li>Run <code>docker scout cves</code> on each image — remediate HIGH/CRITICAL findings</li>
+    <li>Create ECR repos: <code>aws ecr create-repository --repository-name autopears/&lt;service&gt;</code></li>
+    <li>Push images: <code>docker tag ... &amp;&amp; docker push ...</code></li>
+    <li>Verify .dockerignore excludes venv/, logs/, outputs/, __pycache__</li>
+  </ul>
+</div>
+</section>
+
+<!-- ── PHASE 2 — TERRAFORM ───────────────────────────────────── -->
+<section id="phase2">
+<div class="container">
+  <h2><span class="phase-num">2</span> Terraform &amp; AWS Infrastructure</h2>
+  <div class="section-meta"><span class="tag">Week 3–4</span><span>Terraform · VPC · EKS · RDS · ElastiCache · S3 · SQS · WAF · IAM</span></div>
+  <div class="goal-box">Goal: All cloud resources defined as code in infra/terraform/, deployed across three isolated environments. Terraform state stored in S3 with DynamoDB locking.</div>
+
+  <h3>Module Sizing per Environment</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Module</th><th>Dev</th><th>Staging</th><th>Prod</th></tr></thead>
+      <tbody>
+        <tr><td><strong>vpc</strong></td><td>10.0.0.0/16</td><td>10.1.0.0/16</td><td>10.2.0.0/16</td></tr>
+        <tr><td><strong>eks</strong></td><td>t3.medium × 2</td><td>t3.large × 3</td><td>m5.xlarge × 4+</td></tr>
+        <tr><td><strong>rds</strong></td><td>db.t3.micro</td><td>db.t3.medium</td><td>db.r6g.large Multi-AZ</td></tr>
+        <tr><td><strong>elasticache</strong></td><td>cache.t3.micro</td><td>cache.t3.small</td><td>cache.m6g.large cluster</td></tr>
+        <tr><td><strong>s3</strong></td><td>1 bucket</td><td>2 buckets</td><td>3 buckets + lifecycle</td></tr>
+        <tr><td><strong>sqs</strong></td><td>1 queue</td><td>1 queue + DLQ</td><td>2 queues + DLQ + KMS</td></tr>
+        <tr><td><strong>waf</strong></td><td>managed rules</td><td>managed + custom</td><td>managed + custom + rate limit</td></tr>
+        <tr><td><strong>iam</strong></td><td>basic roles</td><td>IRSA + Jenkins</td><td>IRSA + Jenkins + SCPs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Bootstrap (run once — creates state bucket)</h3>
+  <div class="code-block"><span class="code-label">HCL — bootstrap/main.tf</span><pre>resource "aws_s3_bucket" "tfstate" {
+  bucket = "autopears-tfstate-${var.account_id}"
+  versioning { enabled = true }
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+}
+
+resource "aws_dynamodb_table" "tflock" {
+  name         = "autopears-tflock"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
+  attribute { name = "LockID" type = "S" }
+}</pre></div>
+
+  <h3>environments/dev/main.tf</h3>
+  <div class="code-block"><span class="code-label">HCL — environments/dev/main.tf</span><pre>terraform {
+  backend "s3" {
+    bucket         = "autopears-tfstate-&lt;account_id&gt;"
+    key            = "dev/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "autopears-tflock"
+  }
+}
+
+module "vpc" {
+  source      = "../../modules/vpc"
+  environment = "dev"
+  cidr        = "10.0.0.0/16"
+}
+
+module "eks" {
+  source          = "../../modules/eks"
+  cluster_name    = "autopears-dev"
+  vpc_id          = module.vpc.vpc_id
+  private_subnets = module.vpc.private_subnet_ids
+  instance_type   = "t3.medium"
+  desired_size    = 2
+  min_size        = 1
+  max_size        = 4
+}
+
+module "rds" {
+  source         = "../../modules/rds"
+  identifier     = "autopears-dev"
+  instance_class = "db.t3.micro"
+  vpc_id         = module.vpc.vpc_id
+  subnet_ids     = module.vpc.private_subnet_ids
+  multi_az       = false
+}
+
+module "elasticache" {
+  source     = "../../modules/elasticache"
+  cluster_id = "autopears-dev"
+  node_type  = "cache.t3.micro"
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnet_ids
+}
+
+module "s3" {
+  source      = "../../modules/s3"
+  environment = "dev"
+  buckets     = ["autopears-dev-outputs"]
+}
+
+module "sqs" {
+  source      = "../../modules/sqs"
+  environment = "dev"
+  queues      = ["autopears-dev-batch"]
+}
+
+module "waf" {
+  source      = "../../modules/waf"
+  environment = "dev"
+  alb_arn     = module.eks.alb_arn
+}
+
+module "iam" {
+  source           = "../../modules/iam"
+  environment      = "dev"
+  eks_cluster_name = module.eks.cluster_name
+  oidc_provider    = module.eks.oidc_provider
+}</pre></div>
+
+  <h3>WAF Rules (all environments)</h3>
+  <ul class="plain">
+    <li>AWSManagedRulesCommonRuleSet — OWASP Top 10 baseline</li>
+    <li>AWSManagedRulesSQLiRuleSet — SQL injection protection</li>
+    <li>AWSManagedRulesKnownBadInputsRuleSet — XSS and path traversal</li>
+    <li>Custom rate-limit rule: 2 000 req / 5 min per IP (prod only)</li>
+  </ul>
+
+  <h3>Deploy Commands (per environment)</h3>
+  <div class="code-block"><span class="code-label">bash</span><pre>cd infra/terraform/environments/dev
+terraform init
+terraform plan  -out=dev.tfplan
+terraform apply dev.tfplan
+
+# Export outputs for K8s configs
+terraform output -json > ../../../k8s/env-dev-outputs.json</pre></div>
+</div>
+</section>
+
+<!-- ── PHASE 3 — K8S ─────────────────────────────────────────── -->
+<section id="phase3">
+<div class="container">
+  <h2><span class="phase-num">3</span> Kubernetes on EKS</h2>
+  <div class="section-meta"><span class="tag">Week 5–6</span><span>K8s 1.29+ · EKS · HPA · IRSA · External Secrets</span></div>
+  <div class="goal-box">Goal: All 8 services deployed as Kubernetes workloads. infra/k8s/ expanded with Deployments, Services, HPA, and External Secrets wired to AWS Secrets Manager.</div>
+
+  <h3>Replica Count per Environment</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Service</th><th>Dev</th><th>Staging</th><th>Prod</th></tr></thead>
+      <tbody>
+        <tr><td>frontend-service</td><td>1</td><td>2</td><td>3</td></tr>
+        <tr><td>screening-service</td><td>1</td><td>2</td><td>2 → 8 (HPA)</td></tr>
+        <tr><td>scoring-service</td><td>1</td><td>2</td><td>2 → 8 (HPA)</td></tr>
+        <tr><td>risk-service</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td>portfolio-service</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td>notification-service</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td>batch-service</td><td>1</td><td>1</td><td>2 (spot nodes)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>namespace.yaml</h3>
+  <div class="code-block"><span class="code-label">YAML — infra/k8s/namespace.yaml</span><pre>apiVersion: v1
+kind: Namespace
+metadata:
+  name: autopears-prod
+  labels:
+    environment: prod
+    app.kubernetes.io/managed-by: terraform
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: autopears-staging
+  labels:
+    environment: staging
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: autopears-dev
+  labels:
+    environment: dev</pre></div>
+
+  <h3>apps.yaml — Deployment Pattern (repeat for each service)</h3>
+  <div class="code-block"><span class="code-label">YAML — infra/k8s/apps.yaml</span><pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: screening-service
+  namespace: autopears-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: screening-service }
+  template:
+    metadata:
+      labels: { app: screening-service }
+    spec:
+      serviceAccountName: screening-sa    # IRSA role binding
+      containers:
+        - name: screening-service
+          image: &lt;account&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/autopears/screening:latest
+          ports: [{ containerPort: 8000 }]
+          envFrom:
+            - configMapRef: { name: autopears-config }
+            - secretRef:    { name: autopears-secrets }
+          resources:
+            requests: { cpu: '250m', memory: '256Mi' }
+            limits:   { cpu: '500m', memory: '512Mi' }
+          readinessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          livenessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 30
+            periodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: screening-service
+  namespace: autopears-prod
+spec:
+  selector: { app: screening-service }
+  ports: [{ port: 80, targetPort: 8000 }]
+  type: ClusterIP</pre></div>
+
+  <h3>HPA — Horizontal Pod Autoscaler</h3>
+  <div class="code-block"><span class="code-label">YAML — HPA</span><pre>apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: scoring-service-hpa
+  namespace: autopears-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: scoring-service
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 65 }
+    - type: Resource
+      resource:
+        name: memory
+        target: { type: Utilization, averageUtilization: 75 }</pre></div>
+
+  <h3>External Secrets — AWS Secrets Manager sync</h3>
+  <div class="code-block"><span class="code-label">YAML — ExternalSecret</span><pre>apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: autopears-secrets
+  namespace: autopears-prod
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-secrets-manager
+    kind: ClusterSecretStore
+  target:
+    name: autopears-secrets
+  data:
+    - secretKey: DATABASE_URL
+      remoteRef: { key: autopears/prod/database, property: url }
+    - secretKey: REDIS_URL
+      remoteRef: { key: autopears/prod/redis,    property: url }</pre></div>
+
+  <h3>Ingress</h3>
+  <div class="code-block"><span class="code-label">YAML — Ingress</span><pre>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: autopears-ingress
+  namespace: autopears-prod
+  annotations:
+    kubernetes.io/ingress.class: "alb"
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+    - host: autopears.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: { name: frontend-service, port: { number: 80 } }
+          - path: /api/screening
+            pathType: Prefix
+            backend:
+              service: { name: screening-service, port: { number: 80 } }
+          - path: /api/scoring
+            pathType: Prefix
+            backend:
+              service: { name: scoring-service, port: { number: 80 } }</pre></div>
+
+  <h3>kubectl Commands</h3>
+  <div class="code-block"><span class="code-label">bash</span><pre># Configure kubectl for the EKS cluster
+aws eks update-kubeconfig --region us-east-1 --name autopears-prod
+
+# Apply manifests
+kubectl apply -f infra/k8s/namespace.yaml
+kubectl apply -f infra/k8s/apps.yaml
+
+# Verify
+kubectl get pods -n autopears-prod
+kubectl get svc  -n autopears-prod
+kubectl get hpa  -n autopears-prod
+
+# Check a rollout
+kubectl rollout status deployment/screening-service -n autopears-prod
+
+# Tail logs
+kubectl logs -l app=scoring-service -n autopears-prod --tail=100 -f</pre></div>
+</div>
+</section>
+
+<!-- ── PHASE 4 — JENKINS ─────────────────────────────────────── -->
+<section id="phase4">
+<div class="container">
+  <h2><span class="phase-num">4</span> Jenkins CI/CD Pipeline</h2>
+  <div class="section-meta"><span class="tag">Week 7–8</span><span>Jenkins · Jenkinsfile · ECR · K8s rolling deploy</span></div>
+  <div class="goal-box">Goal: Every git push triggers infra/jenkins/Jenkinsfile — running tests, building images, scanning with docker scout, pushing to ECR, and deploying to the matching K8s environment automatically.</div>
+
+  <h3>Branch → Environment Mapping</h3>
+  <div class="branch-row">
+    <span class="branch-name">feature/*</span>
+    <span class="arrow-right">→</span>
+    <span class="env-name">autopears-dev (EKS dev)</span>
+    <span class="trigger-badge trigger-auto">Auto on push</span>
+  </div>
+  <div class="branch-row">
+    <span class="branch-name">develop</span>
+    <span class="arrow-right">→</span>
+    <span class="env-name">autopears-staging (EKS staging)</span>
+    <span class="trigger-badge trigger-auto">Auto on push</span>
+  </div>
+  <div class="branch-row">
+    <span class="branch-name">main</span>
+    <span class="arrow-right">→</span>
+    <span class="env-name">autopears-prod (EKS prod)</span>
+    <span class="trigger-badge trigger-manual">Manual approval gate</span>
+  </div>
+
+  <h3>Jenkinsfile</h3>
+  <div class="code-block"><span class="code-label">Groovy — infra/jenkins/Jenkinsfile</span><pre>pipeline {
+  agent { label 'docker-agent' }
+
+  environment {
+    ECR_REGISTRY = credentials('ecr-registry-url')
+    AWS_REGION   = 'us-east-1'
+    SERVICES     = 'screening scoring risk portfolio batch notification frontend'
+  }
+
+  stages {
+
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+
+    stage('Unit Tests') {
+      steps {
+        sh 'pip install -r requirements-test.txt'
+        sh 'pytest services/ --junitxml=reports/tests.xml -v \
+            --cov=services --cov-report=xml'
+      }
+      post {
+        always {
+          junit      'reports/tests.xml'
+          cobertura  coberturaReportFile: 'coverage.xml'
+        }
+      }
+    }
+
+    stage('Build &amp; Scan Images') {
+      steps {
+        script {
+          env.SERVICES.split(' ').each { svc ->
+            sh """
+              docker build \\
+                -t ${ECR_REGISTRY}/autopears/${svc}:${BUILD_NUMBER} \\
+                -f services/${svc}_service/Dockerfile .
+              docker scout cves ${ECR_REGISTRY}/autopears/${svc}:${BUILD_NUMBER} --exit-code
+            """
+          }
+        }
+      }
+    }
+
+    stage('Push to ECR') {
+      steps {
+        withAWS(credentials: 'aws-jenkins-role', region: env.AWS_REGION) {
+          sh 'aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY'
+          script {
+            env.SERVICES.split(' ').each { svc ->
+              sh "docker push ${ECR_REGISTRY}/autopears/${svc}:${BUILD_NUMBER}"
+              sh "docker tag  ${ECR_REGISTRY}/autopears/${svc}:${BUILD_NUMBER} \
+                              ${ECR_REGISTRY}/autopears/${svc}:latest"
+              sh "docker push ${ECR_REGISTRY}/autopears/${svc}:latest"
+            }
+          }
+        }
+      }
+    }
+
+    stage('Deploy → Dev') {
+      when { branch 'feature/*' }
+      steps {
+        script {
+          env.SERVICES.split(' ').each { svc ->
+            sh """
+              kubectl set image deployment/${svc}-service \
+                ${svc}-service=${ECR_REGISTRY}/autopears/${svc}:${BUILD_NUMBER} \
+                -n autopears-dev
+              kubectl rollout status deployment/${svc}-service \
+                -n autopears-dev --timeout=120s
+            """
+          }
+        }
+      }
+    }
+
+    stage('Deploy → Staging') {
+      when { branch 'develop' }
+      steps {
+        script {
+          env.SERVICES.split(' ').each { svc ->
+            sh """
+              kubectl set image deployment/${svc}-service \
+                ${svc}-service=${ECR_REGISTRY}/autopears/${svc}:${BUILD_NUMBER} \
+                -n autopears-staging
+              kubectl rollout status deployment/${svc}-service \
+                -n autopears-staging --timeout=120s
+            """
+          }
+        }
+      }
+    }
+
+    stage('Prod Approval') {
+      when { branch 'main' }
+      steps {
+        input message: "Deploy build ${BUILD_NUMBER} to PRODUCTION?",
+              ok: 'Deploy',
+              submitterParameter: 'APPROVED_BY'
+      }
+    }
+
+    stage('Deploy → Prod') {
+      when { branch 'main' }
+      steps {
+        sh 'kubectl apply -f infra/k8s/apps.yaml -n autopears-prod'
+        script {
+          env.SERVICES.split(' ').each { svc ->
+            sh """
+              kubectl rollout status deployment/${svc}-service \
+                -n autopears-prod --timeout=300s
+            """
+          }
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      slackSend channel: '#deployments', color: 'good',
+        message: "Build ${BUILD_NUMBER} deployed to ${BRANCH_NAME}"
+    }
+    failure {
+      slackSend channel: '#alerts', color: 'danger',
+        message: "Build ${BUILD_NUMBER} FAILED on ${BRANCH_NAME} — ${BUILD_URL}"
+    }
+  }
+}</pre></div>
+
+  <h3>Jenkins Agent on EKS</h3>
+  <ul class="plain">
+    <li>Deploy Jenkins controller via official Helm chart into namespace <code>jenkins</code></li>
+    <li>Kubernetes plugin — agents spin up as ephemeral pods, terminate after each run</li>
+    <li>Agent pod spec includes Docker-in-Docker (dind) sidecar for image builds</li>
+    <li>Jenkins ServiceAccount IAM role: <code>ecr:GetAuthorizationToken</code>, <code>ecr:PutImage</code>, <code>eks:DescribeCluster</code></li>
+    <li>All credentials stored in Jenkins Credentials Store — never in Jenkinsfile or Git</li>
+    <li>Shared library: <code>infra/jenkins/vars/</code> for reusable pipeline step functions</li>
+  </ul>
+
+  <h3>Rollback Commands</h3>
+  <div class="code-block"><span class="code-label">bash</span><pre># Roll back to previous image
+kubectl rollout undo deployment/screening-service -n autopears-prod
+
+# Roll back to a specific revision
+kubectl rollout undo deployment/screening-service --to-revision=5 -n autopears-prod
+
+# View rollout history
+kubectl rollout history deployment/screening-service -n autopears-prod</pre></div>
+</div>
+</section>
+
+<!-- ── PHASE 5 — GO-LIVE ─────────────────────────────────────── -->
+<section id="phase5">
+<div class="container">
+  <h2><span class="phase-num">5</span> Monitoring, Security &amp; Go-Live</h2>
+  <div class="section-meta"><span class="tag">Week 9–10</span><span>CloudWatch · X-Ray · Secrets Manager · Load testing</span></div>
+
+  <h3>Observability Stack</h3>
+  <ul class="plain">
+    <li>CloudWatch Container Insights — CPU, memory, network per pod and node</li>
+    <li>Fluent Bit DaemonSet — ships all pod stdout/stderr to CloudWatch Logs</li>
+    <li>CloudWatch Alarms — p99 latency &gt; 2s, error rate &gt; 1%, pod restarts &gt; 3</li>
+    <li>AWS X-Ray SDK — distributed tracing across screening → scoring → risk calls</li>
+    <li>S3 Access Logs + WAF logs to CloudWatch for security audit trail</li>
+  </ul>
+
+  <h3>CloudWatch Alarm Example</h3>
+  <div class="code-block"><span class="code-label">HCL — modules/eks/alarms.tf</span><pre>resource "aws_cloudwatch_metric_alarm" "pod_restarts" {
+  alarm_name          = "autopears-pod-restarts-${var.environment}"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 2
+  metric_name         = "pod_number_of_container_restarts"
+  namespace           = "ContainerInsights"
+  period              = 60
+  statistic           = "Sum"
+  threshold           = 3
+  alarm_actions       = [aws_sns_topic.alerts.arn]
+  dimensions = {
+    ClusterName = var.cluster_name
+    Namespace   = "autopears-prod"
+  }
+}</pre></div>
+
+  <h3>Secrets Management Rules</h3>
+  <ul class="plain">
+    <li>All secrets in AWS Secrets Manager — never in Git or Docker images</li>
+    <li>External Secrets Operator syncs Secrets Manager entries to K8s Secrets automatically</li>
+    <li>RDS password rotated every 30 days via Secrets Manager rotation Lambda</li>
+    <li>ECR images scanned on push with docker scout — builds fail on HIGH/CRITICAL CVEs</li>
+  </ul>
+
+  <h3>Go-Live Checklist</h3>
+  <ul class="checklist">
+    <li>All Terraform modules apply cleanly in prod with zero plan diff</li>
+    <li>All 8 K8s Deployments show 2/2 READY in autopears-prod namespace</li>
+    <li>Jenkins pipeline green on a main branch dry-run with manual approval</li>
+    <li>Load test (Locust or k6): 500 concurrent users, p99 &lt; 2s, error rate &lt; 0.1%</li>
+    <li>WAF block test: SQLi and XSS payloads return 403 from ALB</li>
+    <li>Disaster recovery: RDS snapshot restore tested, target RTO &lt; 1 hour</li>
+    <li>Runbook documented in README.md: deploy, rollback, scale, rotate-secrets</li>
+    <li>Cost review: AWS Cost Explorer confirms dev &lt; $500/month, staging &lt; $800/month</li>
+  </ul>
+</div>
+</section>
+
+<!-- ── RESUME ALIGNMENT ──────────────────────────────────────── -->
+<section id="resume">
+<div class="container">
+  <h2><span class="phase-num" style="background:var(--accent)">✦</span> Resume Alignment</h2>
+  <p style="color:var(--muted);margin:10px 0 20px;font-size:14px;">Concrete deliverables for each resume technology that demonstrate hands-on expertise to interviewers.</p>
+
+  <div class="resume-grid">
+    <div class="resume-row">
+      <div class="resume-tech"><span class="tech-badge">Docker</span></div>
+      <div>
+        <div class="resume-label">What you built</div>
+        <div class="resume-text">8 production multi-stage images, ECR registry, extended docker-compose dev environment covering all services + Postgres + Redis</div>
+      </div>
+      <div>
+        <div class="resume-label">Skills demonstrated</div>
+        <div class="resume-text">Dockerfile authoring, multi-stage builds, image scanning with docker scout, ECR registry management</div>
+      </div>
+    </div>
+    <div class="resume-row">
+      <div class="resume-tech"><span class="tech-badge">Kubernetes</span></div>
+      <div>
+        <div class="resume-label">What you built</div>
+        <div class="resume-text">EKS cluster with 8 Deployments, HPA on scoring/screening, IRSA service accounts, namespace isolation across 3 environments</div>
+      </div>
+      <div>
+        <div class="resume-label">Skills demonstrated</div>
+        <div class="resume-text">Workload orchestration, horizontal autoscaling, IRSA security, External Secrets Operator, Ingress configuration</div>
+      </div>
+    </div>
+    <div class="resume-row">
+      <div class="resume-tech"><span class="tech-badge">Terraform</span></div>
+      <div>
+        <div class="resume-label">What you built</div>
+        <div class="resume-text">3-environment IaC covering VPC, EKS, RDS, ElastiCache, S3, SQS, WAF, and IAM with remote S3 state + DynamoDB locking</div>
+      </div>
+      <div>
+        <div class="resume-label">Skills demonstrated</div>
+        <div class="resume-text">Module design, remote state management, drift detection, environment promotion (dev → staging → prod)</div>
+      </div>
+    </div>
+    <div class="resume-row">
+      <div class="resume-tech"><span class="tech-badge">AWS</span></div>
+      <div>
+        <div class="resume-label">What you built</div>
+        <div class="resume-text">Full production stack: EKS, RDS Multi-AZ, ElastiCache Redis, SQS + DLQ, S3 lifecycle, WAF WebACL, ECR, CloudWatch Container Insights, X-Ray</div>
+      </div>
+      <div>
+        <div class="resume-label">Skills demonstrated</div>
+        <div class="resume-text">Cloud architecture, IAM least-privilege, managed services integration, observability setup, secrets rotation</div>
+      </div>
+    </div>
+    <div class="resume-row">
+      <div class="resume-tech"><span class="tech-badge">Jenkins</span></div>
+      <div>
+        <div class="resume-label">What you built</div>
+        <div class="resume-text">Multi-stage Jenkinsfile: test → build → docker scout scan → ECR push → rolling K8s deploy, with prod approval gate and Slack notifications</div>
+      </div>
+      <div>
+        <div class="resume-label">Skills demonstrated</div>
+        <div class="resume-text">Pipeline-as-code, GitOps branching strategy, ephemeral K8s Docker agents, credential management, Slack integration</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="container">
+    Auto Peers — DevOps Project Plan &nbsp;·&nbsp; Docker · Kubernetes · Terraform · AWS · Jenkins &nbsp;·&nbsp; 10 weeks
+  </div>
+</footer>
+
+<script>
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Highlight active tab on scroll
+  const sections = ['overview','phase1','phase2','phase3','phase4','phase5','resume'];
+  const tabs = document.querySelectorAll('.tab-btn');
+  window.addEventListener('scroll', () => {
+    let current = 'overview';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    tabs.forEach((btn, i) => {
+      btn.classList.toggle('active', sections[i] === current);
+    });
+  });
+</script>
+</body>
+</html>

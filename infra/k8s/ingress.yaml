@@ -1,0 +1,64 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: trading-devops-ingress
+  namespace: trading-devops
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /v1/score
+            pathType: Prefix
+            backend:
+              service:
+                name: scoring-service
+                port:
+                  number: 8000
+          - path: /v1/batch-score
+            pathType: Prefix
+            backend:
+              service:
+                name: batch-service
+                port:
+                  number: 8001
+          - path: /v1/portfolio
+            pathType: Prefix
+            backend:
+              service:
+                name: portfolio-service
+                port:
+                  number: 8003
+          - path: /v1/risk
+            pathType: Prefix
+            backend:
+              service:
+                name: risk-service
+                port:
+                  number: 8004
+          - path: /v1/screen
+            pathType: Prefix
+            backend:
+              service:
+                name: screening-service
+                port:
+                  number: 8005
+          - path: /v1/notifications
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service
+                port:
+                  number: 8006
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80

@@ -1,0 +1,13 @@
+venv/
+.venv/
+node_modules/
+services/frontend_service/webapp/node_modules/
+services/frontend_service/webapp/dist/
+outputs/
+logs/
+failed/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.corepack/
+.git/

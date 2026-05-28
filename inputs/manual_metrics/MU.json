@@ -1,0 +1,57 @@
+{
+  "ticker": "MU",
+  "as_of_date": "2026-05-20",
+  "metrics": {
+    "growth_quality": {
+      "eps_growth_yoy": 18.4,
+      "revenue_growth_yoy": 14.2,
+      "ocf_growth_yoy": 16.8,
+      "ocf_to_net_income": 1.21
+    },
+    "profitability": {
+      "operating_margin": 42.5,
+      "net_profit_margin": 35.7,
+      "roic": 24.1,
+      "roe": 38.9
+    },
+    "financial_health": {
+      "debt_to_equity": 0.41,
+      "current_ratio": 1.87,
+      "interest_coverage": 31.6
+    },
+    "valuation_sanity": {
+      "pe_ratio": 33.4,
+      "pe_ratio_industry_avg": 29.8,
+      "peg_ratio": 1.74,
+      "ev_ebitda": 22.3
+    },
+    "monitoring": {
+      "relative_strength": {
+        "status": "strong_outperformance",
+        "outperformance_percent": 11.5
+      },
+      "earnings_vs_guidance": "Beat guidance for the last 3 quarters",
+      "analyst_actions": {
+        "upgrades": 12,
+        "downgrades": 2
+      },
+      "volume_trend": "increasing",
+      "gross_margin_trend": "Stable to slightly expanding",
+      "ocf_vs_net_income_trend": "Operating cash flow consistently exceeds net income",
+      "capex_percent_sales": 8.4,
+      "customer_concentration_trend": "Well diversified enterprise customer base"
+    },
+    "risk_exit_signals": {
+      "margin_compression_bps": 45,
+      "ocf_less_than_net_income": false,
+      "analyst_sentiment_shift": "Mostly positive with minor caution on AI infrastructure costs",
+      "guidance_change": "Management slightly raised FY guidance",
+      "sector_momentum": "Technology sector remains strong",
+      "relative_underperformance_percent": 2.1
+    }
+  },
+  "metadata": {
+    "source": "frontend-manual-entry",
+    "analyst": "Manohar N"
+  }
+}

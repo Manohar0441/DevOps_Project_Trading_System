@@ -1,0 +1,266 @@
+{
+  "decision": "REJECT",
+  "generated_at": "2026-05-20T09:07:40.288389+00:00",
+  "max_score": 100.0,
+  "pass_threshold": 85.0,
+  "rejection_reasons": [
+    "Total score 83.88 is below the minimum threshold of 85.00.",
+    "PEG Ratio was rated poor using rule 1.5-2.0.",
+    "EV / EBITDA was rated bad using rule > 20."
+  ],
+  "score_breakdown": {
+    "financial_health": 13.75,
+    "growth_quality": 24.375,
+    "momentum_monitoring": 15.0,
+    "profitability": 25.0,
+    "valuation_sanity": 5.75
+  },
+  "sections": [
+    {
+      "label": "Growth Quality",
+      "metrics": [
+        {
+          "band": "good",
+          "explanation": "EPS Growth YoY matched the good band using rule 10-20. Weighted score awarded: 5.6250 out of 7.5000.",
+          "label": "EPS Growth YoY",
+          "matched_rule": "10-20",
+          "metric_key": "eps_growth_yoy",
+          "normalized_value": 18.4,
+          "raw_value": 18.4,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 5.625
+        },
+        {
+          "band": "good",
+          "explanation": "Revenue Growth YoY matched the good band using rule 8-15. Weighted score awarded: 5.6250 out of 7.5000.",
+          "label": "Revenue Growth YoY",
+          "matched_rule": "8-15",
+          "metric_key": "revenue_growth_yoy",
+          "normalized_value": 14.2,
+          "raw_value": 14.2,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 5.625
+        },
+        {
+          "band": "excellent",
+          "explanation": "OCF Growth YoY matched the excellent band using rule > 15. Weighted score awarded: 7.5000 out of 7.5000.",
+          "label": "OCF Growth YoY",
+          "matched_rule": "> 15",
+          "metric_key": "ocf_growth_yoy",
+          "normalized_value": 16.8,
+          "raw_value": 16.8,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 7.5
+        },
+        {
+          "band": "good",
+          "explanation": "OCF to Net Income matched the good band using rule 1.0-1.3. Weighted score awarded: 5.6250 out of 7.5000.",
+          "label": "OCF to Net Income",
+          "matched_rule": "1.0-1.3",
+          "metric_key": "ocf_to_net_income",
+          "normalized_value": 1.21,
+          "raw_value": 1.21,
+          "status": "scored",
+          "weight": 7.5,
+          "weighted_score": 5.625
+        }
+      ],
+      "score": 24.375,
+      "section_key": "growth_quality",
+      "weight": 30.0
+    },
+    {
+      "label": "Profitability",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "Operating Margin matched the excellent band using rule > 20. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "Operating Margin",
+          "matched_rule": "> 20",
+          "metric_key": "operating_margin",
+          "normalized_value": 42.5,
+          "raw_value": 42.5,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        },
+        {
+          "band": "excellent",
+          "explanation": "Net Profit Margin matched the excellent band using rule > 10. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "Net Profit Margin",
+          "matched_rule": "> 10",
+          "metric_key": "net_profit_margin",
+          "normalized_value": 35.7,
+          "raw_value": 35.7,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        },
+        {
+          "band": "excellent",
+          "explanation": "ROIC matched the excellent band using rule > 18. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "ROIC",
+          "matched_rule": "> 18",
+          "metric_key": "roic",
+          "normalized_value": 24.1,
+          "raw_value": 24.1,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        },
+        {
+          "band": "excellent",
+          "explanation": "ROE matched the excellent band using rule > 18. Weighted score awarded: 6.2500 out of 6.2500.",
+          "label": "ROE",
+          "matched_rule": "> 18",
+          "metric_key": "roe",
+          "normalized_value": 38.9,
+          "raw_value": 38.9,
+          "status": "scored",
+          "weight": 6.25,
+          "weighted_score": 6.25
+        }
+      ],
+      "score": 25.0,
+      "section_key": "profitability",
+      "weight": 25.0
+    },
+    {
+      "label": "Financial Health",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "Debt to Equity matched the excellent band using rule < 0.5. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Debt to Equity",
+          "matched_rule": "< 0.5",
+          "metric_key": "debt_to_equity",
+          "normalized_value": 0.41,
+          "raw_value": 0.41,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        },
+        {
+          "band": "good",
+          "explanation": "Current Ratio matched the good band using rule 1.5-2.0. Weighted score awarded: 3.7500 out of 5.0000.",
+          "label": "Current Ratio",
+          "matched_rule": "1.5-2.0",
+          "metric_key": "current_ratio",
+          "normalized_value": 1.87,
+          "raw_value": 1.87,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 3.75
+        },
+        {
+          "band": "excellent",
+          "explanation": "Interest Coverage matched the excellent band using rule > 6. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Interest Coverage",
+          "matched_rule": "> 6",
+          "metric_key": "interest_coverage",
+          "normalized_value": 31.6,
+          "raw_value": 31.6,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        }
+      ],
+      "score": 13.75,
+      "section_key": "financial_health",
+      "weight": 15.0
+    },
+    {
+      "label": "Valuation Sanity",
+      "metrics": [
+        {
+          "band": "good",
+          "explanation": "PE Ratio Relative matched the good band using rule 0.8-1.3x. Weighted score awarded: 3.7500 out of 5.0000.",
+          "label": "PE Ratio Relative",
+          "matched_rule": "0.8-1.3x",
+          "metric_key": "pe_ratio_relative",
+          "normalized_value": 1.1208053691275166,
+          "raw_value": 1.1208053691275166,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 3.75
+        },
+        {
+          "band": "poor",
+          "explanation": "PEG Ratio matched the poor band using rule 1.5-2.0. Weighted score awarded: 2.0000 out of 5.0000.",
+          "label": "PEG Ratio",
+          "matched_rule": "1.5-2.0",
+          "metric_key": "peg_ratio",
+          "normalized_value": 1.74,
+          "raw_value": 1.74,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 2.0
+        },
+        {
+          "band": "bad",
+          "explanation": "EV / EBITDA matched the bad band using rule > 20. Weighted score awarded: 0.0000 out of 5.0000.",
+          "label": "EV / EBITDA",
+          "matched_rule": "> 20",
+          "metric_key": "ev_ebitda",
+          "normalized_value": 22.3,
+          "raw_value": 22.3,
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 0.0
+        }
+      ],
+      "score": 5.75,
+      "section_key": "valuation_sanity",
+      "weight": 15.0
+    },
+    {
+      "label": "Momentum Monitoring",
+      "metrics": [
+        {
+          "band": "excellent",
+          "explanation": "Relative Strength matched the excellent band using rule strong_outperformance. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Relative Strength",
+          "matched_rule": "strong_outperformance",
+          "metric_key": "relative_strength",
+          "normalized_value": "strong_outperformance",
+          "raw_value": "strong_outperformance",
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        },
+        {
+          "band": "excellent",
+          "explanation": "Analyst Sentiment matched the excellent band using rule strong_upgrades. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Analyst Sentiment",
+          "matched_rule": "strong_upgrades",
+          "metric_key": "analyst_sentiment",
+          "normalized_value": "strong_upgrades",
+          "raw_value": "strong_upgrades",
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        },
+        {
+          "band": "excellent",
+          "explanation": "Volume Trend matched the excellent band using rule increasing. Weighted score awarded: 5.0000 out of 5.0000.",
+          "label": "Volume Trend",
+          "matched_rule": "increasing",
+          "metric_key": "volume_trend",
+          "normalized_value": "increasing",
+          "raw_value": "increasing",
+          "status": "scored",
+          "weight": 5.0,
+          "weighted_score": 5.0
+        }
+      ],
+      "score": 15.0,
+      "section_key": "momentum_monitoring",
+      "weight": 15.0
+    }
+  ],
+  "ticker": "MU",
+  "total_score": 83.88
+}

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trading-devops-config
+  namespace: trading-devops
+data:
+  AWS_REGION: "ap-south-1"
+  REDIS_HOST: "trading-devops-redis.lbozfw.ng.0001.aps1.cache.amazonaws.com"
+  REDIS_PORT: "6379"
+  SQS_SCREENING_EVENTS_URL: "https://sqs.ap-south-1.amazonaws.com/951151047337/trading-devops-screening-events"
+  SQS_RISK_EVENTS_URL: "https://sqs.ap-south-1.amazonaws.com/951151047337/trading-devops-risk-events"
+  SQS_NOTIFICATION_EVENTS_URL: "https://sqs.ap-south-1.amazonaws.com/951151047337/trading-devops-notification-events"
+  S3_ARTIFACTS_BUCKET: "trading-devops-a3492a6e"

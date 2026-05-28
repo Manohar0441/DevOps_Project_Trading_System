@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Trading DevOps service dashboard for active and inactive service checks."
+    />
+    <meta name="theme-color" content="#0b0f14" />
+    <title>Trading DevOps Services</title>
+    <link rel="stylesheet" href="./assets/service-dashboard.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Trading DevOps Project</p>
+          <h1>Service Operations</h1>
+        </div>
+        <div class="topbar__actions">
+          <a class="btn" href="/">Main App</a>
+          <span id="last-refresh" class="timestamp">Waiting for first check</span>
+          <button id="refresh-button" class="btn btn-primary" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="summary-grid" aria-label="Service summary">
+          <div class="metric">
+            <span class="metric__label">Active</span>
+            <strong id="active-count">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric__label">Inactive</span>
+            <strong id="inactive-count">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric__label">Total</span>
+            <strong id="total-count">7</strong>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-header">
+            <h2>Service Status</h2>
+            <p>Health is checked from the browser against each service endpoint.</p>
+          </div>
+          <div id="service-grid" class="service-grid"></div>
+        </section>
+
+        <section>
+          <div class="section-header">
+            <h2>Endpoint Access</h2>
+            <p>Use these actions to open a service or send a small sample request.</p>
+          </div>
+          <div id="endpoint-grid" class="endpoint-grid"></div>
+        </section>
+
+        <section class="response-panel">
+          <div class="section-header">
+            <h2>Response</h2>
+            <p id="response-title">No request sent yet.</p>
+          </div>
+          <pre id="response-output">Select a sample action to see the response here.</pre>
+        </section>
+      </main>
+    </div>
+
+    <script src="./assets/service-dashboard.js"></script>
+  </body>
+</html>

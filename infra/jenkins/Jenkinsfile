@@ -1,0 +1,67 @@
+pipeline {
+  agent any
+
+  environment {
+    AWS_REGION = 'ap-south-1'
+    APP_NAME = 'trading-devops'
+    K8S_NAMESPACE = 'trading-devops'
+    AWS_ACCOUNT_ID = credentials('aws-account-id')
+    ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    IMAGE_TAG = "${env.BUILD_NUMBER}"
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Docker Login') {
+      steps {
+        sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}'
+      }
+    }
+
+    stage('Build Images') {
+      steps {
+        script {
+          def services = [
+            [name: 'batch-service', path: 'services/batch_service/Dockerfile'],
+            [name: 'frontend-service', path: 'services/frontend_service/Dockerfile'],
+            [name: 'notification-service', path: 'services/notification_service/Dockerfile'],
+            [name: 'portfolio-service', path: 'services/portfolio_service/Dockerfile'],
+            [name: 'risk-service', path: 'services/risk_service/Dockerfile'],
+            [name: 'scoring-service', path: 'services/scoring_service/Dockerfile'],
+            [name: 'screening-service', path: 'services/screening_service/Dockerfile']
+          ]
+
+          services.each { svc ->
+            sh "docker build -f ${svc.path} -t ${ECR_REGISTRY}/${APP_NAME}/${svc.name}:${IMAGE_TAG} ."
+          }
+        }
+      }
+    }
+
+    stage('Push Images') {
+      steps {
+        script {
+          ['batch-service', 'frontend-service', 'notification-service', 'portfolio-service', 'risk-service', 'scoring-service', 'screening-service'].each { svc ->
+            sh "docker push ${ECR_REGISTRY}/${APP_NAME}/${svc}:${IMAGE_TAG}"
+          }
+        }
+      }
+    }
+
+    stage('Deploy Kubernetes') {
+      steps {
+        sh 'kubectl apply -f infra/k8s/'
+        script {
+          ['batch-service', 'frontend-service', 'notification-service', 'portfolio-service', 'risk-service', 'scoring-service', 'screening-service'].each { svc ->
+            sh "kubectl -n ${K8S_NAMESPACE} set image deployment/${svc} ${svc}=${ECR_REGISTRY}/${APP_NAME}/${svc}:${IMAGE_TAG}"
+          }
+        }
+      }
+    }
+  }
+}

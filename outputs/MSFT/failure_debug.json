@@ -1,0 +1,250 @@
+{
+  "details": [
+    "Invalid categorical value for relative_strength. Allowed values: strong_outperformance, moderate_outperformance, neutral, underperformance",
+    "Invalid categorical value for volume_trend. Allowed values: increasing, stable, declining, sharp_decline"
+  ],
+  "error": "Input validation failed.",
+  "generated_at": "2026-05-20T08:56:14.778365+00:00",
+  "metadata": {
+    "as_of_date": "2026-05-20",
+    "metadata": {
+      "analyst": "Manohar N",
+      "source": "frontend-manual-entry"
+    }
+  },
+  "parsed_metrics": {
+    "analyst_sentiment": "strong_upgrades",
+    "current_ratio": 1.87,
+    "debt_to_equity": 0.41,
+    "eps_growth_yoy": 18.4,
+    "ev_ebitda": 22.3,
+    "interest_coverage": 31.6,
+    "net_profit_margin": 35.7,
+    "ocf_growth_yoy": 16.8,
+    "ocf_to_net_income": 1.21,
+    "operating_margin": 42.5,
+    "pe_ratio_relative": 1.1208053691275166,
+    "peg_ratio": 1.74,
+    "relative_strength": "Outperforming S&P 500",
+    "revenue_growth_yoy": 14.2,
+    "roe": 38.9,
+    "roic": 24.1,
+    "volume_trend": "Above average institutional buying volume"
+  },
+  "parser_debug": {
+    "derived_metrics": [
+      {
+        "formula": "pe_ratio / pe_ratio_industry_avg",
+        "metric_key": "pe_ratio_relative",
+        "sources": [
+          {
+            "path": "metrics.valuation_sanity.pe_ratio",
+            "value": 33.4
+          },
+          {
+            "path": "metrics.valuation_sanity.pe_ratio_industry_avg",
+            "value": 29.8
+          }
+        ],
+        "value": 1.1208053691275166
+      },
+      {
+        "formula": "derived from analyst_actions upgrades/downgrades",
+        "metric_key": "analyst_sentiment",
+        "sources": [
+          {
+            "path": "metrics.monitoring.analyst_actions.upgrades",
+            "value": 12.0
+          },
+          {
+            "path": "metrics.monitoring.analyst_actions.downgrades",
+            "value": 2.0
+          }
+        ],
+        "value": "strong_upgrades"
+      }
+    ],
+    "extracted_metrics": [
+      {
+        "metric_key": "eps_growth_yoy",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.eps_growth_yoy",
+        "value": 18.4
+      },
+      {
+        "metric_key": "revenue_growth_yoy",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.revenue_growth_yoy",
+        "value": 14.2
+      },
+      {
+        "metric_key": "ocf_growth_yoy",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.ocf_growth_yoy",
+        "value": 16.8
+      },
+      {
+        "metric_key": "ocf_to_net_income",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.growth_quality.ocf_to_net_income",
+        "value": 1.21
+      },
+      {
+        "metric_key": "operating_margin",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.operating_margin",
+        "value": 42.5
+      },
+      {
+        "metric_key": "net_profit_margin",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.net_profit_margin",
+        "value": 35.7
+      },
+      {
+        "metric_key": "roic",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.roic",
+        "value": 24.1
+      },
+      {
+        "metric_key": "roe",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.profitability.roe",
+        "value": 38.9
+      },
+      {
+        "metric_key": "debt_to_equity",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.financial_health.debt_to_equity",
+        "value": 0.41
+      },
+      {
+        "metric_key": "current_ratio",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.financial_health.current_ratio",
+        "value": 1.87
+      },
+      {
+        "metric_key": "interest_coverage",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.financial_health.interest_coverage",
+        "value": 31.6
+      },
+      {
+        "metric_key": "peg_ratio",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.valuation_sanity.peg_ratio",
+        "value": 1.74
+      },
+      {
+        "metric_key": "ev_ebitda",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.valuation_sanity.ev_ebitda",
+        "value": 22.3
+      },
+      {
+        "metric_key": "relative_strength",
+        "mode": "object-field",
+        "overrode_previous_value": false,
+        "source_path": "metrics.monitoring.relative_strength.status",
+        "value": "Outperforming S&P 500"
+      },
+      {
+        "metric_key": "volume_trend",
+        "mode": "direct",
+        "overrode_previous_value": false,
+        "source_path": "metrics.monitoring.volume_trend",
+        "value": "Above average institutional buying volume"
+      }
+    ],
+    "input_shape": {
+      "metrics_container_keys": [
+        "financial_health",
+        "growth_quality",
+        "monitoring",
+        "profitability",
+        "risk_exit_signals",
+        "valuation_sanity"
+      ],
+      "top_level_keys": [
+        "as_of_date",
+        "metadata",
+        "metrics",
+        "ticker"
+      ]
+    },
+    "unresolved_metrics": []
+  },
+  "raw_input": {
+    "as_of_date": "2026-05-20",
+    "metadata": {
+      "analyst": "Manohar N",
+      "source": "frontend-manual-entry"
+    },
+    "metrics": {
+      "financial_health": {
+        "current_ratio": 1.87,
+        "debt_to_equity": 0.41,
+        "interest_coverage": 31.6
+      },
+      "growth_quality": {
+        "eps_growth_yoy": 18.4,
+        "ocf_growth_yoy": 16.8,
+        "ocf_to_net_income": 1.21,
+        "revenue_growth_yoy": 14.2
+      },
+      "monitoring": {
+        "analyst_actions": {
+          "downgrades": 2,
+          "upgrades": 12
+        },
+        "capex_percent_sales": 8.4,
+        "customer_concentration_trend": "Well diversified enterprise customer base",
+        "earnings_vs_guidance": "Beat guidance for the last 3 quarters",
+        "gross_margin_trend": "Stable to slightly expanding",
+        "ocf_vs_net_income_trend": "Operating cash flow consistently exceeds net income",
+        "relative_strength": {
+          "outperformance_percent": 11.5,
+          "status": "Outperforming S&P 500"
+        },
+        "volume_trend": "Above average institutional buying volume"
+      },
+      "profitability": {
+        "net_profit_margin": 35.7,
+        "operating_margin": 42.5,
+        "roe": 38.9,
+        "roic": 24.1
+      },
+      "risk_exit_signals": {
+        "analyst_sentiment_shift": "Mostly positive with minor caution on AI infrastructure costs",
+        "guidance_change": "Management slightly raised FY guidance",
+        "margin_compression_bps": 45,
+        "ocf_less_than_net_income": false,
+        "relative_underperformance_percent": 2.1,
+        "sector_momentum": "Technology sector remains strong"
+      },
+      "valuation_sanity": {
+        "ev_ebitda": 22.3,
+        "pe_ratio": 33.4,
+        "pe_ratio_industry_avg": 29.8,
+        "peg_ratio": 1.74
+      }
+    },
+    "ticker": "MSFT"
+  },
+  "ticker": "MSFT"
+}

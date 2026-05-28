@@ -1,0 +1,337 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scoring-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scoring-service
+  template:
+    metadata:
+      labels:
+        app: scoring-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8000"
+    spec:
+      containers:
+        - name: scoring-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/scoring-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: SCORING_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: SCORING_SERVICE_PORT
+              value: "8000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scoring-service
+  namespace: trading-devops
+spec:
+  selector:
+    app: scoring-service
+  ports:
+    - port: 8000
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: batch-service
+  template:
+    metadata:
+      labels:
+        app: batch-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8001"
+    spec:
+      containers:
+        - name: batch-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/batch-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8001
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: BATCH_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: BATCH_SERVICE_PORT
+              value: "8001"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: batch-service
+  namespace: trading-devops
+spec:
+  selector:
+    app: batch-service
+  ports:
+    - port: 8001
+      targetPort: 8001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-service
+  template:
+    metadata:
+      labels:
+        app: frontend-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: frontend-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/frontend-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: FRONTEND_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: FRONTEND_SERVICE_PORT
+              value: "8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: trading-devops
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend-service
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: screening-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: screening-service
+  template:
+    metadata:
+      labels:
+        app: screening-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8005"
+    spec:
+      containers:
+        - name: screening-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/screening-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8005
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: SCREENING_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: SCREENING_SERVICE_PORT
+              value: "8005"
+            - name: SQS_PUBLISH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: trading-devops-config
+                  key: SQS_SCREENING_EVENTS_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: screening-service
+  namespace: trading-devops
+spec:
+  selector:
+    app: screening-service
+  ports:
+    - port: 8005
+      targetPort: 8005
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfolio-service
+  template:
+    metadata:
+      labels:
+        app: portfolio-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8003"
+    spec:
+      containers:
+        - name: portfolio-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/portfolio-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8003
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: PORTFOLIO_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: PORTFOLIO_SERVICE_PORT
+              value: "8003"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio-service
+  namespace: trading-devops
+spec:
+  selector:
+    app: portfolio-service
+  ports:
+    - port: 8003
+      targetPort: 8003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: risk-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: risk-service
+  template:
+    metadata:
+      labels:
+        app: risk-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8004"
+    spec:
+      containers:
+        - name: risk-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/risk-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8004
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: RISK_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: RISK_SERVICE_PORT
+              value: "8004"
+            - name: SQS_PUBLISH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: trading-devops-config
+                  key: SQS_RISK_EVENTS_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: risk-service
+  namespace: trading-devops
+spec:
+  selector:
+    app: risk-service
+  ports:
+    - port: 8004
+      targetPort: 8004
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: trading-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8006"
+    spec:
+      containers:
+        - name: notification-service
+          image: 951151047337.dkr.ecr.ap-south-1.amazonaws.com/trading-devops/notification-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8006
+          envFrom:
+            - configMapRef:
+                name: trading-devops-config
+          env:
+            - name: NOTIFICATION_SERVICE_HOST
+              value: "0.0.0.0"
+            - name: NOTIFICATION_SERVICE_PORT
+              value: "8006"
+            - name: SQS_NOTIFICATION_EVENTS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: trading-devops-config
+                  key: SQS_NOTIFICATION_EVENTS_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: trading-devops
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - port: 8006
+      targetPort: 8006

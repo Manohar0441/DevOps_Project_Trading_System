@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "name": "trading-devops-frontend-service",
+  "description": "Static frontend service wrapper for the Trading DevOps dashboard"
+}
