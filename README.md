@@ -3,7 +3,7 @@
 > **A rules-based, fully automated swing trading platform** for Indian (NSE/BSE) and US (NYSE/NASDAQ) equities.
 > Built as a microservice system deployed on AWS EKS with a Jenkins CI/CD pipeline.
 
-**Stack:** Python 3.11 · stdlib HTTP servers · React · Prometheus · AWS SQS · AWS EKS · AWS ECR · Terraform · Docker
+**Stack:** Python 3.11 · stdlib HTTP servers · React · Prometheus · AWS SQS · AWS EKS · AWS ECR · Terraform · Docker · Kubernetes
 
 ---
 
@@ -22,7 +22,7 @@
 11. [Observability — Metrics & Logs](#11-observability--metrics--logs)
 12. [Real-Time Updates — SSE](#12-real-time-updates--sse)
 13. [Risk Rules Engine](#13-risk-rules-engine)
-14. [Local Development Setup](#20-local-development-setup)
+14. [Local Development Setup](#14-local-development-setup)
 
 ---
 
@@ -54,24 +54,24 @@ SwingEdge enforces a **disciplined, emotion-free 3-month swing trading cycle** t
 └─────────────────────┬───────────────────────────────────┘
                       │ HTTPS / SSE
 ┌─────────────────────▼───────────────────────────────────┐
-│         AWS ALB → NGINX Ingress → EKS Services          │
+│     AWS ALB (internet-facing) → AWS EKS Ingress         │
+│           (kubernetes.io/ingress.class: alb)            │
 └─────────────────────┬───────────────────────────────────┘
-                      │
+                      │ Path-based routing (/v1/score, /v1/risk, etc.)
 ┌─────────────────────▼───────────────────────────────────┐
 │              AWS EKS (Kubernetes Cluster)                │
-│           Region: ap-south-1 (Mumbai)                   │
+│     Namespace: trading-devops | Region: ap-south-1      │
 │                                                         │
 │  frontend   screening   scoring   portfolio   risk       │
-│  (Nginx)    (stdlib)   (stdlib)  (stdlib)   (stdlib)   │
+│  (:80)      (:8005)     (:8000)   (:8003)    (:8004)   │
 │                                                         │
 │  batch             notification                          │
-│  (ThreadPool+      (Python HTTP                         │
-│   stdlib HTTP)      Server)                             │
+│  (:8001)           (:8006)                              │
 │                                                         │
 │  ┌──────────────────────────────────────────────────┐   │
-│  │            AWS SQS Event Bus (3 Queues)          │   │
+│  │            AWS SQS Event Bus (3 Queues + DLQs)   │   │
 │  │  screening-events · risk-events ·                │   │
-│  │  notification-events                             │   │
+│  │  notification-events (+ -dlq for each)           │   │
 │  └──────────────────────────────────────────────────┘   │
 └─────────────────────┬───────────────────────────────────┘
                       │
@@ -89,7 +89,7 @@ OBSERVABILITY:
 
 CI/CD:
   GitHub → Jenkins → Docker Build (all 7 services)
-  → ECR Push → kubectl apply (infra/k8s/) → kubectl set image
+  → ECR Push → kubectl apply (infra/k8s/) → kubectl set image (rolling update)
 ```
 
 ---
@@ -104,50 +104,53 @@ CI/CD:
   - **Financial Health** (20%) — D/E <2.0, Current Ratio >1.5, Interest Coverage >3×
   - **Valuation Sanity** (15%) — P/E <Industry+30%, PEG <1.5, EV/EBITDA <15×
 - Reads from `inputs/`, writes scored JSON to `outputs/`
+- Ingress path: `/v1/score`
 
 ### `batch-service` · Port 8001
 - Runs concurrent scoring jobs via Python `ThreadPoolExecutor` (default: 4 workers, configurable via `BATCH_MAX_WORKERS`)
-- Reads stock list from `stocks.txt`; resolves input JSON candidates from `inputs/` directories
+- Reads stock list from `stocks.txt`; resolves input JSON from `inputs/` directories
 - Each job is independent; failures on individual tickers don't block the rest
-- Key jobs: bulk scoring runs on all tickers, summary output to `outputs/_batch/summary.json`
+- Summary output written to `outputs/_batch/summary.json`
+- Ingress path: `/v1/batch-score`
 
-### `frontend-service` · Port 8080
+### `frontend-service` · Port 8080 (container) / Port 80 (K8s service)
 - React SPA served via Nginx
 - Connects to `risk-service` via **SSE** for real-time event streaming (`/v1/risk/stream`)
 - Pages: Dashboard, Trade Tracker, Checklist, Cycle Review, Calendar, Audit Trail
+- Ingress path: `/` (catch-all)
 
 ### `portfolio-service` · Port 8003
 - Implements capital allocation logic
 - Enforces: min ₹5,000/position, no single sector >60%, India sector ≠ USA sector
+- Ingress path: `/v1/portfolio`
 
 ### `risk-service` · Port 8004
 - **Most critical service** — evaluates risk rules during market hours
-- Week-specific SL rules enforced (Week 1–13 cycle):
-  - +5% → move SL to breakeven
-  - +10% → book 40%, SL to +6%
-  - +15% → exit or trail weekly
-  - Week 13 → mandatory full exit
-- Publishes SQS events (`risk-events` queue) on every trigger
+- Logic modules: `week_rules.py`, `profit_lock.py`, `portfolio_heat.py`, `macro_monitor.py`
+- Publishes SQS events (`risk-events` queue) on every trigger via `events/publisher.py`
 - Exposes `/v1/risk/stream` SSE endpoint to frontend
 - Exposes `/metrics` (Prometheus) and `/health` endpoints
+- Ingress path: `/v1/risk`
 
 ### `screening-service` · Port 8005
 - Implements quarterly momentum filter: Q_N > Q_N-1, min +5% EPS sequential growth
 - Produces top 25 India + top 25 USA candidates
 - Publishes events to `screening-events` SQS queue on completion
+- Ingress path: `/v1/screen`
 
 ### `notification-service` · Port 8006
 - Consumes from SQS queues
 - Routes alerts to AWS SES (email) or SNS (SMS) based on event type and severity
 - Critical alerts (SL hit, mandatory exit) trigger both SMS + email
+- Ingress path: `/v1/notifications`
 
 ### `common` (shared library)
-- Installed into all services via local Python import (`services/common/`)
-- Contains: structured logging (`logging_utils`), Prometheus metrics (`metrics.py`), HTTP utilities (`http_utils`), configuration loader (`configuration.py`), SSE formatter
+- Shared Python package imported by all services via `services/common/`
+- Contains: structured logging (`logging_utils`), Prometheus metrics (`metrics.py`), HTTP utilities (`http_utils`), configuration loader (`configuration.py`), SSE formatter (`sse.py`)
 
 ### `auto_peers_web.py` (standalone utility)
 - Fetches peer stocks using `yfinance` with multi-source fallback
-- Computes source-weighted peer scores, sector mapping via `SECTOR_KEY_MAP`
+- Sector mapping via `SECTOR_KEY_MAP`; source-weighted peer scoring
 - Used for peer group analysis and input data enrichment
 
 ---
@@ -158,23 +161,31 @@ CI/CD:
 DevOps_Project_Trading_System/
 │
 ├── services/
-│   ├── common/              # Shared library — logging, metrics, http_utils, config
-│   ├── scoring_service/     # Stock scorer (main entry point, ManualScoringPipeline)
+│   ├── common/              # Shared library — logging, metrics, http_utils, config, sse
+│   ├── scoring_service/     # Stock scorer (ManualScoringPipeline, ManualScoringEngine)
 │   ├── batch_service/       # ThreadPoolExecutor-based batch scoring runner
 │   ├── frontend_service/    # React SPA + Nginx
 │   ├── portfolio_service/   # Capital allocation logic
 │   ├── risk_service/        # Risk rule engine + SSE stream
+│   │   └── app/
+│   │       ├── logic/       # week_rules, profit_lock, portfolio_heat, macro_monitor
+│   │       ├── events/      # publisher.py (SQS event builder)
+│   │       └── sse/         # stream.py (SSE formatter)
 │   ├── screening_service/   # Quarterly stock screener
 │   └── notification_service/# SQS consumer → SNS/SES alerts
 │
 ├── infra/
-│   ├── terraform/           # AWS infra as code (EKS, ECR, SQS, S3, ElastiCache, VPC, IAM)
+│   ├── terraform/           # AWS infra as code
+│   │   ├── main.tf          # Root: VPC, EKS, ECR, SQS, S3, ElastiCache, IAM
 │   │   └── modules/         # vpc, eks, iam, sqs, s3, elasticache
-│   ├── k8s/                 # Kubernetes manifests (kubectl apply target)
-│   ├── jenkins/             # Jenkinsfile (build → push → deploy pipeline)
+│   ├── k8s/                 # Kubernetes manifests
+│   │   ├── namespace.yaml   # trading-devops namespace
+│   │   ├── configmap.yaml   # AWS endpoints (Redis, SQS URLs, S3 bucket)
+│   │   └── ingress.yaml     # AWS ALB Ingress (path-based routing, all 7 services)
+│   ├── jenkins/             # Jenkinsfile (build → push → deploy)
 │   └── monitoring/          # Prometheus / Grafana config
 │
-├── config/                  # Environment configs (dev/staging/prod)
+├── config/                  # Environment configs
 ├── inputs/                  # Stock JSON input files
 ├── outputs/                 # Scored output files (e.g. outputs/MSFT/)
 │
@@ -183,7 +194,7 @@ DevOps_Project_Trading_System/
 ├── auto_peers_web.py        # Peer stock fetcher (yfinance + multi-source)
 ├── stocks.txt               # Watchlist of stock tickers
 ├── docker-compose.yml       # Full local stack (7 services)
-└── docker-compose.dev.yml   # Dev-mode overrides (same services, dev image tags)
+└── docker-compose.dev.yml   # Dev-mode (same services, dev image tags + container names)
 ```
 
 ---
@@ -195,19 +206,19 @@ DevOps_Project_Trading_System/
 | **Backend** | Python 3.11 | All services use stdlib `http.server.ThreadingHTTPServer` |
 | **Frontend** | React (served via Nginx) | SSE-powered real-time risk events |
 | **Concurrency** | Python `ThreadPoolExecutor` | Used in `batch-service` for parallel scoring |
-| **Event Bus** | AWS SQS (3 standard queues) | `screening-events`, `risk-events`, `notification-events` |
-| **Cache** | Redis 7 (AWS ElastiCache `cache.t3.micro`) | Score caching |
+| **Event Bus** | AWS SQS (3 standard queues + 3 DLQs) | `screening-events`, `risk-events`, `notification-events` |
+| **Cache** | Redis 7 (AWS ElastiCache `cache.t3.micro`) | Score caching; endpoint injected via ConfigMap |
 | **Storage** | AWS S3 | Scoring outputs, batch artifacts, Terraform remote state |
-| **Containers** | Docker (single-stage, non-root user `appuser`) | `python:3.11-slim` base; `useradd -u 10001` |
-| **Orchestration** | Kubernetes (AWS EKS 1.32, `t3.small` nodes) | `kubectl apply` via Jenkinsfile |
-| **IaC** | Terraform ≥ 1.5.0 | VPC, EKS, ECR (per-service), SQS, S3, ElastiCache, IAM |
+| **Containers** | Docker (single-stage, non-root `appuser` UID 10001) | `python:3.11-slim` base |
+| **Orchestration** | Kubernetes (AWS EKS 1.32, `t3.small` nodes) | Namespace, ConfigMap, ALB Ingress; `kubectl apply` via Jenkins |
+| **IaC** | Terraform ≥ 1.5.0 | VPC, EKS, ECR (per service), SQS + DLQs, S3, ElastiCache, IAM |
 | **CI/CD** | Jenkins | Checkout → Docker Build → ECR Push → K8s Deploy |
-| **Container Registry** | AWS ECR | `scan_on_push = true`; one repo per service |
-| **Monitoring** | Prometheus | `/metrics` endpoint on every service; business counters + HTTP metrics |
-| **Logging** | Python `logging` → structured JSON | Written to `/app/logs`; trace_id correlation |
-| **Notifications** | AWS SNS (SMS) + SES (email) | Consumed from `notification-events` queue |
-| **Peer Data** | `yfinance` | Used in `auto_peers_web.py` for peer discovery |
-| **AWS Region** | `ap-south-1` (Mumbai) | Terraform default |
+| **Container Registry** | AWS ECR | `scan_on_push = true`; one repo per service (7 total) |
+| **Monitoring** | Prometheus (`prometheus-client`) | `/metrics` on every service; HTTP + business counters |
+| **Logging** | Python `logging` → structured JSON | Written to `/app/logs`; `trace_id` correlation |
+| **Notifications** | AWS SNS (SMS) + SES (email) | Triggered by `notification-service` consuming from SQS |
+| **Peer Data** | `yfinance` | Used in `auto_peers_web.py` for peer stock discovery |
+| **AWS Region** | `ap-south-1` (Mumbai) | Terraform default; also in `configmap.yaml` |
 
 ---
 
@@ -223,10 +234,12 @@ DevOps_Project_Trading_System/
 | `trading-devops-risk-events` | risk-service | notification-service |
 | `trading-devops-notification-events` | risk-service, batch-service | notification-service |
 
-### Key Design Choices
-- **Standard queues** — managed by Terraform `sqs` module
-- **VPC + IAM** — SQS access is via IRSA (IAM Roles for Service Accounts) so no long-lived AWS keys in the cluster
-- SQS queue ARNs are output from Terraform and injected into K8s ConfigMaps
+### Key Design Choices (from `infra/terraform/modules/sqs/main.tf`)
+- **Standard queues** with long polling (`receive_wait_time_seconds = 20`) — reduces empty receive API calls
+- **Dead Letter Queues (DLQs)** — every queue has a paired DLQ (`-dlq` suffix); messages move to DLQ after 3 failed receive attempts (`maxReceiveCount = 3`)
+- **Retention:** 24 hours on main queues; 14 days on DLQs
+- **IAM** — EKS node group IAM role has SQS access policy (`SendMessage`, `ReceiveMessage`, `DeleteMessage`, `GetQueueAttributes`) on all queues and DLQs
+- Queue URLs are Terraform outputs; injected into all pods via the `trading-devops-config` ConfigMap
 
 ---
 
@@ -238,12 +251,12 @@ DevOps_Project_Trading_System/
 GitHub push
     │
     ▼
-1. Checkout (scm)
-2. Docker Login  (aws ecr get-login-password → ap-south-1 ECR)
-3. Build Images  (docker build for all 7 services, tagged :${BUILD_NUMBER})
-4. Push Images   (docker push to ECR for all 7 services)
-5. Deploy K8s    (kubectl apply -f infra/k8s/)
-                 (kubectl set image for each deployment → rolling update)
+1. Checkout         (scm)
+2. Docker Login     (aws ecr get-login-password → ap-south-1 ECR)
+3. Build Images     (docker build for all 7 services, tagged :${BUILD_NUMBER})
+4. Push Images      (docker push to ECR for all 7 services)
+5. Deploy K8s       (kubectl apply -f infra/k8s/)
+                    (kubectl -n trading-devops set image deployment/<svc> → rolling update)
 ```
 
 ### Environment
@@ -256,13 +269,13 @@ GitHub push
 | `ECR_REGISTRY` | `${AWS_ACCOUNT_ID}.dkr.ecr.ap-south-1.amazonaws.com` |
 
 ### Services Built & Deployed
-- `batch-service`, `frontend-service`, `notification-service`, `portfolio-service`, `risk-service`, `scoring-service`, `screening-service`
+`batch-service`, `frontend-service`, `notification-service`, `portfolio-service`, `risk-service`, `scoring-service`, `screening-service`
 
 ---
 
 ## 8. Docker Strategy
 
-### Python Service Dockerfile (same pattern across all services)
+### Python Service Dockerfile (consistent across all 7 services)
 ```dockerfile
 FROM python:3.11-slim
 
@@ -273,7 +286,7 @@ WORKDIR /app
 
 COPY config /app/config
 COPY services /app/services
-COPY stocks.txt /app/stocks.txt   # (where needed)
+COPY stocks.txt /app/stocks.txt   # (where applicable)
 
 RUN pip install --no-cache-dir prometheus-client \
     && mkdir -p /app/outputs /app/logs /app/failed \
@@ -291,109 +304,164 @@ CMD ["python", "-m", "services.<service>.app.main"]
 ```
 
 ### Key Decisions
-- **`python:3.11-slim`** — minimal base image
-- **Non-root user** (`appuser`, UID 10001) — security best practice enforced in every Dockerfile
-- **`prometheus-client`** — the only pip dependency installed at image build time; other dependencies resolved from `services/` package structure
-- **HEALTHCHECK** — every service has a Python-based health check on `/health`
-- **docker-compose.yml** — runs all 7 services locally with shared `config/`, `inputs/`, `outputs/`, `logs/` volume mounts
-- **docker-compose.dev.yml** — dev variant with `dev` image tags and container names (`tradingdevops-*-dev`)
+- **`python:3.11-slim`** — minimal base image; no build tools in runtime
+- **Non-root user** (`appuser`, UID 10001) — enforced in every Dockerfile
+- **`prometheus-client`** — the only pip dependency installed at build time
+- **HEALTHCHECK** — Python-based `/health` check on every service
+- **Shared volumes** — `config/`, `inputs/`, `outputs/`, `logs/` bind-mounted in docker-compose
+
+### docker-compose Setup
+- **`docker-compose.yml`** — all 7 services with production image tags (`:local`)
+- **`docker-compose.dev.yml`** — same services, dev image tags (`:dev`) + explicit container names (`tradingdevops-*-dev`)
 
 ---
 
 ## 9. Kubernetes on AWS EKS
 
-### Cluster Config (from Terraform)
-- **Kubernetes version:** 1.32
-- **Region:** ap-south-1 (Mumbai), 2 AZs
-- **Node instance type:** `t3.small`
-- **Node count:** min 1, desired 2, max 4
-- **Networking:** private subnets (10.0.10.0/24, 10.0.11.0/24)
+### Cluster Config (from `infra/terraform/modules/eks/main.tf`)
+| Setting | Value |
+|---|---|
+| Cluster name | `trading-devops-eks` |
+| Kubernetes version | 1.32 |
+| Region | ap-south-1 (Mumbai), 2 AZs |
+| Node instance type | `t3.small` |
+| Node disk size | 20 GB |
+| Node scaling | min 1 / desired 2 / max 4 |
+| Node subnet | private (10.0.10.0/24, 10.0.11.0/24) |
+| Cluster logs | api, audit, authenticator, controllerManager, scheduler |
+| Node rolling update | `max_unavailable = 1` |
 
-### K8s Manifests
-- Manifests live in `infra/k8s/` (one per service)
-- Deployed via `kubectl apply -f infra/k8s/` in the Jenkins pipeline
-- Rolling updates triggered by `kubectl set image deployment/<svc> <svc>=<new-tag>`
+### K8s Manifests (`infra/k8s/`)
 
-### IRSA (IAM Roles for Service Accounts)
-- Defined in `infra/terraform/modules/iam/`
-- Services get least-privilege IAM roles for SQS and S3 access
-- No long-lived AWS access keys in the cluster
+Applied with `kubectl apply -f infra/k8s/` in Jenkins, then image updated per service with `kubectl set image`.
+
+**`namespace.yaml`**
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trading-devops
+```
+
+**`configmap.yaml`** — injects all AWS service endpoints into pods
+```yaml
+data:
+  AWS_REGION: "ap-south-1"
+  REDIS_HOST: "<elasticache-endpoint>"
+  REDIS_PORT: "6379"
+  SQS_SCREENING_EVENTS_URL: "https://sqs.ap-south-1.amazonaws.com/.../trading-devops-screening-events"
+  SQS_RISK_EVENTS_URL:      "https://sqs.ap-south-1.amazonaws.com/.../trading-devops-risk-events"
+  SQS_NOTIFICATION_EVENTS_URL: "https://sqs.ap-south-1.amazonaws.com/.../trading-devops-notification-events"
+  S3_ARTIFACTS_BUCKET: "trading-devops-<suffix>"
+```
+
+**`ingress.yaml`** — AWS ALB Ingress, path-based routing
+```
+Annotations:
+  kubernetes.io/ingress.class: alb
+  alb.ingress.kubernetes.io/scheme: internet-facing
+  alb.ingress.kubernetes.io/target-type: ip
+  alb.ingress.kubernetes.io/healthcheck-path: /health
+
+Path routing:
+  /v1/score         → scoring-service:8000
+  /v1/batch-score   → batch-service:8001
+  /v1/portfolio     → portfolio-service:8003
+  /v1/risk          → risk-service:8004
+  /v1/screen        → screening-service:8005
+  /v1/notifications → notification-service:8006
+  /                 → frontend-service:80
+```
+
+### IAM (from `infra/terraform/modules/iam/main.tf`)
+| Role | Attached Policy |
+|---|---|
+| EKS Cluster Role | `AmazonEKSClusterPolicy` |
+| EKS Node Group Role | `AmazonEKSWorkerNodePolicy`, `AmazonEKS_CNI_Policy`, `AmazonEC2ContainerRegistryReadOnly` |
+| Node Group (SQS) | Custom policy: `SendMessage`, `ReceiveMessage`, `DeleteMessage`, `GetQueueAttributes` on all SQS queues + DLQs |
 
 ---
 
 ## 10. AWS Infrastructure (Terraform)
 
-All provisioned via Terraform with modules per component. State stored in S3 (`trading-devops-tf-state`, `ap-south-1`).
+All provisioned via Terraform with per-component modules. Remote state in S3 (`trading-devops-tf-state`, `ap-south-1`).
 
 ```
 VPC (10.0.0.0/16)
-├── Public Subnets  (2 AZs: 10.0.1.0/24, 10.0.2.0/24)   → ALB, NAT Gateway
+├── Public Subnets  (2 AZs: 10.0.1.0/24, 10.0.2.0/24)    → ALB, NAT Gateway
 └── Private Subnets (2 AZs: 10.0.10.0/24, 10.0.11.0/24)  → EKS nodes, ElastiCache
 
-EKS:       k8s 1.32, t3.small nodes, min 1 / desired 2 / max 4
-ECR:       1 repo per service (7 total), scan_on_push = true
-SQS:       3 standard queues (screening-events, risk-events, notification-events)
-S3:        scoring outputs + batch artifacts (random suffix bucket)
+EKS:         k8s 1.32, t3.small nodes (20 GB disk), min 1 / desired 2 / max 4
+ECR:         1 repo per service (7 total), scan_on_push = true, MUTABLE tags
+SQS:         3 standard queues + 3 DLQs, long polling, 24h / 14d retention
 ElastiCache: Redis 7, cache.t3.micro, 1 node, private subnet
-IAM:       cluster role, node role, IRSA roles for SQS/S3 access
+S3:          1 bucket (random suffix), scoring outputs + batch artifacts
+IAM:         Cluster role, node group role, SQS access policy
+Terraform state: s3://trading-devops-tf-state/infra/terraform.tfstate
 ```
 
 ### Terraform Modules
 | Module | What It Provisions |
 |---|---|
 | `vpc` | VPC, public/private subnets, route tables, NAT Gateway |
-| `eks` | EKS cluster, managed node group |
-| `iam` | Cluster IAM role, node IAM role, IRSA policies |
-| `sqs` | 3 SQS queues; outputs queue ARNs and URLs |
-| `s3` | Single S3 bucket for outputs + artifacts |
-| `elasticache` | Redis single-node cluster |
+| `eks` | EKS cluster + managed node group |
+| `iam` | Cluster IAM role, node group IAM role, SQS access policy |
+| `sqs` | 3 queues + 3 DLQs; outputs queue ARNs and URLs |
+| `s3` | Single S3 bucket for outputs and artifacts |
+| `elasticache` | Redis single-node cluster (cache.t3.micro) |
 
 ---
 
 ## 11. Observability — Metrics & Logs
 
 ### Metrics (Prometheus)
-Every service exposes `/metrics` (Prometheus text format via `prometheus-client`). Defined in `services/common/metrics.py`:
+Every service exposes `/metrics` using `prometheus-client`. Defined in `services/common/metrics.py`:
 
 ```python
 # Shared across all services (labelled by service name)
-SERVICE_UP                    = Gauge("service_up", ...)
-HTTP_REQUESTS_TOTAL           = Counter("http_requests_total", ...)
-HTTP_REQUEST_DURATION_SECONDS = Histogram("http_request_duration_seconds", ...)
-HTTP_REQUESTS_IN_FLIGHT       = Gauge("http_requests_in_flight", ...)
+SERVICE_UP                     = Gauge("service_up", ...)
+HTTP_REQUESTS_TOTAL            = Counter("http_requests_total", ...)
+HTTP_REQUEST_DURATION_SECONDS  = Histogram("http_request_duration_seconds",
+                                   buckets=[0.005, 0.01, 0.025, 0.05, 0.1, 0.25,
+                                            0.5, 1.0, 2.5, 5.0, 10.0])
+HTTP_REQUESTS_IN_FLIGHT        = Gauge("http_requests_in_flight", ...)
 
 # Business metrics (risk-service)
-RISK_EVALUATIONS_TOTAL        = Counter("risk_evaluations_total", ...)
-RISK_MACRO_FLAGS_TOTAL        = Counter("risk_macro_flags_total", ...)
-RISK_PROFIT_LOCK_SIGNALS_TOTAL= Counter("risk_profit_lock_signals_total", ...)
+RISK_EVALUATIONS_TOTAL         = Counter("risk_evaluations_total", ...)
+RISK_MACRO_FLAGS_TOTAL         = Counter("risk_macro_flags_total", ...)
+RISK_PROFIT_LOCK_SIGNALS_TOTAL = Counter("risk_profit_lock_signals_total", ...)
 ```
 
 ### Logs
-Structured JSON logs written by every service using `services/common/logging_utils.py`. Log files go to `/app/logs`. Format includes `timestamp`, `level`, `service`, `message`, `trace_id`, `module`.
+Structured JSON logs from every service via `services/common/logging_utils.py`. Written to `/app/logs`. Format includes `timestamp`, `level`, `service`, `message`, `trace_id`, `module`.
 
 ---
 
 ## 12. Real-Time Updates — SSE
 
-**Why SSE over WebSocket?** Risk events are one-directional (server → client). SSE is simpler, works over standard HTTP/1.1, and doesn't require a WebSocket upgrade.
+**Why SSE over WebSocket?** Risk events are one-directional (server → client). SSE is simpler, works over standard HTTP/1.1, and doesn't require a WebSocket upgrade — important for passing through ALB and Nginx.
 
 **How it works:**
 1. `risk-service` exposes `GET /v1/risk/stream`
 2. Endpoint responds with `Content-Type: text/event-stream`
 3. Events are formatted via `services/common/sse.py` (`format_sse`)
-4. React frontend `useSSE` hook connects and renders events in real time
-5. Nginx requires `proxy_buffering off` for SSE to work correctly
+4. The React frontend `useSSE` hook connects and renders events in real time
+5. Nginx config must have `proxy_buffering off` — without it, Nginx buffers SSE events and they arrive in batches
 
 ---
 
 ## 13. Risk Rules Engine
 
-The `risk-service` evaluates week-based rules using:
-- `app/logic/week_rules.py` — maps holding days to a `rule_for_holding_days()` function
-- `app/logic/profit_lock.py` — evaluates profit-lock thresholds
-- `app/logic/portfolio_heat.py` — evaluates aggregate portfolio heat
-- `app/logic/macro_monitor.py` — evaluates macro flag conditions
-- `app/events/publisher.py` — builds SQS event envelope (`build_risk_event`)
+The `risk-service` evaluates week-based rules using dedicated logic modules:
+
+| Module | Purpose |
+|---|---|
+| `app/logic/week_rules.py` | Maps holding days → `rule_for_holding_days()` |
+| `app/logic/profit_lock.py` | Evaluates profit-lock thresholds |
+| `app/logic/portfolio_heat.py` | Evaluates aggregate portfolio heat |
+| `app/logic/macro_monitor.py` | Evaluates macro flag conditions |
+| `app/events/publisher.py` | Builds SQS event envelope (`build_risk_event`) |
+| `app/sse/stream.py` | Formats SSE events (`format_sse`) |
 
 **Risk rule triggers (Week 1–13 cycle):**
 | Gain | Action |
@@ -434,7 +502,7 @@ python batchrunner.py
 python auto_peers_web.py  # uses yfinance
 ```
 
-### Volumes (docker-compose)
+### Volume Mounts (docker-compose)
 | Host Path | Container Path | Access |
 |---|---|---|
 | `./config` | `/app/config` | read-only |
@@ -449,14 +517,16 @@ python auto_peers_web.py  # uses yfinance
 
 | Decision | Chosen Approach | Reason |
 |---|---|---|
-| HTTP servers | Python stdlib `ThreadingHTTPServer` | Zero external dependencies; ships with Python 3.11 |
+| HTTP servers | Python stdlib `ThreadingHTTPServer` | Zero extra dependencies; ships with Python 3.11 |
 | Concurrency | `ThreadPoolExecutor` (batch) | Simple, sufficient for I/O-bound scoring jobs |
-| Event bus | AWS SQS (3 queues) | Managed service; decouples risk from notification |
+| Event bus | AWS SQS (3 queues + DLQs) | Managed service; decouples risk from notification; DLQs catch failures |
 | DB/State | Redis (cache) + S3 (outputs) | No relational DB needed for current scope |
-| IaC | Terraform modules | Reproducible AWS infra; state in S3 |
-| CI/CD | Jenkins (straightforward pipeline) | Build → push → deploy; no external tool dependencies |
-| Canary/rollout | `kubectl set image` (rolling update) | Built into Kubernetes; no additional tooling needed |
-| Real-time UI | SSE | One-directional; simpler; works through all HTTP proxies |
+| K8s routing | AWS ALB Ingress (path-based) | Single internet-facing ALB routes all 7 services by path prefix |
+| Config injection | K8s ConfigMap | SQS URLs, Redis endpoint, S3 bucket injected at deploy time from Terraform outputs |
+| IaC | Terraform modules | Reproducible AWS infra; remote state in S3 |
+| CI/CD | Jenkins (5-stage pipeline) | Build → push → deploy; straightforward and self-contained |
+| Rolling updates | `kubectl set image` | Built into Kubernetes; no additional tooling needed |
+| Real-time UI | SSE | One-directional; simpler; works through all HTTP proxies including ALB |
 | Container security | Non-root `appuser` (UID 10001) | Enforced in every Dockerfile |
 
 ---
